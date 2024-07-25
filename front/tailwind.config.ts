@@ -1,12 +1,12 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -33,11 +33,17 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       textColor: {
-        "Principal": "#EB9A32"
-      }
+        Principal: "#EB9A32",
+      },
+      colors: {
+        primary: "#EB9A32",
+        primaryDark: "#D77E1E",
+        secondary: "#8E8E8E",
+        background: "#161616",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
