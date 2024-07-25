@@ -7,7 +7,7 @@ import { Office } from './entities/Offices.entity';
 import { Reservation } from './entities/Reservations.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { typeOrmConfig } from './Config/typeorm';
-import { OfficeModule } from './modules/offices.module';
+import { OfficeModule } from './offices/offices.module';
 
 @Module({
   imports: [
