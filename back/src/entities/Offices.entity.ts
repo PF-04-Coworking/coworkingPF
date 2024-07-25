@@ -21,6 +21,6 @@ export class Office {
   @Column()
   stock: number;
 
-  @OneToMany(() => Reservation, reservation => reservation.office)
+  @OneToMany(() => Reservation, (reservation) => reservation.office)
   reservations: Reservation[];
 }
