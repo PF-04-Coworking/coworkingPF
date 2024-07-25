@@ -43,7 +43,7 @@ export class UserRepository {
       relations: { reservations: true },
     });
 
-    return user;
+    return dbUser;
   }
 
   async updateUser(id: string, user: User) {
