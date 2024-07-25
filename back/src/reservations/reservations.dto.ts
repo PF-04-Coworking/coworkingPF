@@ -13,3 +13,9 @@ export class AddNewReservationDto {
 
   user_id: string;
 }
+
+export class UpdateReservationDto {
+  date?: string;
+
+  guests?: number;
+}

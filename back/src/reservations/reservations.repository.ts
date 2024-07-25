@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { AddNewReservationDto } from './reservations.dto';
+import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
 
 const mockReservations = [
   {
@@ -71,5 +71,34 @@ export class ReservationsRepository {
     const newReservation = mockReservations.push(data);
 
     return mockReservations;
+  }
+
+  //* Rutas PUT
+
+  updateReservation(id: string, updateReservationDto: UpdateReservationDto) {
+    const updateReservation = mockReservations.find(
+      (reservation) => reservation.id === id,
+    );
+
+    if (!updateReservation)
+      throw new BadRequestException('Reservación no encontrada');
+
+    //TODO Actualizar reservation
+
+    return updateReservation;
+  }
+
+  //* Rutas DELETE
+
+  deleteReservation(id) {
+    const deleteReservation = mockReservations.find(
+      (reservation) => reservation.id === id,
+    );
+    if (!deleteReservation)
+      throw new BadRequestException('Reservación no encontrada');
+
+    //TODO Actualizar reservation
+
+    return deleteReservation;
   }
 }
