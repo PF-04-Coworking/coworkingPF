@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { OfficeService } from 'src/services/offices.service';
+import { OfficeService } from 'src/offices/offices.service';
 
 @Controller('offices')
 export class OfficeController {
