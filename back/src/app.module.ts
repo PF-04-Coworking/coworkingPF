@@ -8,6 +8,11 @@ import { Reservation } from './entities/Reservations.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { typeOrmConfig } from './Config/typeorm';
 import { OfficeModule } from './offices/offices.module';
+import { UserController } from './user/user.controller';
+import { UserModule } from './user/user.module';
+import { UserService } from './user/user.service';
+import { UserRepository } from './user/user.repository';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -23,8 +28,14 @@ import { OfficeModule } from './offices/offices.module';
     }),
     TypeOrmModule.forFeature([User, Office, Reservation]),
     OfficeModule,
+    UserModule,
+    JwtModule.register({
+      global: true,
+      signOptions: { expiresIn: '1h' },
+      secret: process.env.JWT_SECRET,
+    })
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, UserController],
+  providers: [AppService, UserService, UserRepository, JwtService],
 })
 export class AppModule {}
