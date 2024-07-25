@@ -13,6 +13,7 @@ import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { UserRepository } from './user/user.repository';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { ReservationsModule } from './reservations/reservations.module';
 
 @Module({
   imports: [
@@ -28,12 +29,13 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
     }),
     TypeOrmModule.forFeature([User, Office, Reservation]),
     OfficeModule,
+    ReservationsModule,
     UserModule,
     JwtModule.register({
       global: true,
       signOptions: { expiresIn: '1h' },
       secret: process.env.JWT_SECRET,
-    })
+    }),
   ],
   controllers: [AppController, UserController],
   providers: [AppService, UserService, UserRepository, JwtService],
