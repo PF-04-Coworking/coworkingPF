@@ -18,8 +18,7 @@ export class UserRepository {
   ) {}
 
   async getUsers() {
-    let users = await this.userRepository.find();
-
+    const users = await this.userRepository.find();
     return users;
   }
 
@@ -44,7 +43,7 @@ export class UserRepository {
       relations: { reservations: true },
     });
 
-    return user;
+    return dbUser;
   }
 
   async updateUser(id: string, user: User) {
