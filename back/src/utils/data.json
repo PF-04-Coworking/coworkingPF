@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Central Office",
+    "location": "New York",
+    "description": "Main headquarters located in the heart of the city.",
+    "capacity": 200,
+    "stock": 150
+  },
+  {
+    "name": "West Side Branch",
+    "location": "Los Angeles",
+    "description": "Branch office with modern facilities and ample parking.",
+    "capacity": 100,
+    "stock": 80
+  },
+  {
+    "name": "Downtown Office",
+    "location": "Chicago",
+    "description": "Conveniently located near public transportation.",
+    "capacity": 150,
+    "stock": 120
+  },
+  {
+    "name": "South Campus",
+    "location": "Austin",
+    "description": "A spacious office with great views and amenities.",
+    "capacity": 250,
+    "stock": 200
+  }
+]
