@@ -7,8 +7,8 @@ import { UserRepository } from './user.repository';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User])],
-    controllers: [UserController],
-    providers: [UserService, UserRepository, JwtService],
+  imports: [TypeOrmModule.forFeature([User])],
+  controllers: [UserController],
+  providers: [UserService, UserRepository, JwtService],
 })
 export class UserModule {}

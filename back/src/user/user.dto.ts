@@ -1,6 +1,5 @@
 export class CreateUserDto {
-  
-    id: string;
+  id: string;
 
   name: string;
 
@@ -18,5 +17,5 @@ export class CreateUserDto {
 
   age: number;
 
-  role: string
+  role: string;
 }

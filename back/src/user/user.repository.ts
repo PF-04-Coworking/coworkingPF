@@ -18,8 +18,7 @@ export class UserRepository {
   ) {}
 
   async getUsers() {
-    let users = await this.userRepository.find();
-
+    const users = await this.userRepository.find();
     return users;
   }
 
