@@ -9,8 +9,8 @@ const config = {
   entities: ['dist/entities/*.entity{.ts,.js}'],
   ssl: { rejectUnauthorized: false },
   logging: false,
-  synchronize: false,
-  dropSchema: false,
+  synchronize: true,
+  dropSchema: true,
 };
 
 export const typeOrmConfig = registerAs('typeorm', () => config);

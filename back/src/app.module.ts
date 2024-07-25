@@ -7,6 +7,7 @@ import { Office } from './entities/Offices.entity';
 import { Reservation } from './entities/Reservations.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { typeOrmConfig } from './Config/typeorm';
+import { OfficeModule } from './modules/offices.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { typeOrmConfig } from './Config/typeorm';
         ConfigService.get('typeorm'),
     }),
     TypeOrmModule.forFeature([User, Office, Reservation]),
+    OfficeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

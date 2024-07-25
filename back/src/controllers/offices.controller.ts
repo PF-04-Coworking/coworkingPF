@@ -1,15 +1,22 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
+import { OfficeService } from 'src/services/offices.service';
 
 @Controller('offices')
-export class OfficesController {
-  constructor() {}
+export class OfficeController {
+  constructor(private readonly officeService: OfficeService) {}
 
   @Get()
-  getAllOffices() {}
+  getAllOffices() {
+    return this.officeService.getAllOffices();
+  }
 
   @Get('seeder')
-  addOffices() {}
+  addOffices() {
+    return this.officeService.addOffices();
+  }
 
   @Get(':id')
-  getOfficeById() {}
+  getOfficeById(@Param('id') id: string) {
+    return this.officeService.getOfficeById(id);
+  }
 }

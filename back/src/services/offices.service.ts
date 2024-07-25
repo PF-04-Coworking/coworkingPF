@@ -1,12 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { OfficeRepository } from 'src/repositories/offices.repository';
 
 @Injectable()
-export class OfficesService {
-  constructor() {}
+export class OfficeService {
+  constructor(private officeRepository: OfficeRepository) {}
 
-  getAllOffices() {}
+  getAllOffices() {
+    return this.officeRepository.getAllOffices();
+  }
 
-  addOffices() {}
+  addOffices() {
+    return this.officeRepository.addOffices();
+  }
 
-  getOfficeById() {}
+  getOfficeById(id: string) {
+    return this.officeRepository.getOfficeById(id);
+  }
 }
