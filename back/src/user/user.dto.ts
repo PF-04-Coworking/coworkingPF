@@ -17,4 +17,6 @@ export class CreateUserDto {
   city: string;
 
   age: number;
+
+  role: string
 }

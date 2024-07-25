@@ -3,12 +3,19 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/entities/Users.entity';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserRepository {
-  constructor(private readonly userRepository: Repository<User>) {}
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async getUsers() {
     let users = await this.userRepository.find();
@@ -71,19 +78,28 @@ export class UserRepository {
       throw new BadRequestException(
         `Email ${email} is already a registered account`,
       );
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    return await this.createUser(user);
+    return await this.createUser({
+      ...user,
+      password: hashedPassword,
+    });
   }
 
-  async signIn(email: string, password: string){
-    const user = await this.userRepository.findOne({where:{email}});
-    if (!user) throw new BadRequestException(`Wrong credentials`);
+  async signIn(email: string, password: string) {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) throw new BadRequestException('Wrong credentials');
 
-    const userPass = await this.userRepository.findOne({where:{password}})
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) throw new BadRequestException('Wrong credentials');
+    const payload = {
+      sub: user.id,
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    };
+    const token = this.jwtService.sign(payload);
 
-    if (user !== userPass) throw new BadRequestException(`Wrong credentials`);
-    
-    return `Successfully signed in. Welcome ${user.name}`
+    return { message: `Successfully signed in. Welcome ${user.name}`, token };
   }
-
 }
