@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLParagraphElement> {
   variant: "primary" | "secondary";
-  size: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   className?: string;
 }
 
@@ -10,7 +10,7 @@ const Paragraph = ({
   children,
   className,
   variant,
-  size,
+  size = "md",
   ...props
 }: IProps) => {
   const baseClassName = "";
@@ -19,6 +19,7 @@ const Paragraph = ({
     secondary: "text-secondary",
   };
   const sizeClassName = {
+    xs: "text-xs",
     sm: "text-sm",
     md: "text-md",
     lg: "text-lg",
