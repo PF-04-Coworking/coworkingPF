@@ -14,6 +14,7 @@ import { UserService } from './user/user.service';
 import { UserRepository } from './user/user.repository';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ReservationsModule } from './reservations/reservations.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ReservationsModule } from './reservations/reservations.module';
     }),
     TypeOrmModule.forFeature([User, Office, Reservation]),
     OfficeModule,
+    FileUploadModule,
     ReservationsModule,
     UserModule,
     JwtModule.register({

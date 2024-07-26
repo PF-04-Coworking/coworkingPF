@@ -6,9 +6,11 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 import { UserService } from './user.service';
+import { CreateUserDto, LoginUserDto, UpdateUserDto } from './user.dto';
 import { User } from 'src/entities/Users.entity';
 
 @ApiTags('user')
@@ -33,35 +35,37 @@ export class UserController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiBody({ type: User })
+  @ApiBody({ type: CreateUserDto })
   @ApiResponse({ status: 201, description: 'The user has been successfully created.', type: User })
-  createUser(@Body() user: User) {
+  createUser(@Body() user: CreateUserDto) {
     return this.userService.createUser(user);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Update an existing user' })
   @ApiParam({ name: 'id', type: String, description: 'User ID' })
-  @ApiBody({ type: User })
+  @ApiBody({ type: UpdateUserDto })
   @ApiResponse({ status: 200, description: 'The user has been successfully updated.', type: User })
-  updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: User) {
+  updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: UpdateUserDto) {
     return this.userService.updateUser(id, user);
   }
 
-  @Post('signup')
-  @ApiOperation({ summary: 'Sign up a new user' })
-  @ApiBody({ type: User })
-  @ApiResponse({ status: 201, description: 'The user has been successfully signed up.', type: User })
-  signUp(@Body() user: User) {
-    return this.userService.signUp(user);
+  @Post('register')
+  @ApiOperation({ summary: 'Register a new user' })
+  @ApiBody({ type: CreateUserDto })
+  @ApiResponse({ status: 201, description: 'The user has been successfully registered.', type: User })
+  register(@Body() user: CreateUserDto) {
+    return this.userService.register(user);
   }
 
-  @Post('signin')
-  @ApiOperation({ summary: 'Sign in an existing user' })
-  @ApiBody({ schema: { properties: { email: { type: 'string' }, password: { type: 'string' } } } })
-  @ApiResponse({ status: 200, description: 'The user has been successfully signed in.' })
-  signIn(@Body('email') email: string, @Body('password') password: string) {
-    return this.userService.signIn(email, password);
+  @Post('login')
+  @ApiOperation({ summary: 'Login a user' })
+  @ApiBody({ type: LoginUserDto })
+  @ApiResponse({ status: 200, description: 'The user has been successfully logged in.' })
+  login(@Body() credentials: LoginUserDto) {
+    return this.userService.login(credentials);
   }
 }
 
+
+  

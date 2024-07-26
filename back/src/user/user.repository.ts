@@ -8,6 +8,7 @@ import { User } from 'src/entities/Users.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserDto, LoginUserDto, UpdateUserDto } from './user.dto';
 
 @Injectable()
 export class UserRepository {
@@ -35,7 +36,7 @@ export class UserRepository {
     return user;
   }
 
-  async createUser(user: Partial<User>) {
+  async createUser(user: CreateUserDto) {
     const newUser = await this.userRepository.save(user);
 
     const dbUser = await this.userRepository.findOne({
@@ -46,7 +47,7 @@ export class UserRepository {
     return dbUser;
   }
 
-  async updateUser(id: string, user: User) {
+  async updateUser(id: string, user: UpdateUserDto) {
     const foundUser = await this.userRepository.findOneBy({ id });
 
     if (!foundUser) {
@@ -68,7 +69,7 @@ export class UserRepository {
     return `User with id ${id} was deleted successfully`;
   }
 
-  async signUp(user: Partial<User>) {
+  async register(user: CreateUserDto) {
     const { email, password } = user;
 
     const foundUser = await this.userRepository.findOne({ where: { email } });
@@ -85,7 +86,9 @@ export class UserRepository {
     });
   }
 
-  async signIn(email: string, password: string) {
+  async login(credentials: LoginUserDto) {
+    const {email, password} = credentials;
+
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) throw new BadRequestException('Wrong credentials');
 
