@@ -41,9 +41,17 @@ const config = {
         secondary: "#8E8E8E",
         background: "#161616",
       },
+      gridTemplateColumns: {
+        "custom":"1fr, 1.2fr"
+      },
+      clipPath: {
+        'custom': 'path("M0,0 H100% V80% Q90%, 80%, 90%, 100% H10% Q0%, 100%, 0%, 80% Z")'
+      }
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+  ],
 } satisfies Config;
 
 export default config;
