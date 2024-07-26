@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Reservation } from './Reservations.entity';
 import { UserRole } from './user-role.enum';
 
@@ -16,7 +16,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   username: string;
 
   @Column()
@@ -38,8 +38,6 @@ export class User {
   })
   role: UserRole;
 
-  @OneToMany(() => Reservation, reservation => reservation.user)
+  @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }
-
-
