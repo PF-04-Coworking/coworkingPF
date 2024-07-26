@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Reservation } from './Reservations.entity';
 import { UserRole } from './user-role.enum';
 
@@ -7,28 +7,28 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50, nullable: false })
   name: string;
-  
-  @Column()
+
+  @Column({ type: 'varchar', length: 50, nullable: false })
   lastname: string;
 
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 128, nullable: false })
   password: string;
 
-  @Column()
+  @Column({ type: 'int' })
   phone: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50 })
   country: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50 })
   city: string;
 
-  @Column()
+  @Column({ type: 'int' })
   age: number;
 
   @Column({
@@ -38,8 +38,9 @@ export class User {
   })
   role: UserRole;
 
-  @OneToMany(() => Reservation, reservation => reservation.user)
+  @Column({ type: 'text'})
+  img_url: string;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }
-
-
