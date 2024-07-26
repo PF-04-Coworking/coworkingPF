@@ -40,7 +40,7 @@ export class User {
 
   @Column({ type: 'text'})
   img_url: string;
-
+  
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }

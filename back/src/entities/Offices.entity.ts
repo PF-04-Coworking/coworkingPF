@@ -21,6 +21,9 @@ export class Office {
   @Column()
   stock: number;
 
+  @Column()
+  imgUrl: string;
+
   @OneToMany(() => Reservation, (reservation) => reservation.office)
   reservations: Reservation[];
 }
