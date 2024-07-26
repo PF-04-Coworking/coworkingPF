@@ -9,15 +9,15 @@ export class User {
 
   @Column()
   name: string;
+  
+  @Column()
+  lastname: string;
 
   @Column({ unique: true })
   email: string;
 
   @Column()
   password: string;
-
-  @Column({unique: true})
-  username: string;
 
   @Column()
   phone: number;

@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from 'src/entities/Users.entity';
-import { PassThrough } from 'stream';
 
 @Controller('user')
 export class UserController {
