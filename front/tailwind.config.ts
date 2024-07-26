@@ -39,6 +39,7 @@ const config = {
         primary: "#EB9A32",
         primaryDark: "#D77E1E",
         secondary: "#8E8E8E",
+        secondaryDark: "#2E2E2E",
         background: "#161616",
       },
     },

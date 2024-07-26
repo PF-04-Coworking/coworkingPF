@@ -6,18 +6,20 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLHeadingElement> {
 }
 
 const Heading = ({ children, className, level, ...props }: IProps) => {
-  const baseClassName = "text-white";
+  const baseClassName = "text-white leading-tight";
   const levelClassName = {
-    1: "text-2xl",
-    2: "text-xl",
-    3: "text-lg",
+    1: "text-8xl",
+    2: "text-5xl",
+    3: "text-xl",
   };
   const finalClassName = clsx(baseClassName, levelClassName[level], className);
 
+  const Tag = `h${level}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
   return (
-    <h3 className={finalClassName} {...props}>
+    <Tag className={finalClassName} {...props}>
       {children}
-    </h3>
+    </Tag>
   );
 };
 
