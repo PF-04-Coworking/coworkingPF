@@ -7,28 +7,28 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50, nullable: false })
   name: string;
+
+  @Column({ type: 'varchar', length: 50, nullable: false })
+  lastname: string;
 
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 128, nullable: false })
   password: string;
 
-  @Column({ unique: true })
-  username: string;
-
-  @Column()
+  @Column({ type: 'int' })
   phone: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50 })
   country: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50 })
   city: string;
 
-  @Column()
+  @Column({ type: 'int' })
   age: number;
 
   @Column({
@@ -38,6 +38,9 @@ export class User {
   })
   role: UserRole;
 
+  @Column({ type: 'text'})
+  img_url: string;
+  
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }

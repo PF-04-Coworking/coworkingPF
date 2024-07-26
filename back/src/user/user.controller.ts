@@ -9,8 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from 'src/entities/Users.entity';
-import { PassThrough } from 'stream';
+import { CreateUserDto, LoginUserDto, UpdateUserDto } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -27,21 +26,21 @@ export class UserController {
   }
 
   @Post()
-  createUser(@Body() user: User) {
+  createUser(@Body() user: CreateUserDto) {
     return this.userService.createUser(user);
   }
 
   @Put(':id')
-  updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: User) {
+  updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: UpdateUserDto) {
     return this.userService.updateUser(id, user);
   }
 
-  @Post('signup')
-  signUp(@Body() user: User) {
-    return this.userService.signUp(user);
+  @Post('register')
+  register(@Body() user: CreateUserDto) {
+    return this.userService.register(user);
   }
-  @Post('signin')
-  signIn(@Body() email: string, password: string) {
-    return this.userService.signIn(email, password);
+  @Post('login')
+  login(@Body() credentials: LoginUserDto) {
+    return this.userService.login(credentials);
   }
 }
