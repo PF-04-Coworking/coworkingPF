@@ -26,7 +26,7 @@ export class UserRepository {
   async getuserById(id: string) {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: { reservations: true },
+      relations: ['reservations'],
     });
 
     if (!user) {
@@ -87,20 +87,35 @@ export class UserRepository {
   }
 
   async login(credentials: LoginUserDto) {
-    const {email, password} = credentials;
+    const { email, password } = credentials;
+
+    console.log('Login function called'); // Añadido
 
     const user = await this.userRepository.findOne({ where: { email } });
-    if (!user) throw new BadRequestException('Wrong credentials');
+    if (!user) {
+      console.log('User not found'); // Añadido
+      throw new BadRequestException('Wrong credentials');
+    }
 
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) throw new BadRequestException('Wrong credentials');
+    if (!validPassword) {
+      console.log('Invalid password'); // Añadido
+      throw new BadRequestException('Wrong credentials');
+    }
+
     const payload = {
       sub: user.id,
       id: user.id,
       email: user.email,
       role: user.role,
     };
+
+    // Agregamos el console.log para verificar el secretOrPrivateKey
+    console.log('JWT_SECRET en login method:', process.env.JWT_SECRET); // Añadido
+
     const token = this.jwtService.sign(payload);
+
+    console.log('Token generated:', token); // Añadido
 
     return { message: `Successfully signed in. Welcome ${user.name}`, token };
   }
