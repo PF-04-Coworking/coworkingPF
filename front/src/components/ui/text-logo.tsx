@@ -6,7 +6,7 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLImageElement> {
 }
 
 const TextLogo = ({ className, ...props }: IProps) => {
-  const baseClassName = "h-10";
+  const baseClassName = "h-10 w-auto";
 
   return (
     <Image src={textLogo} alt="Logo" className={baseClassName} {...props} />

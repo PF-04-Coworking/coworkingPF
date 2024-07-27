@@ -5,14 +5,14 @@ import { Sidebar } from "../Sidebar/Sidebar";
 
 const links = [
   { name: "Inicio", href: "/" },
-  { name: "Servicios", href: "#" },
-  { name: "Sobre Nosotros", href: "#" },
+  { name: "Oficinas", href: "#" },
+  { name: "Sobre nosotros", href: "#" },
   { name: "Contacto", href: "#" },
 ];
 
 const Header = () => {
   return (
-    <header className="fixed h-20 w-full py-4 z-10 backdrop-blur-xl bg-background/15">
+    <header className="fixed h-20 w-full py-4 z-10 backdrop-blur-xl bg-background/20">
       <div className="layout flex items-center justify-between">
         <div className="mr-8">
           <TextLogo />
