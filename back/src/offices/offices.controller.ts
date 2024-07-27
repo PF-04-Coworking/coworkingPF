@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { OfficeService } from 'src/offices/offices.service';
 
 @Controller('offices')
@@ -6,8 +6,8 @@ export class OfficeController {
   constructor(private readonly officeService: OfficeService) {}
 
   @Get()
-  getAllOffices() {
-    return this.officeService.getAllOffices();
+  getAllOffices(@Query('page') page: number, @Query('limit') limit: number) {
+    return this.officeService.getAllOffices(Number(page), Number(limit));
   }
 
   @Get('seeder')

@@ -26,7 +26,7 @@ export class FileUploadService {
     }
 
     const updatedUser = await this.userRepository.update(userId, {
-      img_url: response.secure_url,
+      imgUrl: response.secure_url,
     });
 
     return updatedUser;

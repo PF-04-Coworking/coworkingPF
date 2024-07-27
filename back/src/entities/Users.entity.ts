@@ -39,7 +39,7 @@ export class User {
   role: UserRole;
 
   @Column({ type: 'text', nullable: true })
-  img_url: string;
+  imgUrl: string;
 
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];

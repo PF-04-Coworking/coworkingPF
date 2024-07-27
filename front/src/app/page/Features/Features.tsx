@@ -34,7 +34,7 @@ const features = [
   },
   {
     icon: <PackagePlus size={20} />,
-    title: "Servicios adicionales",
+    title: "Oficinas",
     description:
       "Además del espacio de trabajo, ofrecemos servicios adicionales como recepción, soporte técnico, catering para eventos, entre otras.",
   },
