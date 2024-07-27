@@ -38,9 +38,9 @@ export class User {
   })
   role: UserRole;
 
-  @Column({ type: 'text'})
-  img_url: string;
-  
+  @Column({ type: 'text' })
+  imgUrl: string;
+
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }

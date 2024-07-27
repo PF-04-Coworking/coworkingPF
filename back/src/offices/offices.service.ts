@@ -5,8 +5,8 @@ import { OfficeRepository } from 'src/offices/offices.repository';
 export class OfficeService {
   constructor(private officeRepository: OfficeRepository) {}
 
-  getAllOffices() {
-    return this.officeRepository.getAllOffices();
+  getAllOffices(page: number, limit: number) {
+    return this.officeRepository.getAllOffices(page, limit);
   }
 
   addOffices() {

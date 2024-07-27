@@ -48,5 +48,4 @@ export class FileUploadService {
 
     return updatedOffice;
   }
-
 }

@@ -10,12 +10,15 @@ export class OfficeRepository {
     @InjectRepository(Office) private officeRepository: Repository<Office>,
   ) {}
 
-  async getAllOffices() {
-    const offices = await this.officeRepository.find({
+  async getAllOffices(page: number, limit: number) {
+    let offices = await this.officeRepository.find({
       relations: {
         reservations: true,
       },
     });
+    const start = (page - 1) * limit;
+    const end = start * limit;
+    offices = offices.slice(start, end);
     return offices;
   }
 
