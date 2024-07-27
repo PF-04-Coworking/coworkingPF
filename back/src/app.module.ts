@@ -12,8 +12,10 @@ import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { UserRepository } from './user/user.repository';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { ReservationsModule } from './reservations/reservations.module';
+import { config as dotenvConfig } from 'dotenv';
+dotenvConfig({ path: '.development.env' });
 
 @Module({
   imports: [
@@ -28,16 +30,16 @@ import { ReservationsModule } from './reservations/reservations.module';
         ConfigService.get('typeorm'),
     }),
     TypeOrmModule.forFeature([User, Office, Reservation]),
-    OfficeModule,
-    ReservationsModule,
-    UserModule,
     JwtModule.register({
       global: true,
-      signOptions: { expiresIn: '1h' },
-      secret: process.env.JWT_SECRET,
+      secret: process.env.JWT_SECRET || 'fallback_secret',
+      signOptions: { expiresIn: '60m' },
     }),
+    ReservationsModule,
+    OfficeModule,
+    UserModule,
   ],
   controllers: [AppController, UserController],
-  providers: [AppService, UserService, UserRepository, JwtService],
+  providers: [AppService, UserService, UserRepository],
 })
 export class AppModule {}
