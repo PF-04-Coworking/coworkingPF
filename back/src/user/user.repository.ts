@@ -26,7 +26,7 @@ export class UserRepository {
   async getuserById(id: string) {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: { reservations: true },
+      relations: ['reservations'],
     });
 
     if (!user) {
@@ -87,7 +87,7 @@ export class UserRepository {
   }
 
   async login(credentials: LoginUserDto) {
-    const {email, password} = credentials;
+    const { email, password } = credentials;
 
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) throw new BadRequestException('Wrong credentials');

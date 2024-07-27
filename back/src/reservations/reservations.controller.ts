@@ -11,20 +11,26 @@ import {
 import { ReservationsService } from './reservations.service';
 import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
 
-@Controller('Reservations')
+@Controller('reservations')
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 
   //* Rutas GET
+  //solo admin
 
   @Get()
+  // @Roles(Role.Admin)
+  // @UseGuards(AuthGuard, RolesGuard)
   getReservations() {
     return this.reservationsService.getReservations();
   }
 
-  @Get('/:id')
-  getOfficeById(@Param('id') id: string) {
-    return this.reservationsService.getOfficeById(id);
+  //* ruta para que un user loggeado vea sus reservaciones
+  // @Roles(Role.User)
+  // @UseGuards(AuthGuard, RolesGuard)
+  @Get('/user/:id/reservations')
+  getReservationsByUserId(@Param('id') id: string) {
+    return this.reservationsService.getReservationsByUserId(id);
   }
 
   //TODO getOfficeByLocation

@@ -26,7 +26,7 @@ export class FileUploadService {
     }
 
     const updatedUser = await this.userRepository.update(userId, {
-      imgUrl: response.secure_url,
+      img_url: response.secure_url,
     });
 
     return updatedUser;
@@ -48,5 +48,4 @@ export class FileUploadService {
 
     return updatedOffice;
   }
-
 }

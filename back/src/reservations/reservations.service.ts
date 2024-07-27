@@ -14,8 +14,8 @@ export class ReservationsService {
     return this.reservationsRepository.getReservations();
   }
 
-  async getOfficeById(id: string) {
-    return this.reservationsRepository.getOfficeById(id);
+  async getReservationsByUserId(id: string) {
+    return this.reservationsRepository.getReservationsByUserId(id);
   }
 
   //* Rutas POST

@@ -19,10 +19,10 @@ export class User {
   @Column({ type: 'varchar', length: 128, nullable: false })
   password: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int' }) //!Revisar Renata. Creo que habíamos acordado que este era obligatorio
   phone: number;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   country: string;
 
   @Column({ type: 'varchar', length: 50 })
@@ -38,9 +38,9 @@ export class User {
   })
   role: UserRole;
 
-  @Column({ type: 'text'})
+  @Column({ type: 'text' })
   img_url: string;
-  
+
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }
