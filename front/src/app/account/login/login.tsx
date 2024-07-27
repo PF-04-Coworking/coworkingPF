@@ -18,10 +18,8 @@ import { Highlight } from "@/components/ui/highlight";
 import { ChevronLeft, QuoteIcon, Star } from "lucide-react";
 //images
 import memoji from "../../../../public/memoji.png";
-import fondo from "../../../../public/Fondo.png";
+import fondo from "../../../../public/fondo-2.png";
 import Image from "next/image";
-
-
 
 const Login = () => {
   const router = useRouter();
