@@ -25,10 +25,10 @@ export class User {
   @Column({ type: 'varchar', length: 50, nullable: true })
   country: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   city: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   age: number;
 
   @Column({
@@ -38,7 +38,7 @@ export class User {
   })
   role: UserRole;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   img_url: string;
 
   @OneToMany(() => Reservation, (reservation) => reservation.user)

@@ -31,7 +31,10 @@ export class UserController {
   }
 
   @Put(':id')
-  updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: UpdateUserDto) {
+  updateUser(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() user: UpdateUserDto,
+  ) {
     return this.userService.updateUser(id, user);
   }
 
@@ -41,6 +44,7 @@ export class UserController {
   }
   @Post('login')
   login(@Body() credentials: LoginUserDto) {
+    //{ email: 'prueba2@mail.com', password: '123' }
     return this.userService.login(credentials);
   }
 }
