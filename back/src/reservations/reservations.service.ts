@@ -14,13 +14,13 @@ export class ReservationsService {
     return this.reservationsRepository.getReservations();
   }
 
-  async getOfficeById(id: string) {
-    return this.reservationsRepository.getOfficeById(id);
+  async getReservationsByUserId(id: string) {
+    return this.reservationsRepository.getReservationsByUserId(id);
   }
 
   //* Rutas POST
 
-  async addNewReservation(data: AddNewReservationDto) {
+  async addNewReservation(id: string, data: AddNewReservationDto) {
     const newReservation = this.reservationsRepository.addNewReservation(data);
 
     return newReservation;

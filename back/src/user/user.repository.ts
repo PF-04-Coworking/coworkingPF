@@ -26,7 +26,7 @@ export class UserRepository {
   async getuserById(id: string) {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: { reservations: true },
+      relations: ['reservations'],
     });
 
     if (!user) {
@@ -95,10 +95,15 @@ export class UserRepository {
     const { email, password } = credentials;
 
     const user = await this.userRepository.findOne({ where: { email } });
-    if (!user) throw new BadRequestException('Wrong credentials');
+    if (!user) {
+      throw new BadRequestException('Wrong credentials');
+    }
 
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) throw new BadRequestException('Wrong credentials');
+    if (!validPassword) {
+      throw new BadRequestException('Wrong credentials');
+    }
+
     const payload = {
       sub: user.id,
       id: user.id,

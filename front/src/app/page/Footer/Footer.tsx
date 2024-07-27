@@ -27,7 +27,7 @@ const Footer = () => {
         {socials.map((social, index) => (
           <div
             key={index}
-            className="flex items-center gap-x-3 text-sm text-primary bg-primary bg-opacity-25 rounded-full p-2"
+            className="flex items-center gap-x-3 text-sm text-primary bg-primary bg-opacity-25 hover:bg-opacity-50 transition-colors rounded-full p-2 cursor-pointer"
           >
             {social.icon}
           </div>

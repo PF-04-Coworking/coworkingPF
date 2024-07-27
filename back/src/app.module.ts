@@ -8,38 +8,46 @@ import { Reservation } from './entities/Reservations.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { typeOrmConfig } from './Config/typeorm';
 import { OfficeModule } from './offices/offices.module';
-import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
-import { UserService } from './user/user.service';
-import { UserRepository } from './user/user.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { ReservationsModule } from './reservations/reservations.module';
-import { config as dotenvConfig } from 'dotenv';
-dotenvConfig({ path: '.development.env' });
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeOrmConfig],
+      envFilePath: '.development.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (ConfigService: ConfigService) =>
-        ConfigService.get('typeorm'),
+      useFactory: (configService: ConfigService) => {
+        return configService.get('typeorm');
+      },
     }),
     TypeOrmModule.forFeature([User, Office, Reservation]),
-    JwtModule.register({
-      global: true,
-      secret: process.env.JWT_SECRET || 'fallback_secret',
-      signOptions: { expiresIn: '60m' },
-    }),
-    ReservationsModule,
     OfficeModule,
+    ReservationsModule,
     UserModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        const jwtSecret = configService.get<string>('JWT_SECRET');
+
+        return {
+          secret: jwtSecret,
+          signOptions: { expiresIn: '1h' },
+        };
+      },
+    }),
+    FileUploadModule
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, UserService, UserRepository],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {}
+}

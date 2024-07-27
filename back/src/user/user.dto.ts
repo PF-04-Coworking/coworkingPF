@@ -10,7 +10,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { UserRole } from 'src/entities/user-role.enum';
+import { UserRole } from './user-role.enum';
 
 export class CreateUserDto {
   @IsOptional()

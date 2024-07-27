@@ -10,21 +10,20 @@ import {
 } from '@nestjs/common';
 import { ReservationsService } from './reservations.service';
 import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
+import { Roles } from 'src/auth/guards/roles.decorator';
 
-@Controller('Reservations')
+@Controller('reservations')
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 
   //* Rutas GET
+  //solo admin
 
   @Get()
+  // @Roles(Role.Admin)
+  // @UseGuards(AuthGuard, RolesGuard)
   getReservations() {
     return this.reservationsService.getReservations();
-  }
-
-  @Get('/:id')
-  getOfficeById(@Param('id') id: string) {
-    return this.reservationsService.getOfficeById(id);
   }
 
   //TODO getOfficeByLocation
@@ -32,13 +31,12 @@ export class ReservationsController {
   //* Rutas POST
 
   //TODO agregar AUTH
-  //! Solo con rol de Admin
-  @Post()
-  addNewReservation(@Body() data: AddNewReservationDto) {
-    const newReservation = this.reservationsService.addNewReservation(data);
+  // @Post('/new')
+  // addNewReservation(@Body() data: AddNewReservationDto) {
+  //   const newReservation = this.reservationsService.addNewReservation(data);
 
-    return newReservation;
-  }
+  //   return newReservation;
+  // }
 
   //* Rutas PUT
 

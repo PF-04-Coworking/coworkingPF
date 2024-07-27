@@ -4,11 +4,32 @@ import { User } from 'src/entities/Users.entity';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ReservationsService } from 'src/reservations/reservations.service';
+import { ReservationsRepository } from 'src/reservations/reservations.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), JwtModule],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: '60m' },
+      }),
+      inject: [ConfigService],
+    }),
+  ],
   controllers: [UserController],
-  providers: [UserService, UserRepository, JwtService],
+  providers: [
+    UserService,
+    UserRepository,
+    ReservationsService,
+    ReservationsRepository,
+  ],
 })
 export class UserModule {}

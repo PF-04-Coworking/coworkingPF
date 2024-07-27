@@ -57,12 +57,15 @@ export class ReservationsRepository {
     return mockReservations;
   }
 
-  async getOfficeById(id: string) {
+  async getReservationsByUserId(id: string) {
     // Usa el método find para buscar la oficina por id
-    const office = mockReservations.find((office) => office.id === id);
-    if (!office) throw new BadRequestException('Oficina no existe');
+    const reservationsByUserId = mockReservations.filter(
+      (reservation) => reservation.user_id === id,
+    );
+    if (!reservationsByUserId)
+      throw new BadRequestException('Usuario no tiene reservaciones');
 
-    return office;
+    return reservationsByUserId;
   }
 
   //* Rutas POST
