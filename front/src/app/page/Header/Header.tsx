@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { CustomLink } from "../../../components/ui/custom-link";
 import { TextLogo } from "../../../components/ui/text-logo";
 import { Sidebar } from "../Sidebar/Sidebar";
+import Link from "next/link";
 
 const links = [
   { name: "Inicio", href: "/" },
@@ -26,8 +27,12 @@ const Header = () => {
           ))}
         </nav>
         <div className="ml-auto hidden lg:flex gap-x-4">
-          <Button variant="outline">Iniciar Sesión</Button>
-          <Button variant="primary">Registrarse</Button>
+          <Button variant="outline">
+            <Link href="/account/login">Iniciar Sesión</Link>
+          </Button>
+          <Button variant="primary">
+            <Link href="/account/register">Registrarse</Link>
+          </Button>
         </div>
 
         <Sidebar />
