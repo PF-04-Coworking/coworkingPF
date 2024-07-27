@@ -27,7 +27,6 @@ import { ReservationsModule } from './reservations/reservations.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        console.log('TypeORM config:', configService.get('typeorm'));
         return configService.get('typeorm');
       },
     }),
@@ -41,7 +40,7 @@ import { ReservationsModule } from './reservations/reservations.module';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         const jwtSecret = configService.get<string>('JWT_SECRET');
-        console.log('JWT secret in JwtModule:', jwtSecret);
+
         return {
           secret: jwtSecret,
           signOptions: { expiresIn: '1h' },

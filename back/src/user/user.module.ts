@@ -6,6 +6,8 @@ import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ReservationsService } from 'src/reservations/reservations.service';
+import { ReservationsRepository } from 'src/reservations/reservations.repository';
 
 @Module({
   imports: [
@@ -23,6 +25,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [UserController],
-  providers: [UserService, UserRepository],
+  providers: [
+    UserService,
+    UserRepository,
+    ReservationsService,
+    ReservationsRepository,
+  ],
 })
 export class UserModule {}

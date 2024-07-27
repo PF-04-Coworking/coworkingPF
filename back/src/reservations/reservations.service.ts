@@ -20,7 +20,7 @@ export class ReservationsService {
 
   //* Rutas POST
 
-  async addNewReservation(data: AddNewReservationDto) {
+  async addNewReservation(id: string, data: AddNewReservationDto) {
     const newReservation = this.reservationsRepository.addNewReservation(data);
 
     return newReservation;
