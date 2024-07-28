@@ -1,6 +1,6 @@
-import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { OfficeService } from 'src/offices/offices.service';
-import { CreateOfficesDto } from './offices.dto';
+import { CreateOfficesDto, UpdateOfficeDto } from './offices.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('offices')
@@ -25,5 +25,10 @@ export class OfficeController {
   @Post()
   createOffice(@Body() office: CreateOfficesDto){
     return this.officeService.addNewOffice(office);
+  }
+
+  @Put(':id')
+  updateOffices(@Param('id') id: string, @Body() office: UpdateOfficeDto){
+    return this.officeService.updateOffice(office, id);
   }
 }

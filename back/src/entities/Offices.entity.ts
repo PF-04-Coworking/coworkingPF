@@ -21,6 +21,9 @@ export class Office {
   @Column()
   stock: number;
 
+  @Column()
+  price: number;
+
   @Column({nullable:true})
   imgUrl: string;
 

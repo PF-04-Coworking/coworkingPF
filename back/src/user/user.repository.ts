@@ -55,7 +55,9 @@ export class UserRepository {
     }
     await this.userRepository.update(id, user);
 
-    return user;
+    const dbUser= await this.userRepository.findOneBy({email: foundUser.email})
+
+    return dbUser;
   }
 
   async deleteById(id: string) {
