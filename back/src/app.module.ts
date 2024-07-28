@@ -8,13 +8,10 @@ import { Reservation } from './entities/Reservations.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { typeOrmConfig } from './Config/typeorm';
 import { OfficeModule } from './offices/offices.module';
-import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
-import { UserService } from './user/user.service';
-import { UserRepository } from './user/user.repository';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { ReservationsModule } from './reservations/reservations.module';
-// import { AuthModule } from './auth/auth.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -34,7 +31,6 @@ import { ReservationsModule } from './reservations/reservations.module';
     OfficeModule,
     ReservationsModule,
     UserModule,
-    // AuthModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -47,6 +43,7 @@ import { ReservationsModule } from './reservations/reservations.module';
         };
       },
     }),
+    FileUploadModule
   ],
   controllers: [AppController],
   providers: [AppService],

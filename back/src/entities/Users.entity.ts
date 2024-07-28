@@ -13,13 +13,13 @@ export class User {
   @Column({ type: 'varchar', length: 50, nullable: false })
   lastname: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: false})
   email: string;
 
   @Column({ type: 'varchar', length: 128, nullable: false })
   password: string;
 
-  @Column({ type: 'int' }) //!Revisar Renata. Creo que habíamos acordado que este era obligatorio
+  @Column({ type: 'int', nullable:false})
   phone: number;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
@@ -38,7 +38,7 @@ export class User {
   })
   role: UserRole;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'text', nullable: true, default:'https://i.postimg.cc/yxJm8gJT/default-User.png'})
   imgUrl: string;
 
   @OneToMany(() => Reservation, (reservation) => reservation.user)
