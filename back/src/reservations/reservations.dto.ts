@@ -5,7 +5,9 @@ export class AddNewReservationDto {
 
   time: string;
 
-  priceDay: number;
+  duration?: number; // Campo opcional
+
+  price_per_day: number;
 
   guests: number;
 

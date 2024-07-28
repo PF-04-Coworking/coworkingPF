@@ -10,7 +10,7 @@ const config = {
   ssl: { rejectUnauthorized: false },
   logging: false,
   synchronize: true,
-  dropSchema: true,
+  dropSchema: false,
 };
 
 export const typeOrmConfig = registerAs('typeorm', () => config);
