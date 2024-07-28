@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "buffer-to-stream": "^1.0.0",
+    "cloudinary": "^2.3.1"
+  }
+}
