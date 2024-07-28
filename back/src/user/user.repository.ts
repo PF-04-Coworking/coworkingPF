@@ -84,9 +84,9 @@ export class UserRepository {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await this.createUser({...user,password: hashedPassword});
+    await this.createUser({ ...user, password: hashedPassword });
 
-    const { password:_ , ...userNoPassword } = user;
+    const { password: _, ...userNoPassword } = user;
 
     return userNoPassword;
   }
@@ -111,17 +111,8 @@ export class UserRepository {
       role: user.role,
     };
 
-    try {
-      const token = this.jwtService.sign(payload);
-      const { password: _, ...userNoPassword } = user;
-      return {
-        message: `Successfully signed in. Welcome ${user.name}`,
-        token,
-        userNoPassword,
-      };
-    } catch (error) {
-      console.error('Error signing JWT:', error);
-      throw new BadRequestException('Error signing JWT');
-    }
+    const token = this.jwtService.sign(payload);
+
+    return { message: `Successfully signed in. Welcome ${user.name}`, token };
   }
 }

@@ -31,23 +31,16 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     OfficeModule,
     ReservationsModule,
     UserModule,
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
-        const jwtSecret = configService.get<string>('JWT_SECRET');
-
-        return {
-          secret: jwtSecret,
-          signOptions: { expiresIn: '1h' },
-        };
-      },
+    ReservationsModule,
+    FileUploadModule,
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60m' },
     }),
-    FileUploadModule
+    FileUploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  constructor() {}
-}
+export class AppModule {}
