@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Office } from 'src/entities/Offices.entity';
 import * as data from '../utils/data.json';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateOfficesDto } from './offices.dto';
 
 @Injectable()
 export class OfficeRepository {
@@ -45,5 +46,20 @@ export class OfficeRepository {
     const office = await this.officeRepository.findOneBy({ id });
     if (!office) throw new Error('Office not found');
     return office;
+  }
+
+  async addNewOffice(office: CreateOfficesDto) {
+
+    const tempOffice = office;
+
+    const foundOffice = await this.officeRepository.findOneBy({ location: tempOffice.location });
+
+    if(foundOffice) return new BadRequestException(`Office with name ${foundOffice.name} and location ${foundOffice.location} already exist`);
+
+    const newOffice = await this.officeRepository.save(office)
+
+    const dbOffcie = await this.officeRepository.findOneBy({id: newOffice.id})
+
+    return dbOffcie;
   }
 }

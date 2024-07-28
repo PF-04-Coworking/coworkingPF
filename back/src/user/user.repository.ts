@@ -78,12 +78,17 @@ export class UserRepository {
       throw new BadRequestException(
         `Email ${email} is already a registered account`,
       );
+
+    if (!password) {
+      throw new BadRequestException('Password is required');
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    return await this.createUser({
-      ...user,
-      password: hashedPassword,
-    });
+    await this.createUser({ ...user, password: hashedPassword });
+
+    const { password: _, ...userNoPassword } = user;
+
+    return userNoPassword;
   }
 
   async login(credentials: LoginUserDto) {

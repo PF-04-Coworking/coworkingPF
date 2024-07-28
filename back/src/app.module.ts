@@ -38,6 +38,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '60m' },
     }),
+    FileUploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

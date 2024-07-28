@@ -69,10 +69,7 @@ export class UserController {
 
   //*PUT
   @Put(':id')
-  updateUser(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() user: UpdateUserDto,
-  ) {
+  updateUser(@Param('id', ParseUUIDPipe) id: string,@Body() user: UpdateUserDto) {
     return this.userService.updateUser(id, user);
   }
 
@@ -81,6 +78,7 @@ export class UserController {
   register(@Body() user: CreateUserDto) {
     return this.userService.register(user);
   }
+
   @Post('login')
   login(@Body() credentials: LoginUserDto) {
     //{ email: 'prueba2@mail.com', password: '123' }

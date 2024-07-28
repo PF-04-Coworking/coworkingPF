@@ -1,7 +1,6 @@
 import {
   Controller,
   FileTypeValidator,
-  Injectable,
   MaxFileSizeValidator,
   Param,
   ParseFilePipe,
@@ -11,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { FileUploadService } from './file-upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Office } from 'src/entities/Offices.entity';
 
 @Controller('files')
 export class FileUploadController {
@@ -58,6 +56,6 @@ export class FileUploadController {
     )
     file: Express.Multer.File,
   ) {
-    return this.fileUploadRepository.uploadUserImage(file, officeId);
+    return this.fileUploadRepository.uploadOfficeImage(file, officeId);
   }
 }
