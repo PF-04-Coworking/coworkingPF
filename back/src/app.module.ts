@@ -14,6 +14,7 @@ import { UserService } from './user/user.service';
 import { UserRepository } from './user/user.repository';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ReservationsModule } from './reservations/reservations.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
 // import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -34,23 +35,28 @@ import { ReservationsModule } from './reservations/reservations.module';
     OfficeModule,
     ReservationsModule,
     UserModule,
-    // AuthModule,
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
-        const jwtSecret = configService.get<string>('JWT_SECRET');
-
-        return {
-          secret: jwtSecret,
-          signOptions: { expiresIn: '1h' },
-        };
-      },
+    ReservationsModule,
+    FileUploadModule,
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60m' },
     }),
+    // AuthModule,
+    // JwtModule.registerAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory: async (configService: ConfigService) => {
+    //     const jwtSecret = configService.get<string>('JWT_SECRET');
+
+    //     return {
+    //       secret: jwtSecret,
+    //       signOptions: { expiresIn: '1h' },
+    //     };
+    //   },
+    // }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  constructor() {}
-}
+export class AppModule {}

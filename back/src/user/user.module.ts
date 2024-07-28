@@ -8,20 +8,15 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ReservationsService } from 'src/reservations/reservations.service';
 import { ReservationsRepository } from 'src/reservations/reservations.repository';
+import { Reservation } from 'src/entities/Reservations.entity';
+import { OfficeRepository } from 'src/offices/offices.repository';
+import { Office } from 'src/entities/Offices.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Reservation, Office]),
     ConfigModule.forRoot({
       isGlobal: true,
-    }),
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '60m' },
-      }),
-      inject: [ConfigService],
     }),
   ],
   controllers: [UserController],
