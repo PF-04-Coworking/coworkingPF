@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "@/../public/logo.png";
+import logo from "@/../public/images/logo.png";
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLImageElement> {
   className?: string;

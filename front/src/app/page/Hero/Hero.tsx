@@ -1,6 +1,6 @@
 import { Heading } from "@/components/ui/heading";
 import { Paragraph } from "../../../components/ui/paragraph";
-import officeImage from "@/../public/office-1.png";
+import officeImage from "@/../public/images/office-1.png";
 import "./Hero.css";
 import Image from "next/image";
 import { Check, Clock, Lock } from "lucide-react";

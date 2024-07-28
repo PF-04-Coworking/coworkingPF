@@ -3,7 +3,7 @@ import { Highlight } from "../../../components/ui/highlight";
 import { Logo } from "../../../components/ui/logo";
 import { Paragraph } from "../../../components/ui/paragraph";
 import Image from "next/image";
-import officeImage from "@/../public/office-2.png";
+import officeImage from "@/../public/images/office-2.png";
 import { Button } from "../../../components/ui/button";
 import { Badge } from "../../../components/ui/badge";
 import { UsersRound } from "lucide-react";

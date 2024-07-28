@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { CustomLink } from "../../../components/ui/custom-link";
 import { TextLogo } from "../../../components/ui/text-logo";
-import { Sidebar } from "../Sidebar/Sidebar";
+import { Sidebar } from "../MobileMenu/MobileMenu";
 import Link from "next/link";
 
 const links = [

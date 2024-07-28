@@ -1,17 +1,33 @@
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
-import { CustomLink } from "../../../components/ui/custom-link";
-import { TextLogo } from "../../../components/ui/text-logo";
-import "./Sidebar.css";
+import {
+  BuildingIcon,
+  CalendarCheck2Icon,
+  CircleUserRoundIcon,
+  Menu,
+} from "lucide-react";
+import { CustomLink } from "@/components/ui/custom-link";
+import { TextLogo } from "@/components/ui/text-logo";
+import "./MobileMenu.css";
 
 const links = [
-  { name: "Inicio", href: "/" },
-  { name: "Servicios", href: "#" },
-  { name: "Sobre Nosotros", href: "#" },
-  { name: "Contacto", href: "#" },
+  {
+    name: "Mi cuenta",
+    href: "/dashboard/account",
+    icon: <CircleUserRoundIcon size={20} />,
+  },
+  {
+    name: "Gestionar oficinas",
+    href: "#",
+    icon: <BuildingIcon size={20} />,
+  },
+  {
+    name: "Gestionar reservas",
+    href: "#",
+    icon: <CalendarCheck2Icon size={20} />,
+  },
 ];
 
-const Sidebar = () => {
+const MobileMenu = () => {
   return (
     <Sheet>
       <SheetTrigger asChild className="lg:hidden">
@@ -21,7 +37,7 @@ const Sidebar = () => {
         </div>
       </SheetTrigger>
       <SheetContent
-        side="right"
+        side="left"
         className="bg-background text-white sheet-content border-background"
       >
         <CustomLink
@@ -36,9 +52,10 @@ const Sidebar = () => {
             <CustomLink
               key={link.name}
               href={link.href}
-              className="p-2.5 hover:bg-secondaryDark rounded-md transition"
+              className="p-2.5 hover:bg-secondaryDark rounded-md transition flex gap-x-3"
               prefetch={false}
             >
+              {link.icon}
               {link.name}
             </CustomLink>
           ))}
@@ -48,4 +65,4 @@ const Sidebar = () => {
   );
 };
 
-export { Sidebar };
+export { MobileMenu };
