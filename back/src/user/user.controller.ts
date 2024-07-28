@@ -16,7 +16,6 @@ import { UserRole } from './user-role.enum';
 import { Roles } from 'src/auth/guards/roles.decorator';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Controller('user')
 export class UserController {
