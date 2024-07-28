@@ -9,7 +9,7 @@ const config = {
   entities: ['dist/entities/*.entity{.ts,.js}'],
   ssl: { rejectUnauthorized: false },
   logging: false,
-  synchronize: true,
+  synchronize: false,
   dropSchema: false,
 };
 

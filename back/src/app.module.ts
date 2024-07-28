@@ -29,6 +29,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     }),
     TypeOrmModule.forFeature([User, Office, Reservation]),
     OfficeModule,
+    FileUploadModule,
     ReservationsModule,
     UserModule,
     ReservationsModule,
