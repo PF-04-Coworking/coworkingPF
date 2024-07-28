@@ -8,10 +8,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ReservationsService } from './reservations.service';
 import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
 import { Roles } from 'src/auth/guards/roles.decorator';
 
+@ApiTags('reservations')
 @Controller('reservations')
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
@@ -20,6 +22,7 @@ export class ReservationsController {
   //solo admin
 
   @Get()
+  @ApiOperation({ summary: 'Get all reservations' })
   // @Roles(Role.Admin)
   // @UseGuards(AuthGuard, RolesGuard)
   getReservations() {
@@ -43,6 +46,7 @@ export class ReservationsController {
   //TODO agregar AUTH
   //! con rol de usuario
   @Put('/:id')
+  @ApiOperation({ summary: 'Update an existing reservation' })
   updateReservation(
     @Body() updateReservationDto: UpdateReservationDto,
     @Param('id') id: string,
@@ -63,7 +67,9 @@ export class ReservationsController {
 
   //* Rutas DELETE
   @Delete('/:id')
+  @ApiOperation({ summary: 'Delete a reservation by ID' })
   deleteReservation(@Param('id') id: string) {
     return this.reservationsService.deleteReservation(id);
   }
 }
+

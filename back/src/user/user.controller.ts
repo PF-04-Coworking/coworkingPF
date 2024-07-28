@@ -8,6 +8,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto, LoginUserDto, UpdateUserDto } from './user.dto';
 import { ReservationsService } from 'src/reservations/reservations.service';
@@ -18,6 +19,7 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(
@@ -29,6 +31,7 @@ export class UserController {
 
   //!solo admin
   @Get('all')
+  @ApiOperation({ summary: 'Get all users (Admin only)' })
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   getUsers() {
@@ -36,6 +39,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get user by ID' })
   getUserById(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.getUserById(id);
   }
@@ -44,6 +48,7 @@ export class UserController {
   @Roles(UserRole.USER)
   @UseGuards(AuthGuard, RolesGuard)
   @Get(':id/reservations')
+  @ApiOperation({ summary: 'Get reservations by user ID (User only)' })
   getReservationsByUserId(@Param('id') id: string) {
     return this.reservationsService.getReservationsByUserId(id);
   }
@@ -52,6 +57,7 @@ export class UserController {
   @Roles(UserRole.USER)
   @UseGuards(AuthGuard, RolesGuard)
   @Post(':id/reservations/new')
+  @ApiOperation({ summary: 'Add a new reservation (User only)' })
   addNewReservation(
     @Param('id') id: string,
     @Body() data: AddNewReservationDto,
@@ -63,23 +69,27 @@ export class UserController {
 
   //*POST
   @Post()
+  @ApiOperation({ summary: 'Create a new user' })
   createUser(@Body() user: CreateUserDto) {
     return this.userService.createUser(user);
   }
 
   //*PUT
   @Put(':id')
+  @ApiOperation({ summary: 'Update user by ID' })
   updateUser(@Param('id', ParseUUIDPipe) id: string,@Body() user: UpdateUserDto) {
     return this.userService.updateUser(id, user);
   }
 
   //*LOGIN Y REGISTER
   @Post('register')
+  @ApiOperation({ summary: 'Register a new user' })
   register(@Body() user: CreateUserDto) {
     return this.userService.register(user);
   }
 
   @Post('login')
+  @ApiOperation({ summary: 'Login a user' })
   login(@Body() credentials: LoginUserDto) {
     //{ email: 'prueba2@mail.com', password: '123' }
     return this.userService.login(credentials);
