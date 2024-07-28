@@ -10,13 +10,14 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
   .setTitle('Coworking API')
-  .setDescription('API documentation for the Coworking project')
+  .setDescription('API documentation for Coworking ')
   .setVersion('1.0')
   .addBearerAuth()
   .build();
 const document = SwaggerModule.createDocument(app, config);
 SwaggerModule.setup('api', app, document);
 
+  // app.use(LoggerGlobalMiddleware);
   await app.listen(3000);
   console.log('Server listening on http://localhost:3000');
 }

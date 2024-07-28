@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Reservation } from './Reservations.entity';
-import { UserRole } from './user-role.enum';
+import { UserRole } from '../user/user-role.enum';
 
 @Entity('users')
 export class User {
@@ -13,22 +13,22 @@ export class User {
   @Column({ type: 'varchar', length: 50, nullable: false })
   lastname: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: false})
   email: string;
 
   @Column({ type: 'varchar', length: 128, nullable: false })
   password: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable:false})
   phone: number;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   country: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   city: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   age: number;
 
   @Column({
@@ -38,9 +38,9 @@ export class User {
   })
   role: UserRole;
 
-  @Column({ type: 'text'})
-  img_url: string;
-  
+  @Column({ type: 'text', nullable: true, default:'https://i.postimg.cc/yxJm8gJT/default-User.png'})
+  imgUrl: string;
+
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }

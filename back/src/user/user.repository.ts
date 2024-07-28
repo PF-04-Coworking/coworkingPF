@@ -26,7 +26,7 @@ export class UserRepository {
   async getuserById(id: string) {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: { reservations: true },
+      relations: ['reservations'],
     });
 
     if (!user) {
@@ -78,28 +78,39 @@ export class UserRepository {
       throw new BadRequestException(
         `Email ${email} is already a registered account`,
       );
+
+    if (!password) {
+      throw new BadRequestException('Password is required');
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    return await this.createUser({
-      ...user,
-      password: hashedPassword,
-    });
+    await this.createUser({ ...user, password: hashedPassword });
+
+    const { password: _, ...userNoPassword } = user;
+
+    return userNoPassword;
   }
 
   async login(credentials: LoginUserDto) {
-    const {email, password} = credentials;
+    const { email, password } = credentials;
 
     const user = await this.userRepository.findOne({ where: { email } });
-    if (!user) throw new BadRequestException('Wrong credentials');
+    if (!user) {
+      throw new BadRequestException('Wrong credentials');
+    }
 
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) throw new BadRequestException('Wrong credentials');
+    if (!validPassword) {
+      throw new BadRequestException('Wrong credentials');
+    }
+
     const payload = {
       sub: user.id,
       id: user.id,
       email: user.email,
       role: user.role,
     };
+
     const token = this.jwtService.sign(payload);
 
     return { message: `Successfully signed in. Welcome ${user.name}`, token };

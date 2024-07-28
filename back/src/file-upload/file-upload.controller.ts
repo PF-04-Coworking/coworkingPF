@@ -1,7 +1,6 @@
 import {
   Controller,
   FileTypeValidator,
-  Injectable,
   MaxFileSizeValidator,
   Param,
   ParseFilePipe,
@@ -65,7 +64,7 @@ export class FileUploadController {
     )
     file: Express.Multer.File,
   ) {
-    return this.fileUploadRepository.uploadUserImage(file, officeId);
+    return this.fileUploadRepository.uploadOfficeImage(file, officeId);
   }
 }
 

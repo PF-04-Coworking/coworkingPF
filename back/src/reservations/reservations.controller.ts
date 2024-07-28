@@ -8,46 +8,38 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ReservationsService } from './reservations.service';
 import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
-import { Reservation } from 'src/entities/Reservations.entity';
+import { Roles } from 'src/auth/guards/roles.decorator';
 
-@ApiTags('Reservations')
-@Controller('Reservations')
+@ApiTags('reservations')
+@Controller('reservations')
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 
   //* Rutas GET
+  //solo admin
 
   @Get()
   @ApiOperation({ summary: 'Get all reservations' })
-  @ApiResponse({ status: 200, description: 'Return all reservations.', type: [Reservation] })
+  // @Roles(Role.Admin)
+  // @UseGuards(AuthGuard, RolesGuard)
   getReservations() {
     return this.reservationsService.getReservations();
   }
 
-  @Get('/:id')
-  @ApiOperation({ summary: 'Get reservation by ID' })
-  @ApiParam({ name: 'id', type: String, description: 'Reservation ID' })
-  @ApiResponse({ status: 200, description: 'Return reservation by ID.', type: Reservation })
-  getOfficeById(@Param('id') id: string) {
-    return this.reservationsService.getOfficeById(id);
-  }
+  //TODO getOfficeByLocation
 
   //* Rutas POST
 
   //TODO agregar AUTH
-  //! Solo con rol de Admin
-  @Post()
-  @ApiOperation({ summary: 'Add a new reservation' })
-  @ApiBody({ type: AddNewReservationDto })
-  @ApiResponse({ status: 201, description: 'The reservation has been successfully created.', type: Reservation })
-  addNewReservation(@Body() data: AddNewReservationDto) {
-    const newReservation = this.reservationsService.addNewReservation(data);
+  // @Post('/new')
+  // addNewReservation(@Body() data: AddNewReservationDto) {
+  //   const newReservation = this.reservationsService.addNewReservation(data);
 
-    return newReservation;
-  }
+  //   return newReservation;
+  // }
 
   //* Rutas PUT
 
@@ -55,9 +47,6 @@ export class ReservationsController {
   //! con rol de usuario
   @Put('/:id')
   @ApiOperation({ summary: 'Update an existing reservation' })
-  @ApiParam({ name: 'id', type: String, description: 'Reservation ID' })
-  @ApiBody({ type: UpdateReservationDto })
-  @ApiResponse({ status: 200, description: 'The reservation has been successfully updated.', type: Reservation })
   updateReservation(
     @Body() updateReservationDto: UpdateReservationDto,
     @Param('id') id: string,
@@ -78,9 +67,7 @@ export class ReservationsController {
 
   //* Rutas DELETE
   @Delete('/:id')
-  @ApiOperation({ summary: 'Delete a reservation' })
-  @ApiParam({ name: 'id', type: String, description: 'Reservation ID' })
-  @ApiResponse({ status: 200, description: 'The reservation has been successfully deleted.' })
+  @ApiOperation({ summary: 'Delete a reservation by ID' })
   deleteReservation(@Param('id') id: string) {
     return this.reservationsService.deleteReservation(id);
   }

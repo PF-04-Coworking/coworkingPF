@@ -26,7 +26,7 @@ export class FileUploadService {
     }
 
     const updatedUser = await this.userRepository.update(userId, {
-      img_url: response.secure_url,
+      imgUrl: response.secure_url,
     });
 
     return updatedUser;
@@ -49,4 +49,13 @@ export class FileUploadService {
     return updatedOffice;
   }
 
+  async uploadCreatedOffcieImage(file:Express.Multer.File){
+
+    const response = await this.fileUploadRepository.uploadImage(file);
+    if (!response.secure_url) {
+      throw new NotFoundException('File not uploaded');
+    }
+
+    return response.secure_url;
+  }
 }

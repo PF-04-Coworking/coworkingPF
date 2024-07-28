@@ -1,4 +1,4 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
+import { PickType, ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -10,27 +10,26 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { UserRole } from 'src/entities/user-role.enum';
+import { UserRole } from './user-role.enum';
 
 export class CreateUserDto {
   @IsOptional()
   @IsUUID()
-  @ApiProperty({ description: 'User ID', example: '123e4567-e89b-12d3-a456-426614174000' })
+  @ApiProperty({ description: 'User ID', required: false })
   id: string;
 
   @IsNotEmpty()
   @IsString()
   @MinLength(3)
   @MaxLength(80)
-  @ApiProperty({ description: 'User first name', example: 'John', minLength: 3, maxLength: 80 })
+  @ApiProperty({ description: 'User name', minLength: 3, maxLength: 80 })
   name: string;
 
-  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(80)
-  @ApiProperty({ description: 'User last name', example: 'Doe', minLength: 3, maxLength: 80 })
+  @ApiProperty({ description: 'User lastname', minLength: 3, maxLength: 80 })
   lastname: string;
 
   @IsEmail()
@@ -38,7 +37,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(50)
-  @ApiProperty({ description: 'User email', example: 'john.doe@example.com', minLength: 3, maxLength: 50 })
+  @ApiProperty({ description: 'User email', minLength: 3, maxLength: 50 })
   email: string;
 
   @IsStrongPassword()
@@ -47,39 +46,39 @@ export class CreateUserDto {
   @MinLength(8)
   @MaxLength(15)
   @ApiProperty({
-    description: 'User password. Must be at least 8 characters long and 15 max. Must have 1 uppercase letter, one number and one special character (?!@#$)',
-    example: 'Password1!',
+    description: 'User password',
     minLength: 8,
-    maxLength: 15
+    maxLength: 15,
+    example: 'NewPass2!',
   })
   password: string;
 
   @IsNotEmpty()
   @IsNumber()
-  @ApiProperty({ description: 'User phone number', example: 1234567890 })
+  @ApiProperty({ description: 'User phone number' })
   phone: number;
 
   @IsOptional()
   @IsString()
   @MinLength(4)
   @MaxLength(20)
-  @ApiProperty({ description: 'User country', example: 'USA', minLength: 4, maxLength: 20 })
+  @ApiProperty({ description: 'User country', minLength: 4, maxLength: 20, required: false })
   country: string;
 
   @IsOptional()
   @IsString()
   @MinLength(4)
   @MaxLength(20)
-  @ApiProperty({ description: 'User city', example: 'New York', minLength: 4, maxLength: 20 })
+  @ApiProperty({ description: 'User city', minLength: 4, maxLength: 20, required: false })
   city: string;
 
   @IsOptional()
   @IsNumber()
-  @ApiProperty({ description: 'User age', example: 30 })
+  @ApiProperty({ description: 'User age', required: false })
   age: number;
 
   @IsOptional()
-  //@ApiProperty({ description: 'User role', enum: UserRole, example: UserRole.ADMIN })
+  @ApiProperty({ description: 'User role', enum: UserRole, required: false })
   role: UserRole;
 }
 
@@ -88,14 +87,14 @@ export class UpdateUserDto {
   @IsString()
   @MinLength(3)
   @MaxLength(80)
-  @ApiProperty({ description: 'Updated user first name', example: 'John', minLength: 3, maxLength: 80 })
+  @ApiProperty({ description: 'User name', minLength: 3, maxLength: 80, required: false })
   name: string;
 
   @IsOptional()
   @IsString()
   @MinLength(3)
   @MaxLength(80)
-  @ApiProperty({ description: 'Updated user last name', example: 'Doe', minLength: 3, maxLength: 80 })
+  @ApiProperty({ description: 'User lastname', minLength: 3, maxLength: 80, required: false })
   lastname: string;
 
   @IsOptional()
@@ -104,38 +103,49 @@ export class UpdateUserDto {
   @MaxLength(15)
   @IsStrongPassword()
   @ApiProperty({
-    description: 'Updated user password. Must be at least 8 characters long and 15 max. Must have 1 uppercase letter, one number and one special character (?!@#$)',
+    description:
+      'Updated user password. Must be at least 8 characters long and 15 max. Must have 1 uppercase letter, one number and one special character (?!@#$)',
     example: 'NewPass2!',
-    minLength: 8,
-    maxLength: 15
+    required: false,
   })
   password: string;
 
   @IsOptional()
   @IsNumber()
-  @ApiProperty({ description: 'Updated user phone number', example: 1234567890 })
+  @ApiProperty({ description: 'User phone number', required: false })
   phone: number;
 
   @IsOptional()
   @MinLength(4)
   @MaxLength(20)
-  @ApiProperty({ description: 'Updated user country', example: 'USA', minLength: 4, maxLength: 20 })
+  @ApiProperty({ description: 'User country', minLength: 4, maxLength: 20, required: false })
   country: string;
 
   @IsOptional()
   @IsString()
   @MinLength(5)
   @MaxLength(20)
-  @ApiProperty({ description: 'Updated user city', example: 'New York', minLength: 5, maxLength: 20 })
+  @ApiProperty({ description: 'User city', minLength: 5, maxLength: 20, required: false })
   city: string;
 
   @IsOptional()
   @IsNumber()
-  @ApiProperty({ description: 'Updated user age', example: 30 })
+  @ApiProperty({ description: 'User age', required: false })
   age: number;
 }
 
 export class LoginUserDto extends PickType(CreateUserDto, [
   'email',
   'password',
-]) {}
+]) {
+  @ApiProperty({ description: 'User email', minLength: 3, maxLength: 50 })
+  email: string;
+
+  @ApiProperty({
+    description: 'User password',
+    minLength: 8,
+    maxLength: 15,
+    example: 'NewPass2!',
+  })
+  password: string;
+}

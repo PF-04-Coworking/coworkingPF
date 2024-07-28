@@ -1,80 +1,96 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
+import { UserRepository } from 'src/user/user.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Reservation } from 'src/entities/Reservations.entity';
+import { Repository } from 'typeorm';
+import { User } from 'src/entities/Users.entity';
+import { Office } from 'src/entities/Offices.entity'; // Importar la entidad Office
 
 const mockReservations = [
-  {
-    id: '1',
-    date: '2024-08-01',
-    time: '09:00',
-    priceDay: 100,
-    guests: 3,
-    office_id: '1',
-    user_id: '101',
-  },
-  {
-    id: '2',
-    date: '2024-08-02',
-    time: '10:00',
-    priceDay: 150,
-    guests: 5,
-    office_id: '2',
-    user_id: '102',
-  },
-  {
-    id: '3',
-    date: '2024-08-03',
-    time: '11:00',
-    priceDay: 80,
-    guests: 2,
-    office_id: '3',
-    user_id: '103',
-  },
-  {
-    id: '4',
-    date: '2024-08-04',
-    time: '12:00',
-    priceDay: 200,
-    guests: 10,
-    office_id: '4',
-    user_id: '104',
-  },
-  {
-    id: '5',
-    date: '2024-08-05',
-    time: '13:00',
-    priceDay: 120,
-    guests: 4,
-    office_id: '5',
-    user_id: '105',
-  },
+  // Mock data aquí
 ];
 
 @Injectable()
 export class ReservationsRepository {
-  //* Rutas GET
+  constructor(
+    @InjectRepository(Reservation)
+    private readonly reservationRepository: Repository<Reservation>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(Office) // Inyectar el repositorio de Office
+    private readonly officeRepository: Repository<Office>,
+  ) {}
 
+  // Rutas GET
   async getReservations() {
-    return mockReservations;
+    return this.reservationRepository.find();
   }
 
-  async getOfficeById(id: string) {
-    // Usa el método find para buscar la oficina por id
-    const office = mockReservations.find((office) => office.id === id);
-    if (!office) throw new BadRequestException('Oficina no existe');
+  async getReservationsByUserId(id: string) {
+    const reservationsByUserId = mockReservations.filter(
+      (reservation) => reservation.user_id === id,
+    );
+    if (!reservationsByUserId)
+      throw new BadRequestException('Usuario no tiene reservaciones');
 
-    return office;
+    return reservationsByUserId;
   }
 
-  //* Rutas POST
-
+  // Rutas POST
   async addNewReservation(data: AddNewReservationDto) {
-    const newReservation = mockReservations.push(data);
+    const foundUser = await this.userRepository.findOne({
+      where: { id: data.user_id },
+    });
 
-    return mockReservations;
+    if (!foundUser) {
+      throw new NotFoundException(
+        `Usuario con id ${data.user_id} no fue encontrado`,
+      );
+    }
+
+    const foundOffice = await this.officeRepository.findOne({
+      where: { id: data.office_id },
+    });
+
+    if (!foundOffice) {
+      throw new NotFoundException(
+        `Oficina con id ${data.office_id} no fue encontrada`,
+      );
+    }
+
+    const newReservation = this.reservationRepository.create({
+      date: new Date(data.date), // Asegúrate de convertir a Date si es necesario
+      time: data.time,
+      duration: data.duration,
+      price_per_day: data.price_per_day,
+      guests: data.guests,
+      user: foundUser,
+      office: foundOffice,
+    });
+
+    await this.reservationRepository.save(newReservation);
+
+    const response = {
+      message: 'Reserva realizada con éxito',
+      info: {
+        usuario: `${foundUser.name} ${foundUser.lastname}`,
+        role: foundUser.role,
+        office: foundOffice.name,
+        location: foundOffice.location,
+        description: foundOffice.description,
+        capacity: foundOffice.capacity,
+      },
+    };
+
+    return response;
   }
 
-  //* Rutas PUT
-
+  // Rutas PUT
   updateReservation(id: string, updateReservationDto: UpdateReservationDto) {
     const updateReservation = mockReservations.find(
       (reservation) => reservation.id === id,
@@ -83,13 +99,12 @@ export class ReservationsRepository {
     if (!updateReservation)
       throw new BadRequestException('Reservación no encontrada');
 
-    //TODO Actualizar reservation
+    // TODO: Actualizar reservation
 
     return updateReservation;
   }
 
-  //* Rutas DELETE
-
+  // Rutas DELETE
   deleteReservation(id) {
     const deleteReservation = mockReservations.find(
       (reservation) => reservation.id === id,
@@ -97,7 +112,7 @@ export class ReservationsRepository {
     if (!deleteReservation)
       throw new BadRequestException('Reservación no encontrada');
 
-    //TODO Actualizar reservation
+    // TODO: Actualizar reservation
 
     return deleteReservation;
   }

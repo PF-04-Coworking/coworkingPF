@@ -13,7 +13,7 @@ export class Reservation {
   @Column()
   time: string;
 
-  @Column()
+  @Column({ nullable: true })
   duration: number;
 
   @Column('decimal', { precision: 10, scale: 2 })
@@ -22,9 +22,9 @@ export class Reservation {
   @Column()
   guests: number;
 
-  @ManyToOne(() => User, user => user.reservations)
+  @ManyToOne(() => User, (user) => user.reservations)
   user: User;
 
-  @ManyToOne(() => Office, office => office.reservations)
+  @ManyToOne(() => Office, (office) => office.reservations)
   office: Office;
 }

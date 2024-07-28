@@ -8,11 +8,8 @@ import { Reservation } from './entities/Reservations.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { typeOrmConfig } from './Config/typeorm';
 import { OfficeModule } from './offices/offices.module';
-import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
-import { UserService } from './user/user.service';
-import { UserRepository } from './user/user.repository';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { ReservationsModule } from './reservations/reservations.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 
@@ -21,25 +18,30 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeOrmConfig],
+      envFilePath: '.development.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (ConfigService: ConfigService) =>
-        ConfigService.get('typeorm'),
+      useFactory: (configService: ConfigService) => {
+        return configService.get('typeorm');
+      },
     }),
     TypeOrmModule.forFeature([User, Office, Reservation]),
     OfficeModule,
     FileUploadModule,
     ReservationsModule,
     UserModule,
+    ReservationsModule,
+    FileUploadModule,
     JwtModule.register({
       global: true,
-      signOptions: { expiresIn: '1h' },
       secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60m' },
     }),
+    FileUploadModule,
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, UserService, UserRepository, JwtService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
