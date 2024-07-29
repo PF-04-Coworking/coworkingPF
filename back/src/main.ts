@@ -8,16 +8,23 @@ async function bootstrap() {
 
   app.use(LoggerGlobalMiddleware);
 
-  const config = new DocumentBuilder()
-  .setTitle('Coworking API')
-  .setDescription('API documentation for Coworking ')
-  .setVersion('1.0')
-  .addBearerAuth()
-  .build();
-const document = SwaggerModule.createDocument(app, config);
-SwaggerModule.setup('api', app, document);
+  // Configuración de CORS
+  app.enableCors({
+    origin: ['http://localhost:3000', 'http://yourfrontend.com'], // Ajusta esto según los dominios permitidos
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true, // Si necesitas enviar cookies o autenticación HTTP
+  });
 
-  // app.use(LoggerGlobalMiddleware);
+  const config = new DocumentBuilder()
+    .setTitle('Coworking API')
+    .setDescription('API documentation for Coworking ')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
   await app.listen(3000);
   console.log('Server listening on http://localhost:3000');
 }
