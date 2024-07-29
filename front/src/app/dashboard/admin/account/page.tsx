@@ -1,5 +1,3 @@
-import { Header } from "@/app/dashboard/_components/Header";
-import { Sidebar } from "@/app/dashboard/_components/Sidebar";
 import Image from "next/image";
 import faceImage from "@/../public/images/face-1.png";
 import { EditProfileForm } from "./_components/EditProfileForm";

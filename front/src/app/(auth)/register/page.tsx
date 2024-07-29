@@ -12,10 +12,10 @@ const Register = () => {
     <AuthLayout>
       <div className="w-full max-w-96 space-y-6">
         <div className="space-y-6">
-          <Heading level="2" className="!text-primary">
+          <Heading level="2" className="!text-primary text-center">
             ¡Regístrate!
           </Heading>
-          <Paragraph className="text-secondary" variant="secondary">
+          <Paragraph className="text-secondary text-center" variant="secondary">
             Estamos <Highlight>emocionados</Highlight> de que te unas a nuestra
             comunidad. ¡Gracias por <Highlight>elegirnos</Highlight> y ser parte
             de <Highlight>nuestra</Highlight> comunidad!

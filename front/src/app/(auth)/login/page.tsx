@@ -10,10 +10,10 @@ const Login = () => {
     <AuthLayout>
       <div className="w-full max-w-96 space-y-6">
         <div className="space-y-6">
-          <Heading level="2" className="!text-primary">
+          <Heading level="2" className="!text-primary text-center">
             ¡Bienvenido de nuevo!
           </Heading>
-          <Paragraph className="text-secondary" variant="secondary">
+          <Paragraph className="text-secondary text-center" variant="secondary">
             Nos alegra <Highlight>verte</Highlight> otra vez. Por favor,{" "}
             <Highlight>inicia sesión</Highlight> con tu correo electrónico y
             contraseña para

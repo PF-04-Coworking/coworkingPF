@@ -11,7 +11,7 @@ interface IProps {
 const DashboardLayout = ({ children, headerTitle, navLinks }: IProps) => {
   return (
     <div
-      className="bg-no-repeat bg-center bg-fixed"
+      className="bg-no-repeat bg-center bg-fixedv h-[80vh]" 
       style={{ backgroundImage: `url(/images/fondo-2.png)` }}
     >
       <div className="layout-admin flex gap-x-8">
