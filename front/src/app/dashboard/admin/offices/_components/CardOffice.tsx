@@ -11,7 +11,7 @@ import {
 } from "@/components/common/dialog";
 import { Button } from "@/components/common/Button";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Paragraph } from "@/components/common/Paragraph";
 import { Heading } from "@/components/common/Heading";
@@ -41,8 +41,6 @@ const CardOffice = ({ id, name, location, imgUrl }: IProps) => {
     setIsModalOpen(true);
   };
 
-  const router = useRouter();
-
   const handleEditOffice = async (
     values: IProps,
     { setSubmitting, resetForm }: FormikHelpers<IProps>
@@ -60,7 +58,6 @@ const CardOffice = ({ id, name, location, imgUrl }: IProps) => {
       resetForm({ values });
     } catch (error) {
       console.log(error);
-      toast.error("Error");
     } finally {
       setSubmitting(false);
     }

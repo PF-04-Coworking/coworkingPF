@@ -66,9 +66,6 @@ export class OfficeRepository {
         `Office with name ${foundOffice.name} and location ${foundOffice.location} already exist`,
       );
 
-    console.log('office');
-    console.log(office);
-
     const newOffice = await this.officeRepository.save(office);
 
     const dbOffcie = await this.officeRepository.findOneBy({

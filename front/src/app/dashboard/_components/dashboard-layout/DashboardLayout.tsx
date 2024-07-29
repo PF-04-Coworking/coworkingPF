@@ -1,8 +1,6 @@
 import { Header } from "@/app/dashboard/_components/Header";
 import { Sidebar } from "@/app/dashboard/_components/Sidebar";
 import { INavLink } from "../../types";
-import { ToastContainer } from "react-toastify";
-import "./DashboardLayout.css";
 
 interface IProps {
   children: React.ReactNode;
@@ -13,7 +11,7 @@ interface IProps {
 const DashboardLayout = ({ children, headerTitle, navLinks }: IProps) => {
   return (
     <div
-      className="bg-no-repeat bg-center bg-fixedv h-[80vh]" 
+      className="bg-no-repeat bg-center bg-fixedv h-[80vh]"
       style={{ backgroundImage: `url(/images/fondo-2.png)` }}
     >
       <div className="layout-admin flex gap-x-8">
@@ -25,18 +23,6 @@ const DashboardLayout = ({ children, headerTitle, navLinks }: IProps) => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
     </div>
   );
 };
