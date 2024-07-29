@@ -27,7 +27,7 @@ const Hero = () => {
         <Heading level="3" className="uppercase">
           Coworking
         </Heading>
-        <Heading level="1" className="uppercase text-gradient w-min">
+        <Heading level="1" className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem]">
           Relux
         </Heading>
         <Paragraph variant="primary">

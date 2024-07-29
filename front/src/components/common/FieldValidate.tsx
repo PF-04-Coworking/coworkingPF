@@ -9,7 +9,7 @@ const FieldValidate: React.FC<IProps> = ({ ...props }) => {
   return (
     <>
       <Field
-        className={`rounded-md py-2 px-3 mb-1 text-sm w-full bg-inherit text-white border focus:outline-none disabled:bg-secondaryDark disabled:text-secondary ${
+        className={`rounded-md py-3 px-3 mb-1 text-sm w-full bg-inherit text-white border focus:outline-none disabled:bg-secondaryDark disabled:text-secondary ${
           errors[name] && touched[name]
             ? "border-red-500"
             : touched[name]

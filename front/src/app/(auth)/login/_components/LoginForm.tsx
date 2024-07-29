@@ -43,8 +43,6 @@ const LoginForm = () => {
       }}
       validate={validateLogin}
       onSubmit={handleSubmitLogin}
-      validateOnChange={true}
-      validateOnBlur={true}
     >
       {({ isSubmitting }: any) => (
         <Form className="space-y-4">
@@ -63,6 +61,7 @@ const LoginForm = () => {
               name="password"
               type="password"
               placeholder="Contraseña"
+              disabled={isSubmitting}
             />
           </div>
 
@@ -73,7 +72,7 @@ const LoginForm = () => {
             <Button
               variant="outline"
               className="w-full"
-              onSubmit={isSubmitting}
+             
             >
               <GoogleIcon className="mr-2" />
               Iniciar sesión con Google
