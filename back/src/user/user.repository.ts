@@ -115,6 +115,8 @@ export class UserRepository {
 
     const token = this.jwtService.sign(payload);
 
-    return { message: `Successfully signed in. Welcome ${user.name}`, token };
+    const {password:_, ...userNoPassword} = user;
+
+    return { message: `Successfully signed in. Welcome ${user.name}`, token , userNoPassword };
   }
 }
