@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Param, Post, Query, UploadedFile, UseInterceptors, ParseUUIDPipe, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UploadedFile,
+  UseInterceptors,
+  ParseUUIDPipe,
+  Put,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { OfficeService } from 'src/offices/offices.service';
 import { CreateOfficesDto, UpdateOfficeDto } from './offices.dto';
@@ -34,7 +45,10 @@ export class OfficeController {
   }
 
   @Put(':id')
-  updateOffices(@Param('id', ParseUUIDPipe) id: string, @Body() office: UpdateOfficeDto){
+  updateOffices(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() office: UpdateOfficeDto,
+  ) {
     return this.officeService.updateOffice(office, id);
   }
 }
