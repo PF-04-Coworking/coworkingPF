@@ -8,7 +8,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto, LoginUserDto, UpdateUserDto } from './user.dto';
 import { ReservationsService } from 'src/reservations/reservations.service';
@@ -32,6 +32,7 @@ export class UserController {
   //!solo admin
   @Get('all')
   @ApiOperation({ summary: 'Get all users (Admin only)' })
+  @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   getUsers() {
@@ -77,7 +78,10 @@ export class UserController {
   //*PUT
   @Put(':id')
   @ApiOperation({ summary: 'Update user by ID' })
-  updateUser(@Param('id', ParseUUIDPipe) id: string,@Body() user: UpdateUserDto) {
+  updateUser(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() user: UpdateUserDto,
+  ) {
     return this.userService.updateUser(id, user);
   }
 
@@ -95,3 +99,4 @@ export class UserController {
     return this.userService.login(credentials);
   }
 }
+
