@@ -24,9 +24,10 @@ export class Office {
   @Column()
   price: number;
 
-  @Column({nullable:true})
+  @Column({ nullable: true })
   imgUrl: string;
 
   @OneToMany(() => Reservation, (reservation) => reservation.office)
   reservations: Reservation[];
 }
+
