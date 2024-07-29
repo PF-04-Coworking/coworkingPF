@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Office } from 'src/entities/Offices.entity';
 import * as data from '../utils/data.json';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateOfficesDto } from './offices.dto';
+import { CreateOfficesDto, UpdateOfficeDto } from './offices.dto';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class OfficeRepository {
@@ -61,5 +62,20 @@ export class OfficeRepository {
     const dbOffcie = await this.officeRepository.findOneBy({id: newOffice.id})
 
     return dbOffcie;
+  }
+
+ async updateOffice(office: UpdateOfficeDto, id : string){
+
+    const foundOffice = await this.officeRepository.findOneBy({id})
+
+    if(!foundOffice) return new NotFoundException(`No office was found to update`);
+
+    await this.officeRepository.update(id, office);
+    
+    const dbOffice = await this.officeRepository.findOneBy({id});
+
+
+    return dbOffice;
+
   }
 }
