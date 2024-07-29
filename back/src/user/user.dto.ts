@@ -62,14 +62,24 @@ export class CreateUserDto {
   @IsString()
   @MinLength(4)
   @MaxLength(20)
-  @ApiProperty({ description: 'User country', minLength: 4, maxLength: 20, required: false })
+  @ApiProperty({
+    description: 'User country',
+    minLength: 4,
+    maxLength: 20,
+    required: false,
+  })
   country: string;
 
   @IsOptional()
   @IsString()
   @MinLength(4)
   @MaxLength(20)
-  @ApiProperty({ description: 'User city', minLength: 4, maxLength: 20, required: false })
+  @ApiProperty({
+    description: 'User city',
+    minLength: 4,
+    maxLength: 20,
+    required: false,
+  })
   city: string;
 
   @IsOptional()
@@ -87,14 +97,24 @@ export class UpdateUserDto {
   @IsString()
   @MinLength(3)
   @MaxLength(80)
-  @ApiProperty({ description: 'User name', minLength: 3, maxLength: 80, required: false })
+  @ApiProperty({
+    description: 'User name',
+    minLength: 3,
+    maxLength: 80,
+    required: false,
+  })
   name: string;
 
   @IsOptional()
   @IsString()
   @MinLength(3)
   @MaxLength(80)
-  @ApiProperty({ description: 'User lastname', minLength: 3, maxLength: 80, required: false })
+  @ApiProperty({
+    description: 'User lastname',
+    minLength: 3,
+    maxLength: 80,
+    required: false,
+  })
   lastname: string;
 
   @IsOptional()
@@ -118,14 +138,24 @@ export class UpdateUserDto {
   @IsOptional()
   @MinLength(4)
   @MaxLength(20)
-  @ApiProperty({ description: 'User country', minLength: 4, maxLength: 20, required: false })
+  @ApiProperty({
+    description: 'User country',
+    minLength: 4,
+    maxLength: 20,
+    required: false,
+  })
   country: string;
 
   @IsOptional()
   @IsString()
   @MinLength(5)
   @MaxLength(20)
-  @ApiProperty({ description: 'User city', minLength: 5, maxLength: 20, required: false })
+  @ApiProperty({
+    description: 'User city',
+    minLength: 5,
+    maxLength: 20,
+    required: false,
+  })
   city: string;
 
   @IsOptional()

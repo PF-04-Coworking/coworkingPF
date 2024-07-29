@@ -34,7 +34,11 @@ export class CreateOfficesDto {
   @IsNotEmpty()
   @MinLength(10)
   @MaxLength(150)
-  @ApiProperty({ description: 'Office description', minLength: 10, maxLength: 150 })
+  @ApiProperty({
+    description: 'Office description',
+    minLength: 10,
+    maxLength: 150,
+  })
   description: string;
 
   @IsNotEmpty()
@@ -56,7 +60,7 @@ export class CreateOfficesDto {
   imgUrl: string;
 }
 
-export class UpdateOfficeDto{
+export class UpdateOfficeDto {
   @IsOptional()
   @IsString()
   @MinLength(3)
@@ -92,4 +96,3 @@ export class UpdateOfficeDto{
   @ApiProperty({ description: 'Office image URL', required: false })
   imgUrl: string;
 }
-
