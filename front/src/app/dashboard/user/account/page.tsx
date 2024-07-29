@@ -5,7 +5,7 @@ import faceImage from "@/../public/images/face-1.png";
 import { EditProfileForm } from "./_components/EditProfileForm";
 import { Paragraph } from "@/components/common/Paragraph";
 import { Heading } from "@/components/common/Heading";
-import { DashboardLayout } from "../../_components/DashboardLayout";
+import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { USER_LINKS } from "../links";
 
 const Account = () => {

@@ -36,6 +36,7 @@ export class OfficeRepository {
       office.capacity = element.capacity;
       office.stock = element.stock;
       office.price = element.price;
+      office.imgUrl = element.imgUrl;
 
       await this.officeRepository
         .createQueryBuilder()
@@ -53,7 +54,7 @@ export class OfficeRepository {
     return office;
   }
 
-  async addNewOffice(office: CreateOfficesDto) {
+  async createOffice(office: CreateOfficesDto) {
     const tempOffice = office;
 
     const foundOffice = await this.officeRepository.findOneBy({
@@ -64,6 +65,9 @@ export class OfficeRepository {
       return new BadRequestException(
         `Office with name ${foundOffice.name} and location ${foundOffice.location} already exist`,
       );
+
+    console.log('office');
+    console.log(office);
 
     const newOffice = await this.officeRepository.save(office);
 
@@ -85,6 +89,17 @@ export class OfficeRepository {
     const dbOffice = await this.officeRepository.findOneBy({ id });
 
     return dbOffice;
+  }
+
+  async deleteOffice(id: string) {
+    const foundOffice = await this.officeRepository.findOneBy({ id });
+
+    if (!foundOffice)
+      return new NotFoundException(`No office was found to delete`);
+
+    await this.officeRepository.delete(id);
+
+    return 'Office deleted successfully';
   }
 }
 

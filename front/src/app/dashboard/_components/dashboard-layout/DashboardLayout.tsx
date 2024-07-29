@@ -1,6 +1,8 @@
 import { Header } from "@/app/dashboard/_components/Header";
 import { Sidebar } from "@/app/dashboard/_components/Sidebar";
-import { INavLink } from "../types";
+import { INavLink } from "../../types";
+import { ToastContainer } from "react-toastify";
+import "./DashboardLayout.css";
 
 interface IProps {
   children: React.ReactNode;
@@ -23,6 +25,18 @@ const DashboardLayout = ({ children, headerTitle, navLinks }: IProps) => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 };

@@ -16,7 +16,6 @@ export interface IRegisterData {
 
 export interface IAddOfficeData {
   name: string;
-  address: string;
-  phone: string;
-  email: string;
+  location: string;
+  file: File;
 }

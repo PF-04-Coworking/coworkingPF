@@ -10,66 +10,74 @@ import {
   DialogTitle,
 } from "@/components/common/dialog";
 import { Button } from "@/components/common/Button";
-import { Field, Form, Formik } from "formik";
-import { toast } from "react-toastify";
+import { Field, Form, Formik, FormikHelpers } from "formik";
+import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Paragraph } from "@/components/common/Paragraph";
 import { Heading } from "@/components/common/Heading";
 import { InputLabel } from "@/components/common/InputLabel";
+import { apiOffices } from "@/lib/api/offices/apiOffices";
+import "react-toastify/dist/ReactToastify.css";
+import { useOfficesStore } from "../../_stores/useOfficesStore";
 
-const CardOffice: React.FC<IOffice> = ({ url, nombre, direccion }) => {
+interface IProps {
+  id: string;
+  name: string;
+  location: string;
+  imgUrl?: string;
+}
+
+const CardOffice = ({ id, name, location, imgUrl }: IProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedOffice, setSelectedOffice] = useState<IProps | null>(null);
+  const [selectedOffice, setSelectedOffice] = useState<IProps>({
+    id,
+    name,
+    location,
+  });
+  const { updateStoredOffice, removeStoredOffice } = useOfficesStore();
 
-  const handleAddInfo = (props: IProps) => {
-    setSelectedOffice(props);
+  const handleAddInfo = ({ id, name, location, imgUrl }: IProps) => {
+    setSelectedOffice({ id, name, location });
     setIsModalOpen(true);
   };
 
   const router = useRouter();
 
   const handleEditOffice = async (
-    values: any,
-    { setSubmitting, resetForm }: any
+    values: IProps,
+    { setSubmitting, resetForm }: FormikHelpers<IProps>
   ) => {
     try {
-      const response = await fetch("url", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
+      if (!selectedOffice) return;
+      const officeId = selectedOffice.id;
+      const promise = apiOffices.updateOffice(officeId, values);
+      toast.promise(promise, {
+        pending: "Actualizando...",
+        success: "Actualizado exitosamente",
+        error: "Error",
       });
-
-      if (response.ok) {
-        toast.success("Editado Exitosamente");
-        router.push("/account/dashboard");
-      } else {
-        toast.error("Error");
-      }
+      updateStoredOffice(officeId, values);
+      resetForm({ values });
+    } catch (error) {
+      console.log(error);
+      toast.error("Error");
     } finally {
       setSubmitting(false);
     }
   };
 
-  const handleDeleteOffice = async (name: string | undefined) => {
+  const handleDeleteOffice = async ({ id }: { id: string }) => {
     try {
-      const response = await fetch("url", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name }),
+      const promise = apiOffices.deleteOffice(id);
+      toast.promise(promise, {
+        pending: "Eliminando...",
+        success: "Oficina eliminada exitosamente",
+        error: "Error",
       });
-
-      if (response.ok) {
-        toast.success("Eliminado Exitosamente");
-        router.push("/account/dashboard");
-      } else {
-        toast.error("Error");
-      }
-    } finally {
-      console.log("ok");
+      await promise;
+      removeStoredOffice(id);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -77,23 +85,21 @@ const CardOffice: React.FC<IOffice> = ({ url, nombre, direccion }) => {
     <>
       <div className="backdrop-blur-lg bg-secondaryDark/60 rounded-md p-4 shadow-md text-white">
         <img
-          src={url}
+          src={imgUrl}
           alt="Office Image"
           className="rounded-md object-cover w-full h-80"
         />
         <div className="py-4 space-y-2">
           <Heading level="3" className="font-medium">
-            {nombre}
+            {name}
           </Heading>
-          <Paragraph variant="secondary">{direccion}</Paragraph>
+          <Paragraph variant="secondary">{location}</Paragraph>
           <Button
             className="w-full !mt-4"
             variant="primary"
-            onClick={() =>
-              handleAddInfo({ name: nombre, direccion: direccion })
-            }
+            onClick={() => handleAddInfo({ id, name, location, imgUrl })}
           >
-            <span className="text-black">Editar</span>
+            Editar
           </Button>
         </div>
       </div>
@@ -109,13 +115,14 @@ const CardOffice: React.FC<IOffice> = ({ url, nombre, direccion }) => {
           <div>
             <Formik
               initialValues={{
-                name: selectedOffice?.name,
-                direccion: selectedOffice?.direccion,
-                file: null,
+                id: selectedOffice.id,
+                name: selectedOffice.name,
+                location: selectedOffice.location,
+                // file: null,
               }}
               onSubmit={handleEditOffice}
             >
-              {({ isSubmitting }: any) => (
+              {({ isSubmitting, dirty }: any) => (
                 <Form>
                   <div className="grid gap-4">
                     <div className="grid gap-2">
@@ -126,13 +133,13 @@ const CardOffice: React.FC<IOffice> = ({ url, nombre, direccion }) => {
                       />
                     </div>
                     <div className="grid gap-2">
-                      <InputLabel htmlFor="direccion">Direccion</InputLabel>
+                      <InputLabel htmlFor="location">Direccion</InputLabel>
                       <Field
-                        name="direccion"
+                        name="location"
                         className="rounded-md py-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
                       />
                     </div>
-
+                    {/* 
                     <div className="space-y-2">
                       <InputLabel htmlFor="file">
                         Sube un archivo multimedia:
@@ -143,17 +150,22 @@ const CardOffice: React.FC<IOffice> = ({ url, nombre, direccion }) => {
                         type="file"
                         className="mt-1 mb-5 file:bg-inherit file:text-white file:border file:border-primary file:rounded-md file:p-2 text-sm file:hover:text-primary cursor-pointer file:cursor-pointer file:mr-4 w-full max-w-[350px]"
                       />
-                    </div>
+                    </div> */}
                   </div>
 
                   <DialogFooter className="flex gap-2 mt-8">
-                    <Button variant="primary" className="w-full" type="submit">
+                    <Button
+                      variant="primary"
+                      className="w-full"
+                      type="submit"
+                      disabled={isSubmitting || !dirty}
+                    >
                       Confirmar
                     </Button>
                     <Button
                       variant="destructive"
                       className="w-full"
-                      onClick={() => handleDeleteOffice(selectedOffice?.name)}
+                      onClick={() => handleDeleteOffice({ id })}
                     >
                       Eliminar
                     </Button>
