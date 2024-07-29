@@ -1,12 +1,12 @@
-import { Hero } from "@/app/page/Hero/Hero";
-import { Header } from "@/app/page/Header/Header";
-import { Description } from "@/app/page/Description/Description";
-import { Features } from "./page/Features/Features";
-import { Testimonials } from "./page/Testimonials/Testimonials";
-import { CallToAction } from "./page/CallToAction/CallToAction";
-import { Footer } from "./page/Footer/Footer";
+import { Hero } from "@/app/_page/_components/Hero/Hero";
+import { Header } from "@/app/_page/_components/HeaderSection";
+import { Description } from "@/app/_page/_components/DescriptionSection";
+import { Features } from "./_page/_components/FeaturesSection";
+import { Testimonials } from "./_page/_components/TestimonialsSection";
+import { CallToAction } from "./_page/_components/CallToActionSection";
+import { Footer } from "./_page/_components/FooterSection";
 
-export default function Home() {
+export default function Page() {
   return (
     <div
       className="h-full min-h-screen bg-no-repeat bg-top bg-contain"
