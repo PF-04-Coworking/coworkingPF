@@ -67,7 +67,9 @@ export class OfficeController {
 
   @Put(':id')
   updateOffices(
-    @Param('id', ParseUUIDPipe) id: string, @Body() office: UpdateOfficeDto) {
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() office: UpdateOfficeDto,
+  ) {
     return this.officeService.updateOffice(office, id);
   }
 

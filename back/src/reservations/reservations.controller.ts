@@ -72,4 +72,3 @@ export class ReservationsController {
     return this.reservationsService.deleteReservation(id);
   }
 }
-
