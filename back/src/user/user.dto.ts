@@ -55,6 +55,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsNumber()
+  @MaxLength(20)
   @ApiProperty({ description: 'User phone number' })
   phone: number;
 

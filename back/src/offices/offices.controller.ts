@@ -11,10 +11,13 @@ import {
   MaxFileSizeValidator,
   FileTypeValidator,
   Delete,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { OfficeService } from 'src/offices/offices.service';
 import { CreateOfficesDto, UpdateOfficeDto } from './offices.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('offices')
 @Controller('offices')
