@@ -1,12 +1,16 @@
-import { CardAdd } from "./_components/CardAdd";
+"use client";
+
+import { CardAdd } from "./_components/modals/CreateOfficeModal";
 import { CardOffice } from "./_components/CardOffice";
 import { TextInput } from "@/components/common/TextInput";
-import { Offices } from "./helpers/offices-data";
 import { SearchIcon } from "lucide-react";
-import { DashboardLayout } from "../../_components/DashboardLayout";
+import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { ADMIN_LINKS } from "../../user/links";
+import useOffices from "./_hooks/useOffices";
 
 const DashboardOffices = () => {
+  const { offices } = useOffices();
+
   return (
     <DashboardLayout
       headerTitle="Panel de administración"
@@ -30,12 +34,13 @@ const DashboardOffices = () => {
           </div>
 
           <div className="w-full lg:grid-cols-2 grid gap-10 md:grid-cols-2 grid-cols-1">
-            {Offices.map((office, index) => (
+            {offices.map((office, index) => (
               <CardOffice
                 key={index}
-                url={office.url}
-                nombre={office.nombre}
-                direccion={office.direccion}
+                id={office.id}
+                imgUrl={office.imgUrl}
+                name={office.name}
+                location={office.location}
               />
             ))}
           </div>

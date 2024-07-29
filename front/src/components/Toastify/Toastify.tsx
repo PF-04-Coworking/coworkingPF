@@ -1,16 +1,11 @@
-import React from 'react';
-import { Slide, ToastContainer, toast } from 'react-toastify';
+import React from "react";
+import { Slide, ToastContainer, toast } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
-// minified version is also included
-// import 'react-toastify/dist/ReactToastify.min.css';
+import "react-toastify/dist/ReactToastify.css";
 
-function Alert(){
-
+function Alert() {
   return (
-    <>
-
-      <ToastContainer 
+    <ToastContainer
       position="bottom-right"
       autoClose={5000}
       newestOnTop={false}
@@ -18,13 +13,10 @@ function Alert(){
       rtl={false}
       pauseOnFocusLoss
       draggable
-      theme="colored"
+      theme="dark"
       transition={Slide}
-      />
-    </>
-
-    
+    />
   );
 }
 
-export default Alert
+export default Alert;
