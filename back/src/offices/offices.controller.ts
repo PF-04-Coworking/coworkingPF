@@ -5,14 +5,14 @@ import {
   Param,
   Post,
   Query,
-  UploadedFile,
-  UseInterceptors,
   ParseUUIDPipe,
   Put,
   ParseFilePipe,
   MaxFileSizeValidator,
   FileTypeValidator,
   Delete,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { OfficeService } from 'src/offices/offices.service';
@@ -67,9 +67,7 @@ export class OfficeController {
 
   @Put(':id')
   updateOffices(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() office: UpdateOfficeDto,
-  ) {
+    @Param('id', ParseUUIDPipe) id: string, @Body() office: UpdateOfficeDto) {
     return this.officeService.updateOffice(office, id);
   }
 
@@ -81,3 +79,4 @@ export class OfficeController {
 }
 
  
+
