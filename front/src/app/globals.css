@@ -23,3 +23,8 @@ body {
 input[type="search"]::-webkit-search-cancel-button {
   color: red;
 }
+
+@font-face {
+  font-family: "Clash";
+  src: url(../../public/font/ClashDisplay-Variable.ttf);
+}

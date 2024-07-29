@@ -1,20 +1,21 @@
-import {
-  BuildingIcon,
-  CalendarCheck2Icon,
-  CircleUserRoundIcon,
-  LogOutIcon,
-} from "lucide-react";
-import { Button } from "../../../components/common/Button";
 import { CustomLink } from "../../../components/common/CustomLink";
 import { TextLogo } from "../../../components/common/TextLogo";
 import { INavLink } from "../types";
+import Link from "next/link";
+import { Logout } from "./Logout";
+
+
+
 
 const Sidebar = ({ navLinks }: { navLinks: INavLink[] }) => {
+
   return (
     <section className="h-full min-h-screen pt-4 pb-8 w-64 space-y-10 flex-col justify-between hidden lg:flex fixed">
       <div className="space-y-8">
         <div className="px-3">
+          <Link href="/">
           <TextLogo />
+          </Link>
         </div>
         <div className="flex flex-col gap-y-4">
           {navLinks?.map((link) => (
@@ -31,10 +32,7 @@ const Sidebar = ({ navLinks }: { navLinks: INavLink[] }) => {
         </div>
       </div>
       <div>
-        <Button variant="outline" className="flex gap-x-2">
-          <LogOutIcon size={16} />
-          Cerrar sesión
-        </Button>
+          <Logout />
       </div>
     </section>
   );

@@ -7,6 +7,10 @@ import {
   Query,
   ParseUUIDPipe,
   Put,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
+  Delete,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { OfficeService } from 'src/offices/offices.service';
@@ -37,13 +41,36 @@ export class OfficeController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new office' })
-  createOffice(@Body() office: CreateOfficesDto) {
-    return this.officeService.addNewOffice(office);
+  @UseInterceptors(FileInterceptor('file'))
+  createOffice(
+    @Body() office: CreateOfficesDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 2000000, // 2MB
+            message: 'File is too large',
+          }),
+          new FileTypeValidator({
+            fileType: /(.jpg|.jpeg|.png|.webp)/,
+          }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.officeService.createOffice(office, file);
   }
 
   @Put(':id')
   updateOffices(
     @Param('id', ParseUUIDPipe) id: string, @Body() office: UpdateOfficeDto) {
     return this.officeService.updateOffice(office, id);
+  }
+
+  @ApiOperation({ summary: 'Delete an office' })
+  @Delete(':id')
+  deleteOffice(@Param('id', ParseUUIDPipe) id: string) {
+    return this.officeService.deleteOffice(id);
   }
 }

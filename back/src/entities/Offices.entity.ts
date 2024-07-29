@@ -21,7 +21,7 @@ export class Office {
   @Column()
   stock: number;
 
-  @Column()
+  @Column({ nullable: true })
   price: number;
 
   @Column({ nullable: true })

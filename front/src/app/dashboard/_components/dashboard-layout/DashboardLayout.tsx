@@ -1,6 +1,6 @@
 import { Header } from "@/app/dashboard/_components/Header";
 import { Sidebar } from "@/app/dashboard/_components/Sidebar";
-import { INavLink } from "../types";
+import { INavLink } from "../../types";
 
 interface IProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ interface IProps {
 const DashboardLayout = ({ children, headerTitle, navLinks }: IProps) => {
   return (
     <div
-      className="bg-no-repeat bg-center bg-fixed"
+      className="bg-no-repeat bg-center bg-fixedv h-[80vh]"
       style={{ backgroundImage: `url(/images/fondo-2.png)` }}
     >
       <div className="layout-admin flex gap-x-8">

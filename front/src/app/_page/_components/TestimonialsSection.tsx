@@ -8,21 +8,21 @@ import Image from "next/image";
 const testimonials = [
   {
     name: "Carlos Ramírez",
-    image: "/face-1.png",
+    image: "/images/face-1.png",
     position: "Desarrollador de software",
     description:
       "Buscaba un lugar tranquilo para trabajar en mis proyectos y los espacios de Relux superaron mis expectativas. La conexión a internet es excelente, y el ambiente es motivador.",
   },
   {
     name: "María Gómez",
-    image: "/face-2.png",
+    image: "/images/face-2.png",
     position: "CEO de Tech Innovators",
     description:
       "Como líder de una startup, necesitaba un espacio flexible que se adaptara a las necesidades cambiantes de mi equipo. Los lugares de Relux fueron perfectos para abarcar mis requerimientos.",
   },
   {
     name: "Juan Pérez",
-    image: "/face-3.png",
+    image: "/images/face-3.png",
     position: "Freelancer de marketing digital",
     description:
       "Los espacios de coworking han revolucionado mi forma de trabajar. Encontré un ambiente profesional y lleno de recursos que me ayudaron a ser más productivo y a conectar con otros profesionales.",

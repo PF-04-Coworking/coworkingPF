@@ -7,7 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/common/dialog";
 import { Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";

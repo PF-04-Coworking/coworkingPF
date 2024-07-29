@@ -1,9 +1,9 @@
-import { Button } from "@/components/common/Button";
 import { CustomLink } from "../../../components/common/CustomLink";
 import { TextLogo } from "../../../components/common/TextLogo";
 import { Sidebar } from "./MobileMenu/MobileMenu";
-import Link from "next/link";
 import { links } from "../links";
+import { ControlToken } from "./ControlToken";
+
 
 const Header = () => {
   return (
@@ -21,12 +21,7 @@ const Header = () => {
           ))}
         </nav>
         <div className="ml-auto hidden lg:flex gap-x-4">
-          <Button variant="outline">
-            <Link href="/login">Iniciar Sesión</Link>
-          </Button>
-          <Button variant="primary">
-            <Link href="/register">Registrarse</Link>
-          </Button>
+          <ControlToken />
         </div>
 
         <Sidebar />

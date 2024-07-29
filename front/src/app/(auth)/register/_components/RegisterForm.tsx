@@ -39,8 +39,6 @@ const RegisterForm = () => {
       }}
       validate={validateRegister}
       onSubmit={handleSubmitRegister}
-      validateOnChange={true}
-      validateOnBlur={true}
     >
       {({ isSubmitting }: any) => (
         <Form className="space-y-4">
@@ -87,16 +85,16 @@ const RegisterForm = () => {
             </div>
             <FieldValidate
               name="phone"
-              type="number"
+              type="tel"
               placeholder="+22 123-123..."
             />
           </div>
 
           <div className="pt-4 space-y-4">
-            <Button type="submit" className="w-full" variant="primary">
+            <Button type="submit" className="w-full" variant="primary" disabled={isSubmitting}> 
               Registrarse
             </Button>
-            <Button variant="outline" className="w-full ">
+            <Button variant="outline" className="w-full">
               <GoogleIcon className="mr-2" />
               Registrarse con Google
             </Button>
