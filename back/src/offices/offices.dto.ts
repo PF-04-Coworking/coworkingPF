@@ -47,6 +47,46 @@ export class CreateOfficesDto {
   @ApiProperty({ description: 'Office stock' })
   stock: number;
 
+  @IsNotEmpty()
+  @IsNumber()
+  price: number;
+
+  @IsOptional()
+  @IsUrl()
+  imgUrl: string;
+}
+
+export class UpdateOfficeDto{
+  @IsOptional()
+  @IsString()
+  @MinLength(3)
+  @MaxLength(80)
+  name: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @MinLength(3)
+  @MaxLength(80)
+  location: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @MinLength(10)
+  @MaxLength(150)
+  description: string;
+
+  @IsOptional()
+  @IsNumber()
+  capacity: number;
+
+  @IsOptional()
+  @IsNumber()
+  stock: number;
+
+  @IsOptional()
+  @IsNumber()
+  price: number;
+
   @IsOptional()
   @IsUrl()
   @ApiProperty({ description: 'Office image URL', required: false })
