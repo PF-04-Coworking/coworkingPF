@@ -27,6 +27,9 @@ export class Office {
   @Column({ nullable: true })
   imgUrl: string;
 
+  @Column('simple-array', { nullable: true })
+  services: string[];
+
   @OneToMany(() => Reservation, (reservation) => reservation.office)
   reservations: Reservation[];
 }

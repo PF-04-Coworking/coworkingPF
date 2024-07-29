@@ -6,7 +6,8 @@
     "capacity": 200,
     "stock": 150,
     "price": 100,
-    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/lacoste-office-18.jpg"
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/lacoste-office-18.jpg",
+    "services": ["Internet", "Estacionamiento", "Cafe"]
   },
   {
     "name": "West Side Branch",
@@ -15,7 +16,8 @@
     "capacity": 100,
     "stock": 80,
     "price": 100,
-    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/decathlon-singapore-office-1.jpg"
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/decathlon-singapore-office-1.jpg",
+    "services": ["Estacionamiento", "Internet", "Cafe"]
   },
   {
     "name": "Downtown Office",
@@ -24,7 +26,8 @@
     "capacity": 150,
     "stock": 120,
     "price": 100,
-    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/sicoob-brasil-office-3.jpg"
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/sicoob-brasil-office-3.jpg",
+    "services": ["Internet", "Acceso a transporte publico"]
   },
   {
     "name": "South Campus",
@@ -33,7 +36,9 @@
     "capacity": 250,
     "stock": 200,
     "price": 100,
-    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/mercedes-benz-istanbul-office-1.jpg"
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/mercedes-benz-istanbul-office-1.jpg",
+    "services": ["Internet", "Gimnasio", "Cafe"]
   }
 ]
+
 

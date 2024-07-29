@@ -1,4 +1,6 @@
 import {
+  ArrayNotEmpty,
+  IsArray,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -54,6 +56,12 @@ export class CreateOfficesDto {
   @IsOptional()
   @IsUrl()
   imgUrl: string;
+
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  @ApiProperty({ description: 'List of services', type: [String] })
+  services: string[];
 }
 
 export class UpdateOfficeDto{
@@ -91,5 +99,11 @@ export class UpdateOfficeDto{
   @IsUrl()
   @ApiProperty({ description: 'Office image URL', required: false })
   imgUrl: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  @ApiProperty({ description: 'List of services', type: [String], required: false })
+  services: string[];
 }
 
