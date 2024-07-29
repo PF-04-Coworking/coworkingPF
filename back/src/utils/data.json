@@ -4,27 +4,36 @@
     "location": "New York",
     "description": "Main headquarters located in the heart of the city.",
     "capacity": 200,
-    "stock": 150
+    "stock": 150,
+    "price": 100,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/lacoste-office-18.jpg"
   },
   {
     "name": "West Side Branch",
     "location": "Los Angeles",
     "description": "Branch office with modern facilities and ample parking.",
     "capacity": 100,
-    "stock": 80
+    "stock": 80,
+    "price": 100,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/decathlon-singapore-office-1.jpg"
   },
   {
     "name": "Downtown Office",
     "location": "Chicago",
     "description": "Conveniently located near public transportation.",
     "capacity": 150,
-    "stock": 120
+    "stock": 120,
+    "price": 100,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/sicoob-brasil-office-3.jpg"
   },
   {
     "name": "South Campus",
     "location": "Austin",
     "description": "A spacious office with great views and amenities.",
     "capacity": 250,
-    "stock": 200
+    "stock": 200,
+    "price": 100,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/mercedes-benz-istanbul-office-1.jpg"
   }
 ]
+

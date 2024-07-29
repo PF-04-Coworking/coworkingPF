@@ -1,10 +1,13 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Office } from 'src/entities/Offices.entity';
 import * as data from '../utils/data.json';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateOfficesDto, UpdateOfficeDto } from './offices.dto';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class OfficeRepository {
@@ -19,7 +22,7 @@ export class OfficeRepository {
       },
     });
     const start = (page - 1) * limit;
-    const end = start * limit;
+    const end = page * limit;
     offices = offices.slice(start, end);
     return offices;
   }
@@ -32,6 +35,7 @@ export class OfficeRepository {
       office.description = element.description;
       office.capacity = element.capacity;
       office.stock = element.stock;
+      office.price = element.price;
 
       await this.officeRepository
         .createQueryBuilder()
@@ -50,32 +54,37 @@ export class OfficeRepository {
   }
 
   async addNewOffice(office: CreateOfficesDto) {
-
     const tempOffice = office;
 
-    const foundOffice = await this.officeRepository.findOneBy({ location: tempOffice.location });
+    const foundOffice = await this.officeRepository.findOneBy({
+      location: tempOffice.location,
+    });
 
-    if(foundOffice) return new BadRequestException(`Office with name ${foundOffice.name} and location ${foundOffice.location} already exist`);
+    if (foundOffice)
+      return new BadRequestException(
+        `Office with name ${foundOffice.name} and location ${foundOffice.location} already exist`,
+      );
 
-    const newOffice = await this.officeRepository.save(office)
+    const newOffice = await this.officeRepository.save(office);
 
-    const dbOffcie = await this.officeRepository.findOneBy({id: newOffice.id})
+    const dbOffcie = await this.officeRepository.findOneBy({
+      id: newOffice.id,
+    });
 
     return dbOffcie;
   }
 
- async updateOffice(office: UpdateOfficeDto, id : string){
+  async updateOffice(office: UpdateOfficeDto, id: string) {
+    const foundOffice = await this.officeRepository.findOneBy({ id });
 
-    const foundOffice = await this.officeRepository.findOneBy({id})
-
-    if(!foundOffice) return new NotFoundException(`No office was found to update`);
+    if (!foundOffice)
+      return new NotFoundException(`No office was found to update`);
 
     await this.officeRepository.update(id, office);
-    
-    const dbOffice = await this.officeRepository.findOneBy({id});
 
+    const dbOffice = await this.officeRepository.findOneBy({ id });
 
     return dbOffice;
-
   }
 }
+
