@@ -25,10 +25,23 @@ export class OfficeController {
   constructor(private readonly officeService: OfficeService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Get all offices with pagination' })
-  getAllOffices(@Query('page') page: number, @Query('limit') limit: number) {
-    return this.officeService.getAllOffices(Number(page), Number(limit));
+  @ApiOperation({ summary: 'Get all offices with pagination and filters' })
+  getAllOffices(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+    @Query('services') services: string[] = [],
+    @Query('capacity') capacity: number,
+    @Query('location') location: string,
+    @Query('price') price: number
+  ) {
+    return this.officeService.getAllOffices(page, limit, {
+      services,
+      capacity,
+      location,
+      price
+    });
   }
+  
 
   @Get('seeder')
   @ApiOperation({ summary: 'Add seed offices' })
@@ -79,3 +92,6 @@ export class OfficeController {
     return this.officeService.deleteOffice(id);
   }
 }
+
+ 
+
