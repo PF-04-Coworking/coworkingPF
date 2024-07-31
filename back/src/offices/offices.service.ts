@@ -60,12 +60,9 @@ export class OfficeService {
       office.imgUrl = foundOffice.imgUrl;
     }
 
-  console.log('Office before update:', foundOffice);
-
   await this.officeRepository.updateOffice(office, id);
 
   const dbOffice = await this.officeRepository.getOfficeById(id);
-  console.log('Updated Office from DB:', dbOffice);
 
   return dbOffice;
   }
