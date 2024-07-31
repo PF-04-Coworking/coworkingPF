@@ -8,7 +8,14 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiParam, ApiConsumes, ApiBody, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiParam,
+  ApiConsumes,
+  ApiBody,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { FileUploadService } from './file-upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -67,4 +74,3 @@ export class FileUploadController {
     return this.fileUploadRepository.uploadOfficeImage(file, officeId);
   }
 }
-

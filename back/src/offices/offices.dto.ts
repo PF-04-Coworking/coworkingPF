@@ -38,7 +38,11 @@ export class CreateOfficesDto {
   @IsNotEmpty()
   @MinLength(10)
   @MaxLength(150)
-  @ApiProperty({ description: 'Office description', minLength: 10, maxLength: 150 })
+  @ApiProperty({
+    description: 'Office description',
+    minLength: 10,
+    maxLength: 150,
+  })
   description: string;
 
   @IsNotEmpty()
@@ -58,7 +62,7 @@ export class CreateOfficesDto {
 
   @IsOptional()
   @IsUrl()
-  @ApiProperty({ description: 'Image URL', required: false })
+  @ApiProperty({ description: 'Office image URL' })
   imgUrl: string;
 
   @IsArray()
@@ -73,36 +77,40 @@ export class UpdateOfficeDto {
   @IsString()
   @MinLength(3)
   @MaxLength(80)
-  @ApiProperty({ description: 'Office name', required: false })
+  @ApiProperty({ description: 'Office name', minLength: 3, maxLength: 80 })
   name: string;
 
   @IsOptional()
   @IsString()
   @MinLength(3)
   @MaxLength(80)
-  @ApiProperty({ description: 'Office location', required: false })
+  @ApiProperty({ description: 'Office location', minLength: 3, maxLength: 80 })
   location: string;
 
   @IsOptional()
   @IsString()
   @MinLength(10)
   @MaxLength(150)
-  @ApiProperty({ description: 'Office description', required: false })
+  @ApiProperty({
+    description: 'Office description',
+    minLength: 10,
+    maxLength: 150,
+  })
   description: string;
 
   @IsOptional()
   @IsNumber()
-  @ApiProperty({ description: 'Office capacity', required: false })
+  @ApiProperty({ description: 'Office capacity' })
   capacity: number;
 
   @IsOptional()
   @IsNumber()
-  @ApiProperty({ description: 'Office stock', required: false })
+  @ApiProperty({ description: 'Office stock' })
   stock: number;
 
   @IsOptional()
   @IsNumber()
-  @ApiProperty({ description: 'Office price', required: false })
+  @ApiProperty({ description: 'Office price' })
   price: number;
 
   @IsOptional()
@@ -116,5 +124,3 @@ export class UpdateOfficeDto {
   @ApiProperty({ description: 'List of services', enum: ServicesEnum, isArray: true, required: false })
   services: ServicesEnum[];
 }
-
-

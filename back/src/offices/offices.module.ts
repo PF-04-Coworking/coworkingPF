@@ -14,4 +14,3 @@ import { FileUploadRepository } from 'src/file-upload/file-upload.repository';
   providers: [OfficeService, OfficeRepository, FileUploadRepository],
 })
 export class OfficeModule {}
-

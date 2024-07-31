@@ -98,4 +98,3 @@ export class UserController {
     return this.userService.login(credentials);
   }
 }
-

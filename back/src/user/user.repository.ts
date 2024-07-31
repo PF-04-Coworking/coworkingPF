@@ -55,7 +55,9 @@ export class UserRepository {
     }
     await this.userRepository.update(id, user);
 
-    const dbUser= await this.userRepository.findOneBy({email: foundUser.email})
+    const dbUser = await this.userRepository.findOneBy({
+      email: foundUser.email,
+    });
 
     return dbUser;
   }
@@ -115,8 +117,12 @@ export class UserRepository {
 
     const token = this.jwtService.sign(payload);
 
-    const {password:_, ...userNoPassword} = user;
+    const { password: _, ...userNoPassword } = user;
 
-    return { message: `Successfully signed in. Welcome ${user.name}`, token , userNoPassword };
+    return {
+      message: `Successfully signed in. Welcome ${user.name}`,
+      token,
+      userNoPassword,
+    };
   }
 }
