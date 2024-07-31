@@ -134,6 +134,7 @@ export class OfficeRepository {
   }
 
   async updateOffice(office: UpdateOfficeDto, id: string) {
+    
     const foundOffice = await this.officeRepository.findOneBy({ id });
 
     if (!foundOffice)
