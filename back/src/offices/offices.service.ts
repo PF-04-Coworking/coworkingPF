@@ -48,4 +48,3 @@ export class OfficeService {
     return this.officeRepository.deleteOffice(id);
   }
 }
-

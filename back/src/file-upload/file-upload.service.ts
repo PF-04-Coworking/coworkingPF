@@ -49,8 +49,7 @@ export class FileUploadService {
     return updatedOffice;
   }
 
-  async uploadCreatedOffcieImage(file:Express.Multer.File){
-
+  async uploadCreatedOffcieImage(file: Express.Multer.File) {
     const response = await this.fileUploadRepository.uploadImage(file);
     if (!response.secure_url) {
       throw new NotFoundException('File not uploaded');
