@@ -13,6 +13,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ReservationsModule } from './reservations/reservations.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { StripeModule } from './stripe/stripe.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -42,7 +43,6 @@ import { StripeModule } from './stripe/stripe.module';
     }),
     FileUploadModule,
     StripeModule, //!Pendiente aquí
-    StripeModule.forRootAsync(),
   ],
   controllers: [AppController],
   providers: [AppService],

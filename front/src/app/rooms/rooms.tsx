@@ -4,6 +4,8 @@ import { SearchIcon } from "lucide-react";
 import CardAdd from "@/components/dashboard/cardAdd";
 import Offices from "@/helpers/data";
 import CardOffice from "@/components/dashboard/cardOffice";
+import StripeCheckout from "./StripeCheckout";
+import ProductDisplay from "./StripeCheckout"
 
 const rooms = () => {
   return (
@@ -39,8 +41,14 @@ const rooms = () => {
           </div>
         </div>
       </div>
+
+<StripeCheckout />
+
+      
 </>
   );
 };
 
 export default rooms;
+
+

@@ -10,4 +10,11 @@ export class AppController {
     // return this.appService.getHello();
     return 'Acá va el index';
   }
+
+  @Get()
+  success() {
+    return {
+      message: 'Transaccion exitosa',
+    };
+  }
 }

@@ -13,25 +13,10 @@ export class StripeService {
     });
   }
 
-  checkout(cart: Cart) {
-    const totalPrice = cart.reduce(
-      (acc, item) => acc + item.quantity * item.price,
-      0,
-    );
-    return this.stripe.paymentIntents.create({
-      amount: +totalPrice.toFixed(2) * 100, //cents
-      currency: 'usd', // set currency
-      payment_method_types: ['card'],
+  async createPaymentIntent(amount: number, currency: string) {
+    return await this.stripe.paymentIntents.create({
+      amount,
+      currency,
     });
-  }
-
-  async getProducts(): Promise<Stripe.Product[]> {
-    const products = await this.stripe.products.list();
-    return products.data;
-  }
-
-  async getCustomers() {
-    const customers = await this.stripe.customers.list({});
-    return customers.data;
   }
 }
