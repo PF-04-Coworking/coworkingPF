@@ -9,15 +9,17 @@ import {
   IsUUID,
   MaxLength,
   MinLength,
+  IsEnum,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { ServicesEnum } from 'src/utils/services.enum';
 
 export class CreateOfficesDto {
   @IsOptional()
   @IsUUID()
   @ApiProperty({ description: 'Office ID', required: false })
   id: string;
- 
+
   @IsNotEmpty()
   @IsString()
   @MinLength(3)
@@ -65,9 +67,9 @@ export class CreateOfficesDto {
 
   @IsArray()
   @ArrayNotEmpty()
-  @IsString({ each: true })
-  @ApiProperty({ description: 'List of services', type: [String] })
-  services: string[];
+  @IsEnum(ServicesEnum, { each: true })
+  @ApiProperty({ description: 'List of services', enum: ServicesEnum, isArray: true })
+  services: ServicesEnum[];
 }
 
 export class UpdateOfficeDto {
@@ -79,14 +81,14 @@ export class UpdateOfficeDto {
   name: string;
 
   @IsOptional()
-  @IsNotEmpty()
+  @IsString()
   @MinLength(3)
   @MaxLength(80)
   @ApiProperty({ description: 'Office location', minLength: 3, maxLength: 80 })
   location: string;
 
   @IsOptional()
-  @IsNotEmpty()
+  @IsString()
   @MinLength(10)
   @MaxLength(150)
   @ApiProperty({
@@ -118,7 +120,7 @@ export class UpdateOfficeDto {
 
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
-  @ApiProperty({ description: 'List of services', type: [String], required: false })
-  services: string[];
+  @IsEnum(ServicesEnum, { each: true })
+  @ApiProperty({ description: 'List of services', enum: ServicesEnum, isArray: true, required: false })
+  services: ServicesEnum[];
 }
