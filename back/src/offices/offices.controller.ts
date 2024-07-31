@@ -18,6 +18,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { OfficeService } from 'src/offices/offices.service';
 import { CreateOfficesDto, UpdateOfficeDto } from './offices.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ServicesEnum } from 'src/utils/services.enum';
 
 @ApiTags('offices')
 @Controller('offices')
@@ -29,7 +30,7 @@ export class OfficeController {
   getAllOffices(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
-    @Query('services') services: string[] = [],
+    @Query('services') services: ServicesEnum[] = [],
     @Query('capacity') capacity: number,
     @Query('location') location: string,
     @Query('price') price: number
