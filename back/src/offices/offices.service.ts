@@ -10,8 +10,8 @@ export class OfficeService {
     private fileUploadRepository: FileUploadRepository,
   ) {}
 
-  getAllOffices(page: number, limit: number) {
-    return this.officeRepository.getAllOffices(page, limit);
+  getAllOffices(page: number, limit: number, filters: any) {
+    return this.officeRepository.getAllOffices(page, limit, filters);
   }
 
   addOffices() {
