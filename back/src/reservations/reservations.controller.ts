@@ -82,7 +82,7 @@ export class ReservationsController {
   @ApiOperation({ summary: 'Delete a reservation by ID / Admin only' })
   @ApiResponse({
     status: 200,
-    description: 'Succes message',
+    description: 'Succes message ',
     type: Office,
   })
   @ApiBearerAuth()
