@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto, LoginUserDto, LoginUserGoodleDto, RegisterUserGoogleDto, UpdateUserDto } from './user.dto';
+import { transporter } from '../Config/mailer'
 
 @Injectable()
 export class UserRepository {
@@ -92,6 +93,17 @@ export class UserRepository {
 
     const { password: _, ...userNoPassword } = user;
 
+    try{
+      await transporter.sendMail({
+       from: '"Redux team"', // sender address
+       to: userNoPassword.email, // list of receivers
+       subject: "Confirmacion de cuenta", // Subject line
+       html: "<b>Hola, bienvenido a Redux!</b>", // html body
+     });
+   } catch(error){
+     throw new BadRequestException('Something went wrong. No emails were sent ')
+   }
+
     return userNoPassword;
   }
 
@@ -124,7 +136,7 @@ export class UserRepository {
       token,
       userNoPassword,
     };
-  }
+  } 
 
   async registerGoogle(credentials: RegisterUserGoogleDto){
     const {name, lastname, email} = credentials;

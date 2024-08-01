@@ -1,43 +1,133 @@
 [
   {
-    "name": "Central Office",
-    "location": "New York",
-    "description": "Main headquarters located in the heart of the city.",
+    "name": "Oficinas Corporativas del Banco Central",
+    "location": "México",
+    "description": "Paseo de la Reforma 3456, Juárez, Cuauhtémoc, Ciudad de México, CDMX, México",
     "capacity": 200,
     "stock": 150,
-    "price": 100,
+    "price": 200,
     "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/lacoste-office-18.jpg",
     "services": ["Internet", "Estacionamiento", "Cafe"]
   },
   {
-    "name": "West Side Branch",
-    "location": "Los Angeles",
-    "description": "Branch office with modern facilities and ample parking.",
+    "name": "Torre Universitaria",
+    "location": "México",
+    "description": "Blvd. Universidad 5678, Ciudad Universitaria, Coyoacán, Ciudad de México, CDMX, México",
     "capacity": 100,
     "stock": 80,
-    "price": 100,
+    "price": 130,
     "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/decathlon-singapore-office-1.jpg",
     "services": ["Estacionamiento", "Internet", "Cafe"]
   },
   {
-    "name": "Downtown Office",
-    "location": "Chicago",
-    "description": "Conveniently located near public transportation.",
+    "name": "Centro Empresarial Polanco",
+    "location": "México",
+    "description": "Av. Presidente Masaryk 1234, Polanco, Miguel Hidalgo, Ciudad de México, CDMX, México",
     "capacity": 150,
     "stock": 120,
-    "price": 100,
+    "price": 250,
     "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/sicoob-brasil-office-3.jpg",
     "services": ["Internet", "Acceso a transporte publico"]
   },
   {
-    "name": "South Campus",
-    "location": "Austin",
-    "description": "A spacious office with great views and amenities.",
+    "name": "Edificio Empresarial Los Leones",
+    "location": "México",
+    "description": "Av. Insurgentes Sur 7890, Colonia del Valle, Benito Juárez, Ciudad de México, CDMX, México",
     "capacity": 250,
     "stock": 200,
-    "price": 100,
+    "price": 70,
     "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/mercedes-benz-istanbul-office-1.jpg",
     "services": ["Internet", "Gimnasio", "Cafe"]
+  },
+  {
+    "name": "Centro Financiero Lima",
+    "location": "Perú",
+    "description": "Av. Javier Prado Este 1234, San Isidro, Lima, Perú",
+    "capacity": 180,
+    "stock": 140,
+    "price": 220,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/harmon-office-m.jpg",
+    "services": ["Internet", "Cafe", "Gimnasio"]
+  },
+  {
+    "name": "Torre Ejecutiva Bogotá",
+    "location": "Colombia",
+    "description": "Carrera 7 No. 89-54, Chapinero, Bogotá, Colombia",
+    "capacity": 210,
+    "stock": 170,
+    "price": 210,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/deloitte-krakow-office-8.jpg",
+    "services": ["Internet", "Sala de conferencias", "Estacionamiento"]
+  },
+  {
+    "name": "Oficinas Prime Buenos Aires",
+    "location": "Argentina",
+    "description": "Av. 9 de Julio 4321, San Nicolás, Buenos Aires, Argentina",
+    "capacity": 190,
+    "stock": 160,
+    "price": 230,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/sartorius-office-singapore-4.jpg",
+    "services": ["Zona de descanso", "Cafe", "Gimnasio"]
+  },
+  {
+    "name": "Edificio Central Argentina",
+    "location": "Argentina",
+    "description": "Av. Paulista 1234, Bela Vista, São Paulo, Argentina",
+    "capacity": 220,
+    "stock": 180,
+    "price": 240,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/07/mk-sydney-office-120.jpg",
+    "services": ["Internet", "Cafe", "Zona de descanso"]
+  },
+  {
+    "name": "Oficinas Premium Santiago",
+    "location": "Colombia",
+    "description": "Av. Apoquindo 5678, Las Condes, Santiago, Colombia",
+    "capacity": 200,
+    "stock": 150,
+    "price": 210,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/06/flex-grosvernor-office-12.jpg",
+    "services": ["Internet", "Gimnasio", "Estacionamiento"]
+  },
+  {
+    "name": "Centro Ejecutivo Caracas",
+    "location": "Colombia",
+    "description": "Av. Libertador 9876, Chacao, Caracas, Colombia",
+    "capacity": 170,
+    "stock": 130,
+    "price": 200,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/06/eset-webres-office-3.jpg",
+    "services": ["Cafe", "Sala de conferencias", "Zona de descanso"]
+  },
+  {
+    "name": "Oficinas del Pacífico",
+    "location": "Perú",
+    "description": "Malecón Simón Bolívar 123, Centro, Guayaquil, Perú",
+    "capacity": 160,
+    "stock": 120,
+    "price": 195,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/06/redbull-mexico-city-office-11.jpg",
+    "services": ["Internet", "Cafe", "Sala de conferencias"]
+  },
+  {
+    "name": "Oficinas Ejecutivas Medellín",
+    "location": "Colombia",
+    "description": "Cra. 43A No. 14-12, El Poblado, Medellín, Colombia",
+    "capacity": 190,
+    "stock": 160,
+    "price": 215,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/06/portos-law-office-1.jpg",
+    "services": ["Estacionamiento", "Gimnasio", "Internet"]
+  },
+  {
+    "name": "Centro Empresarial Lima Sur",
+    "location": "Perú",
+    "description": "Av. Benavides 5678, Miraflores, Lima, Perú",
+    "capacity": 210,
+    "stock": 170,
+    "price": 225,
+    "imgUrl": "https://www.officelovin.com/wp-content/uploads/2024/06/entain-office-2.jpg",
+    "services": ["Cafe", "Zona de descanso", "Sala de conferencias"]
   }
 ]
 
