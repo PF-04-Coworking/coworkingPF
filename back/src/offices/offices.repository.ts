@@ -24,7 +24,7 @@ export class OfficeRepository {
       capacity?: number;
       location?: string;
       price?: number;
-    } = {}
+    } = {},
   ) {
     const pageNumber = Number(page) || 1;
     const limitNumber = Number(limit) || 10;
@@ -35,20 +35,27 @@ export class OfficeRepository {
       filters.services = [filters.services];
     }
 
-    const queryBuilder = this.officeRepository.createQueryBuilder('office')
+    const queryBuilder = this.officeRepository
+      .createQueryBuilder('office')
       .leftJoinAndSelect('office.reservations', 'reservation');
 
     if (Array.isArray(filters.services) && filters.services.length > 0) {
       filters.services.forEach((service, index) => {
-        queryBuilder.andWhere(`office.services LIKE :service${index}`, { [`service${index}`]: `%${service}%` });
+        queryBuilder.andWhere(`office.services LIKE :service${index}`, {
+          [`service${index}`]: `%${service}%`,
+        });
       });
     }
 
     if (filters.capacity) {
-      queryBuilder.andWhere('office.capacity >= :capacity', { capacity: filters.capacity });
+      queryBuilder.andWhere('office.capacity >= :capacity', {
+        capacity: filters.capacity,
+      });
     }
     if (filters.location) {
-      queryBuilder.andWhere('office.location LIKE :location', { location: `%${filters.location}%` });
+      queryBuilder.andWhere('office.location LIKE :location', {
+        location: `%${filters.location}%`,
+      });
     }
     if (filters.price) {
       queryBuilder.andWhere('office.price <= :price', { price: filters.price });
@@ -58,20 +65,29 @@ export class OfficeRepository {
 
     const mapServiceToEnum = (service: string): ServicesEnum | null => {
       const formattedService = service.toUpperCase().replace(/ /g, '_');
-      return ServicesEnum[formattedService as keyof typeof ServicesEnum] || null;
+      return (
+        ServicesEnum[formattedService as keyof typeof ServicesEnum] || null
+      );
     };
 
-    const mockOffices = data.map(office => {
+    const mockOffices = data.map((office) => {
       return {
         ...office,
-        services: office.services.map(service => mapServiceToEnum(service))
+        services: office.services.map((service) => mapServiceToEnum(service)),
       };
     });
 
-    const filteredMockOffices = mockOffices.filter(office => {
-      const servicesMatch = !filters.services || (Array.isArray(office.services) && (filters.services as ServicesEnum[]).every(service => office.services.includes(service)));
-      const capacityMatch = !filters.capacity || office.capacity >= filters.capacity;
-      const locationMatch = !filters.location || office.location.includes(filters.location);
+    const filteredMockOffices = mockOffices.filter((office) => {
+      const servicesMatch =
+        !filters.services ||
+        (Array.isArray(office.services) &&
+          (filters.services as ServicesEnum[]).every((service) =>
+            office.services.includes(service),
+          ));
+      const capacityMatch =
+        !filters.capacity || office.capacity >= filters.capacity;
+      const locationMatch =
+        !filters.location || office.location.includes(filters.location);
       const priceMatch = !filters.price || office.price <= filters.price;
       return servicesMatch && capacityMatch && locationMatch && priceMatch;
     });
@@ -81,27 +97,33 @@ export class OfficeRepository {
 
     return paginatedOffices;
   }
-  
-  async addOffices() {
-    data?.map(async (element) => {
-      const office = new Office();
-      office.name = element.name;
-      office.location = element.location;
-      office.description = element.description;
-      office.capacity = element.capacity;
-      office.stock = element.stock;
-      office.price = element.price;
-      office.imgUrl = element.imgUrl;
-      office.services = element.services;
 
-      await this.officeRepository
-        .createQueryBuilder()
-        .insert()
-        .into(Office)
-        .values(office)
-        .execute();
-    });
-    return 'Offices added successfully';
+  async addOffices() {
+    try {
+      console.log('Starting seeding...');
+      data?.map(async (element) => {
+        const office = new Office();
+        office.name = element.name;
+        office.location = element.location;
+        office.description = element.description;
+        office.capacity = element.capacity;
+        office.stock = element.stock;
+        office.price = element.price;
+        office.imgUrl = element.imgUrl;
+        office.services = element.services;
+
+        await this.officeRepository
+          .createQueryBuilder()
+          .insert()
+          .into(Office)
+          .values(office)
+          .execute();
+        console.log('Office added successfully');
+      });
+      console.log('All offices added successfully');
+    } catch (error) {
+      console.log('Error adding offices:', error);
+    }
   }
 
   async getOfficeById(id: string) {
@@ -132,6 +154,7 @@ export class OfficeRepository {
   }
 
   async updateOffice(office: UpdateOfficeDto, id: string) {
+    
     const foundOffice = await this.officeRepository.findOneBy({ id });
 
     if (!foundOffice)

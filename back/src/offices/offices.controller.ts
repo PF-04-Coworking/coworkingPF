@@ -55,9 +55,9 @@ export class OfficeController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('services') services: ServicesEnum[] = [],
-    @Query('capacity') capacity?: number,
-    @Query('location') location?: string,
-    @Query('price') price?: number,
+    @Query('capacity') capacity: number,
+    @Query('location') location: string,
+    @Query('price') price: number,
   ) {
     return this.officeService.getAllOffices(page, limit, {
       services,
@@ -109,6 +109,7 @@ export class OfficeController {
     return this.officeService.createOffice(office, file);
   }
 
+  @ApiOperation({ summary: 'Update an office' })
   @Put(':id')
   @ApiOperation({ summary: 'Update an office / Admin only' })
   @ApiResponse({ status: 200, description: 'The updated office', type: Office })
@@ -116,11 +117,27 @@ export class OfficeController {
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  updateOffices(
+  @UseInterceptors(FileInterceptor('file'))
+  updateOffice(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() office: UpdateOfficeDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 2000000, // 2MB
+            message: 'File is too large',
+          }),
+          new FileTypeValidator({
+            fileType: /(.jpg|.jpeg|.png|.webp)/,
+          }),
+        ],
+        fileIsRequired: false,
+      }),
+    )
+    file?: Express.Multer.File,
   ) {
-    return this.officeService.updateOffice(office, id);
+    return this.officeService.updateOffice(office, id, file);
   }
 
   @Delete(':id')
