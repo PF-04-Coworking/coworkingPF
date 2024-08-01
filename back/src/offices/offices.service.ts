@@ -10,6 +10,10 @@ export class OfficeService {
     private fileUploadRepository: FileUploadRepository,
   ) {}
 
+  async onModuleInit() {
+    await this.addOffices();
+  }
+
   getAllOffices(page: number, limit: number, filters: any) {
     return this.officeRepository.getAllOffices(page, limit, filters);
   }

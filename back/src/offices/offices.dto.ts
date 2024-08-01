@@ -68,7 +68,11 @@ export class CreateOfficesDto {
   @IsArray()
   @ArrayNotEmpty()
   @IsEnum(ServicesEnum, { each: true })
-  @ApiProperty({ description: 'List of services', enum: ServicesEnum, isArray: true })
+  @ApiProperty({
+    description: 'List of services',
+    enum: ServicesEnum,
+    isArray: true,
+  })
   services: ServicesEnum[];
 }
 
@@ -121,6 +125,11 @@ export class UpdateOfficeDto {
   @IsOptional()
   @IsArray()
   @IsEnum(ServicesEnum, { each: true })
-  @ApiProperty({ description: 'List of services', enum: ServicesEnum, isArray: true, required: false })
+  @ApiProperty({
+    description: 'List of services',
+    enum: ServicesEnum,
+    isArray: true,
+    required: false,
+  })
   services: ServicesEnum[];
 }
