@@ -65,6 +65,7 @@ export class OfficeController {
     return this.officeService.createOffice(office, file);
   }
 
+  @ApiOperation({ summary: 'Update an office' })
   @Put(':id')
   updateOffices(
     @Param('id', ParseUUIDPipe) id: string,
