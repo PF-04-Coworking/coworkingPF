@@ -55,11 +55,11 @@ export class FileUploadController {
         ],
       }),
     )
-    file: Express.Multer.File,
+    File: Express.Multer.File,
   ) {
     console.log('user id: ', userId);
-    console.log('File: ', file);
-    return this.fileUploadRepository.uploadUserImage(file, userId);
+    console.log('File: ', File);
+    return this.fileUploadRepository.uploadUserImage(File, userId);
   }
 
   @Post('uploadOfficeImage/:id')

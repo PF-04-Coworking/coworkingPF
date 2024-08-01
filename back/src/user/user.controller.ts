@@ -10,7 +10,13 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { CreateUserDto, LoginUserDto, LoginUserGoodleDto, RegisterUserGoogleDto, UpdateUserDto } from './user.dto';
+import {
+  CreateUserDto,
+  LoginUserDto,
+  LoginUserGoodleDto,
+  RegisterUserGoogleDto,
+  UpdateUserDto,
+} from './user.dto';
 import { ReservationsService } from 'src/reservations/reservations.service';
 import { AddNewReservationDto } from 'src/reservations/reservations.dto';
 import { UserRole } from './user-role.enum';
@@ -100,13 +106,13 @@ export class UserController {
 
   @Post('google/register')
   @ApiOperation({ summary: 'Register a user desde auth de google' })
-  registerGoogle(@Body() credentials:RegisterUserGoogleDto){
+  registerGoogle(@Body() credentials: RegisterUserGoogleDto) {
     return this.userService.registerGoogle(credentials);
   }
 
   @Post('google/login')
   @ApiOperation({ summary: 'Login a user desde auth de google' })
-  loginGoogle(@Body() credentials: LoginUserGoodleDto){
+  loginGoogle(@Body() credentials: LoginUserGoodleDto) {
     return this.userService.loginGoogle(credentials);
   }
 }
