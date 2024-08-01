@@ -80,11 +80,28 @@ export class OfficeController {
 
   @ApiOperation({ summary: 'Update an office' })
   @Put(':id')
-  updateOffices(
+  @ApiOperation({ summary: 'Update an office' })
+  @UseInterceptors(FileInterceptor('file'))
+  updateOffice(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() office: UpdateOfficeDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 2000000, // 2MB
+            message: 'File is too large',
+          }),
+          new FileTypeValidator({
+            fileType: /(.jpg|.jpeg|.png|.webp)/,
+          }),
+        ],
+        fileIsRequired: false,
+      }),
+    )
+    file?: Express.Multer.File,
   ) {
-    return this.officeService.updateOffice(office, id);
+    return this.officeService.updateOffice(office, id,file,);
   }
 
   @ApiOperation({ summary: 'Delete an office' })

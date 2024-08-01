@@ -62,7 +62,7 @@ export class CreateOfficesDto {
 
   @IsOptional()
   @IsUrl()
-  @ApiProperty({ description: 'Office image URL' })
+  @ApiProperty({ description: 'Office image URL', required: false })
   imgUrl: string;
 
   @IsArray()
@@ -118,9 +118,9 @@ export class UpdateOfficeDto {
   price: number;
 
   @IsOptional()
-  @IsUrl()
-  @ApiProperty({ description: 'Image URL', required: false })
-  imgUrl: string;
+  @IsUrl({}, {each:true})
+  @ApiProperty({ description: 'Office image URL', required: false, type: [String] })
+  imgUrl: string[] | string;
 
   @IsOptional()
   @IsArray()

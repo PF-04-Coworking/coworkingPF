@@ -22,11 +22,11 @@ export class User {
   email: string;
 
   @ApiProperty({ description: 'User password' })
-  @Column({ type: 'varchar', length: 128, nullable: false })
+  @Column({ type: 'varchar', length: 128, nullable: true })
   password: string;
 
   @ApiProperty({ description: 'User phone' })
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: true })
   phone: number;
 
   @ApiProperty({ description: 'User country' })
