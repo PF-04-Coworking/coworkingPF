@@ -181,3 +181,50 @@ export class LoginUserDto extends PickType(CreateUserDto, [
   })
   password: string;
 }
+
+export class RegisterUserGoogleDto {
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(3)
+  @MaxLength(80)
+  @ApiProperty({ description: 'User name', minLength: 3, maxLength: 80 })
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(3)
+  @MaxLength(80)
+  @ApiProperty({ description: 'User lastname', minLength: 3, maxLength: 80 })
+  lastname: string;
+
+  @IsEmail()
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(3)
+  @MaxLength(50)
+  @ApiProperty({ description: 'User email', minLength: 3, maxLength: 50 })
+  email: string;
+
+  @IsStrongPassword()
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(8)
+  @MaxLength(15)
+  @ApiProperty({
+    description: 'User password',
+    minLength: 8,
+    maxLength: 15,
+    example: 'NewPass2!',
+  })
+  password: string; 
+}
+
+export class LoginUserGoodleDto{
+  @IsEmail()
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(3)
+  @MaxLength(50)
+  @ApiProperty({ description: 'User email', minLength: 3, maxLength: 50 })
+  email: string;
+}

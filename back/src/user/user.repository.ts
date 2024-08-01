@@ -8,7 +8,7 @@ import { User } from 'src/entities/Users.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto, LoginUserDto, UpdateUserDto } from './user.dto';
+import { CreateUserDto, LoginUserDto, LoginUserGoodleDto, RegisterUserGoogleDto, UpdateUserDto } from './user.dto';
 
 @Injectable()
 export class UserRepository {
@@ -123,6 +123,53 @@ export class UserRepository {
       message: `Successfully signed in. Welcome ${user.name}`,
       token,
       userNoPassword,
+    };
+  }
+
+  async registerGoogle(credentials: RegisterUserGoogleDto){
+    const {name, lastname, email} = credentials;
+
+    const foundUser= await this.userRepository.findOne({where: {email}})
+    if(foundUser) throw new BadRequestException(`Email ${email} is already a registered account`);
+
+    const newUser= await this.userRepository.save({name, lastname, email});
+    
+    const payload = {
+      sub: newUser.id,
+      id: newUser.id,
+      email: newUser.email,
+      role: newUser.role,
+    }
+
+    const token = this.jwtService.sign(payload);
+
+    return {
+      message: `Successfully registered in. Welcome ${newUser.name}`,
+      token,
+      newUser
+    };
+  }
+  
+  async loginGoogle(credentials: LoginUserGoodleDto){
+    const {email} = credentials;
+
+    const user = await this.userRepository.findOne({where:{email}})
+
+    if (!user) throw new BadRequestException('Wrogn credentials');
+    
+    const payload = {
+      sub: user.id,
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    }
+
+    const token = this.jwtService.sign(payload);
+
+    return {
+      message: `Successfully signed in. Welcome ${user.name}`,
+      token,
+      user
     };
   }
 }
