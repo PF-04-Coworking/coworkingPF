@@ -17,6 +17,7 @@ import { UserRole } from './user-role.enum';
 import { Roles } from 'src/auth/guards/roles.decorator';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { PaymentsService } from 'src/payments/payments.service';
 
 @ApiTags('user')
 @Controller('user')
@@ -24,6 +25,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly reservationsService: ReservationsService,
+    private readonly paymentsService: PaymentsService,
   ) {}
 
   //*GET
@@ -32,8 +34,8 @@ export class UserController {
   @Get('all')
   @ApiOperation({ summary: 'Get all users (Admin only)' })
   @ApiBearerAuth()
-  @Roles(UserRole.ADMIN)
-  @UseGuards(AuthGuard, RolesGuard)
+ // @Roles(UserRole.ADMIN)
+  //@UseGuards(AuthGuard, RolesGuard)
   getUsers() {
     return this.userService.getUsers();
   }
@@ -54,17 +56,27 @@ export class UserController {
   }
 
   //* ruta para que un user loggeado cree una nueva reservación
-  @Roles(UserRole.USER)
-  @UseGuards(AuthGuard, RolesGuard)
+  //@Roles(UserRole.USER)
+  //@UseGuards(AuthGuard, RolesGuard)
   @Post(':id/reservations/new')
   @ApiOperation({ summary: 'Add a new reservation (User only)' })
-  addNewReservation(
+  async addNewReservation(
     @Param('id') id: string,
     @Body() data: AddNewReservationDto,
   ) {
-    const newReservation = this.reservationsService.addNewReservation(id, data);
+    // Crea la reserva en la base de datos
+    const newReservation = await this.reservationsService.addNewReservation(id, data);
 
-    return newReservation;
+    // Crear un Payment Intent con Stripe para la reserva
+    const paymentIntent = await this.paymentsService.createPaymentIntent(
+      data.amount,  // Cantidad a pagar
+      'usd'  // Moneda (puedes adaptarlo según tus necesidades)
+    );
+
+    return {
+      reservation: newReservation,
+      paymentIntent,
+    };
   }
 
   //*POST
@@ -98,4 +110,3 @@ export class UserController {
     return this.userService.login(credentials);
   }
 }
-
