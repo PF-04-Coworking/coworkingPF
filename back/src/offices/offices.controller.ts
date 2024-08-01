@@ -19,6 +19,7 @@ import { OfficeService } from 'src/offices/offices.service';
 import { CreateOfficesDto, UpdateOfficeDto } from './offices.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ServicesEnum } from 'src/utils/services.enum';
+import { LocationEnum } from 'src/utils/location.enum';
 
 @ApiTags('offices')
 @Controller('offices')
@@ -32,7 +33,7 @@ export class OfficeController {
     @Query('limit') limit: number = 10,
     @Query('services') services: ServicesEnum[] = [],
     @Query('capacity') capacity: number,
-    @Query('location') location: string,
+    @Query('location') location: LocationEnum,
     @Query('price') price: number,
   ) {
     return this.officeService.getAllOffices(page, limit, {
