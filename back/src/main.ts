@@ -6,7 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(LoggerGlobalMiddleware);
+  // app.use(LoggerGlobalMiddleware);
 
   // Configuración de CORS
   app.enableCors({
@@ -29,4 +29,3 @@ async function bootstrap() {
   console.log('Server listening on http://localhost:3000');
 }
 bootstrap();
-
