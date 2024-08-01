@@ -1,6 +1,6 @@
-export enum ServicesEnum{
+export enum LocationEnum{
     ARGENTINA = 'Argentina',
     COLOMBIA = 'Colombia',
-    MEXICO = 'Mexico',
-    PERU = 'Peru'   
+    MEXICO = 'México',
+    PERU = 'Perú'   
 }
