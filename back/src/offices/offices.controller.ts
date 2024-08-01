@@ -33,16 +33,15 @@ export class OfficeController {
     @Query('services') services: ServicesEnum[] = [],
     @Query('capacity') capacity: number,
     @Query('location') location: string,
-    @Query('price') price: number
+    @Query('price') price: number,
   ) {
     return this.officeService.getAllOffices(page, limit, {
       services,
       capacity,
       location,
-      price
+      price,
     });
   }
-  
 
   @Get('seeder')
   @ApiOperation({ summary: 'Add seed offices' })
@@ -94,6 +93,3 @@ export class OfficeController {
     return this.officeService.deleteOffice(id);
   }
 }
-
- 
-
