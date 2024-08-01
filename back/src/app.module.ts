@@ -12,6 +12,7 @@ import { UserModule } from './user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ReservationsModule } from './reservations/reservations.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 @Module({
   imports: [
@@ -44,4 +45,16 @@ import { FileUploadModule } from './file-upload/file-upload.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private readonly appService: AppService) {}
+
+  configureSwagger(app) {
+    const config = new DocumentBuilder()
+      .setTitle('API')
+      .setDescription('API description')
+      .setVersion('1.0')
+      .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document);
+  }
+}
