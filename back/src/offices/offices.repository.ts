@@ -101,30 +101,34 @@ export class OfficeRepository {
   async addOffices() {
     try {
       console.log('Starting seeding...');
-      data?.map(async (element) => {
-        const office = new Office();
-        office.name = element.name;
-        office.location = element.location;
-        office.description = element.description;
-        office.capacity = element.capacity;
-        office.stock = element.stock;
-        office.price = element.price;
-        office.imgUrl = element.imgUrl;
-        office.services = element.services;
-
-        await this.officeRepository
-          .createQueryBuilder()
-          .insert()
-          .into(Office)
-          .values(office)
-          .execute();
-        console.log('Office added successfully');
-      });
+      for (const element of data) {
+        const existingOffice = await this.officeRepository.findOne({
+          where: { name: element.name, location: element.location },
+        });
+  
+        if (!existingOffice) {
+          const office = new Office();
+          office.name = element.name;
+          office.location = element.location;
+          office.description = element.description;
+          office.capacity = element.capacity;
+          office.stock = element.stock;
+          office.price = element.price;
+          office.imgUrl = element.imgUrl;
+          office.services = element.services;
+  
+          await this.officeRepository.save(office);
+          console.log('Office added successfully');
+        } else {
+          console.log(`Office ${element.name} at ${element.location} already exists.`);
+        }
+      }
       console.log('All offices added successfully');
     } catch (error) {
       console.log('Error adding offices:', error);
     }
   }
+  
 
   async getOfficeById(id: string) {
     const office = await this.officeRepository.findOneBy({ id });
