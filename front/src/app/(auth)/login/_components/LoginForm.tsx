@@ -1,38 +1,19 @@
 "use client";
 
 import { Formik, Form } from "formik";
-import { toast } from "react-toastify";
-
-import validateLogin from "@/app/(auth)/helpers/validateLogin";
+import { validateLogin } from "@/app/(auth)/helpers/validateLogin";
 import { FieldValidate } from "@/components/common/FieldValidate";
 import { Button } from "@/components/common/Button";
 import { InputLabel } from "@/components/common/InputLabel";
-import { useRouter } from "next/navigation";
-import { GoogleIcon } from "../../_components/GoogleIcon";
-import { apiUsers } from "@/lib/api/auth/apiUsers";
 import { ILoginData } from "@/lib/api/types";
+import { GoogleLoginButton } from "./GoogleLoginButton";
 
 const LoginForm = () => {
-  const router = useRouter();
-
   const handleSubmitLogin = async (
     formData: ILoginData,
-    { setSubmitting, resetForm }: any
+    { setSubmitting }: any
   ) => {
-    try {
-      const response = await apiUsers.login(formData);
-      const { token, user } = response;
-      localStorage.setItem(
-        "userSession",
-        JSON.stringify({ token: token, userData: user })
-      );
-      toast.success("Bienvenido");
-      router.push("/");
-    } catch (error) {
-      toast.error("Credenciales incorrectas");
-    } finally {
-      setSubmitting(false);
-    }
+    console.log("Logueando...");
   };
 
   return (
@@ -69,14 +50,7 @@ const LoginForm = () => {
             <Button type="submit" className="w-full" variant="primary">
               Iniciar Sesión
             </Button>
-            <Button
-              variant="outline"
-              className="w-full"
-             
-            >
-              <GoogleIcon className="mr-2" />
-              Iniciar sesión con Google
-            </Button>
+            <GoogleLoginButton />
           </div>
         </Form>
       )}
