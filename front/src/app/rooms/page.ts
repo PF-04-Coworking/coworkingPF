@@ -1,1 +1,1 @@
-export {default} from "./rooms";
+export { default } from "./rooms";

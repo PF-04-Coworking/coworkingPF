@@ -1,25 +1,32 @@
-import { ErrorMessage, Field, useFormikContext } from "formik";
+import React from "react";
+import { ErrorMessage, Field, useFormikContext, FieldProps } from "formik";
 
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+}
 
-const FieldValidate: React.FC<IProps> = ({ ...props }) => {
-  const { errors, touched, setFieldTouched }: any = useFormikContext();
-  const { name = "", type, placeholder, ...rest } = props;
+const FieldValidate: React.FC<IProps> = ({
+  name,
+  type,
+  placeholder,
+  ...rest
+}) => {
+  const { errors, touched } = useFormikContext<any>();
+
+  const borderColor =
+    errors[name] && touched[name]
+      ? "border-red-500"
+      : touched[name]
+      ? "border-primary"
+      : "border-primary";
 
   return (
     <>
       <Field
-        className={`rounded-md py-3 px-3 mb-1 text-sm w-full bg-inherit text-white border focus:outline-none disabled:bg-secondaryDark disabled:text-secondary ${
-          errors[name] && touched[name]
-            ? "border-red-500"
-            : touched[name]
-            ? "border-green-500"
-            : "border-primary"
-        }`}
+        className={`rounded-md py-3 px-3 mb-1 text-sm w-full bg-inherit text-white border focus:outline-none disabled:bg-secondaryDark disabled:text-secondary ${borderColor}`}
         type={type}
         name={name}
         placeholder={placeholder}
-        onFocus={() => setFieldTouched(name, true, true)}
         {...rest}
       />
       <ErrorMessage

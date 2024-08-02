@@ -13,7 +13,7 @@ import { UserService } from './user.service';
 import {
   CreateUserDto,
   LoginUserDto,
-  LoginUserGoodleDto,
+  LoginUserGoogleDto,
   RegisterUserGoogleDto,
   UpdateUserDto,
 } from './user.dto';
@@ -112,7 +112,7 @@ export class UserController {
 
   @Post('google/login')
   @ApiOperation({ summary: 'Login a user desde auth de google' })
-  loginGoogle(@Body() credentials: LoginUserGoodleDto) {
+  loginGoogle(@Body() credentials: LoginUserGoogleDto) {
     return this.userService.loginGoogle(credentials);
   }
 }
