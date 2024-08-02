@@ -50,4 +50,4 @@ const validateRegister = (values: FormValues) => {
   return errors;
 };
 
-export default validateRegister;
+export { validateRegister };

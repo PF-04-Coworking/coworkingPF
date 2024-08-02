@@ -11,7 +11,6 @@ import { useState } from "react";
 import useOfficesRoomsStore from "./_store/storeFilterOffice";
 import { useFetchFilteredOffices, useFetchAllOffices } from "./hooks/hooks";
 
-
 const page = 1;
 const limit = 100;
 
@@ -23,7 +22,7 @@ const rooms = () => {
   //estados de la busqueda
   const [searchTerm, setSearchTerm] = useState("");
   //estados de los filtros
-  const [filters, setFilters] = useState({ amenities: [], countries: [] });
+  const [filters, setFilters] = useState({ amenities: [], location: [] });
 
   useFetchFilteredOffices(filters, page, limit);
   useFetchAllOffices();

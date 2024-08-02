@@ -8,8 +8,14 @@ import { User } from 'src/entities/Users.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto, LoginUserDto, LoginUserGoodleDto, RegisterUserGoogleDto, UpdateUserDto } from './user.dto';
-import { transporter } from '../Config/mailer'
+import {
+  CreateUserDto,
+  LoginUserDto,
+  LoginUserGoogleDto,
+  RegisterUserGoogleDto,
+  UpdateUserDto,
+} from './user.dto';
+import { transporter } from '../Config/mailer';
 
 @Injectable()
 export class UserRepository {
@@ -60,7 +66,9 @@ export class UserRepository {
       email: foundUser.email,
     });
 
-    return dbUser;
+    const { password: _, ...userNoPassword } = dbUser;
+
+    return userNoPassword;
   }
 
   async deleteById(id: string) {
@@ -93,16 +101,18 @@ export class UserRepository {
 
     const { password: _, ...userNoPassword } = user;
 
-    try{
+    try {
       await transporter.sendMail({
-       from: '"Redux team"', // sender address
-       to: userNoPassword.email, // list of receivers
-       subject: "Confirmacion de cuenta", // Subject line
-       html: "<b>Hola, bienvenido a Redux!</b>", // html body
-     });
-   } catch(error){
-     throw new BadRequestException('Something went wrong. No emails were sent ')
-   }
+        from: '"Redux team"', // sender address
+        to: userNoPassword.email, // list of receivers
+        subject: 'Confirmacion de cuenta', // Subject line
+        html: '<b>Hola, bienvenido a Relux!</b>', // html body
+      });
+    } catch (error) {
+      throw new BadRequestException(
+        'Something went wrong. No emails were sent ',
+      );
+    }
 
     return userNoPassword;
   }
@@ -136,52 +146,47 @@ export class UserRepository {
       token,
       userNoPassword,
     };
-  } 
-
-  async registerGoogle(credentials: RegisterUserGoogleDto){
-    const {name, lastname, email} = credentials;
-
-    const foundUser= await this.userRepository.findOne({where: {email}})
-    if(foundUser) throw new BadRequestException(`Email ${email} is already a registered account`);
-
-    const newUser= await this.userRepository.save({name, lastname, email});
-    
-    const payload = {
-      sub: newUser.id,
-      id: newUser.id,
-      email: newUser.email,
-      role: newUser.role,
-    }
-
-    const token = this.jwtService.sign(payload);
-
-    return {
-      message: `Successfully registered in. Welcome ${newUser.name}`,
-      token,
-      newUser
-    };
   }
-  
-  async loginGoogle(credentials: LoginUserGoodleDto){
-    const {email} = credentials;
 
-    const user = await this.userRepository.findOne({where:{email}})
+  async registerGoogle(credentials: RegisterUserGoogleDto) {
+    const { name, lastname, email } = credentials;
+
+    const foundUser = await this.userRepository.findOne({ where: { email } });
+    if (foundUser)
+      throw new BadRequestException(
+        `Email ${email} is already a registered account`,
+      );
+
+    const newUser = await this.userRepository.save({ name, lastname, email });
+
+    const { password: _, ...userNoPassword } = newUser;
+
+    return userNoPassword;
+  }
+
+  async loginGoogle(credentials: LoginUserGoogleDto) {
+    const { email } = credentials;
+
+    const user = await this.userRepository.findOne({ where: { email } });
 
     if (!user) throw new BadRequestException('Wrogn credentials');
-    
+
     const payload = {
       sub: user.id,
       id: user.id,
       email: user.email,
       role: user.role,
-    }
+    };
 
     const token = this.jwtService.sign(payload);
+
+    const { password: _, ...userNoPassword } = user;
 
     return {
       message: `Successfully signed in. Welcome ${user.name}`,
       token,
-      user
+      userNoPassword,
     };
   }
 }
+
