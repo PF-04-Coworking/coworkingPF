@@ -20,6 +20,7 @@ const CreateOfficeForm = () => {
     formData.append("file", values.file);
     try {
       const promise = apiOffices.createOffice(formData);
+      console.log("Agregando...");
       toast.promise(promise, {
         pending: "Agregando...",
         success: "Oficina creada exitosamente",
