@@ -6,7 +6,7 @@ dotenvConfig({ path: '.development.env' });
 
 // Crear el transportador de nodemailer
 export const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: 'smtp.gmail.com',
   port: 465,
   secure: true, // Usar `true` para el puerto 465, `false` para todos los demás puertos
   auth: {
@@ -16,8 +16,11 @@ export const transporter = nodemailer.createTransport({
 });
 
 // Verificar la configuración del transportador
-transporter.verify().then(() => {
-  console.log('NodeMailer ready');
-}).catch(error => {
-  console.error('Error verifying transporter:', error);
-});
+transporter
+  .verify()
+  .then(() => {
+    console.log('NodeMailer ready');
+  })
+  .catch((error) => {
+    console.error('Error verifying transporter:', error);
+  });
