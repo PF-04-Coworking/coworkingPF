@@ -1,7 +1,7 @@
 import { axiosClient } from "../apiConfig";
 import { ILoginData, IRegisterData } from "../types";
 
-const apiUsers = {
+const apiAuth = {
   login: async (data: ILoginData) => {
     const response = await axiosClient.post("/user/login", data);
     return response.data;
@@ -11,6 +11,16 @@ const apiUsers = {
     const response = await axiosClient.post("/user/register", data);
     return response.data;
   },
+
+  googleRegister: async (data: Partial<IRegisterData>) => {
+    const response = await axiosClient.post("/user/google/register", data);
+    return response.data;
+  },
+
+  googleLogin: async (data: Partial<ILoginData>) => {
+    const response = await axiosClient.post("/user/google/login", data);
+    return response.data;
+  },
 };
 
-export { apiUsers };
+export { apiAuth };

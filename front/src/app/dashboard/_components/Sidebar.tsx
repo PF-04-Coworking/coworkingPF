@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { CustomLink } from "../../../components/common/CustomLink";
 import { TextLogo } from "../../../components/common/TextLogo";
 import { INavLink } from "../types";
-import Link from "next/link";
 import { Logout } from "./Logout";
 
 const Sidebar = ({ navLinks }: { navLinks: INavLink[] }) => {

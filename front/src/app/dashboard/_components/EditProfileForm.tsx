@@ -1,47 +1,69 @@
 "use client";
 
 import React from "react";
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { InputLabel } from "@/components/common/InputLabel";
 import { FieldValidate } from "@/components/common/FieldValidate";
 import { Button } from "@/components/common/Button";
+import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
+import { apiUsers } from "@/lib/api/users/apiUsers";
+import { toast } from "react-toastify";
 
 const EditProfileForm = () => {
+  const { userData, setUserData } = useAuthStore();
+
   const validationSchema = Yup.object({
     name: Yup.string().required("Debes ingresar un nombre"),
-    lastName: Yup.string().required("Debes ingresar un apellido"),
-    phoneNumber: Yup.string()
+    lastname: Yup.string().required("Debes ingresar un apellido"),
+    phone: Yup.string()
       .required("Debes ingresar un número de teléfono")
       .matches(/^[0-9]+$/, "Número de teléfono unválido")
-      .min(10, "Debes ingresar al menos 7 dígitos")
+      .min(7, "Debes ingresar al menos 7 dígitos")
       .max(10, "No debes ingresar más de 15 dígitos")
       .required("Debes ingresar un número de teléfono"),
     country: Yup.string()
       .required("Debes ingresar un país")
-      .min(2, "Debes ingresar al menos 3 caracteres")
-      .max(2, "Debes ingresar al menos 3 caracteres"),
+      .min(2, "Debes ingresar al menos 3 caracteres"),
     city: Yup.string()
       .required("Debes ingresar una ciudad")
-      .min(2, "Debes ingresar al menos 2 caracteres")
-      .max(2, "Debes ingresar al menos 2 caracteres"),
+      .min(2, "Debes ingresar al menos 2 caracteres"),
     age: Yup.number()
       .required("Debes ingresar una edad")
       .min(18, "Debes ingresar al menos 18 años")
       .max(100, "Debes ingresar menos de 100 años"),
   });
 
+  const handleSubmit = async (
+    values: any,
+    { setSubmitting, resetForm }: any
+  ) => {
+    if (!userData) return;
+    const promise = apiUsers.updateUser(userData.id, values);
+    toast.promise(promise, {
+      pending: "Actualizando...",
+      success: "Datos actualizados",
+      error: "Datos incorrectos",
+    });
+    const newUserData = await promise;
+    setUserData(newUserData);
+    setSubmitting(false);
+    resetForm({ values });
+  };
+
   return (
     <Formik
-      initialValues={{ name: "", lastName: "", phoneNumber: "", email: "" }}
-      validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+      initialValues={{
+        name: userData?.name || "",
+        lastname: userData?.lastname || "",
+        phone: userData?.phone || "",
+        email: userData?.email || "",
+        age: userData?.age || "",
+        country: userData?.country || "",
+        city: userData?.city || "",
       }}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
     >
       {({ isSubmitting, dirty }) => (
         <Form>
@@ -52,28 +74,28 @@ const EditProfileForm = () => {
             </div>
 
             <div className="space-y-2">
-              <InputLabel htmlFor="lastName">Apellido</InputLabel>
-              <FieldValidate type="text" name="lastName" placeholder="" />
+              <InputLabel htmlFor="lastname">Apellido</InputLabel>
+              <FieldValidate type="text" name="lastname" placeholder="" />
             </div>
 
             <div className="space-y-2">
-              <InputLabel htmlFor="phoneNumber">Teléfono</InputLabel>
-              <FieldValidate type="text" name="phoneNumber" placeholder="" />
+              <InputLabel htmlFor="phone">Teléfono</InputLabel>
+              <FieldValidate type="text" name="phone" placeholder="" />
             </div>
 
             <div className="space-y-2">
               <InputLabel htmlFor="age">Edad</InputLabel>
-              <FieldValidate type="text" name="email" placeholder="" />
+              <FieldValidate type="text" name="age" placeholder="" />
             </div>
 
             <div className="space-y-2">
               <InputLabel htmlFor="country">País</InputLabel>
-              <FieldValidate type="text" name="email" placeholder="" />
+              <FieldValidate type="text" name="country" placeholder="" />
             </div>
 
             <div className="space-y-2">
               <InputLabel htmlFor="city">Ciudad</InputLabel>
-              <FieldValidate type="text" name="email" placeholder="" />
+              <FieldValidate type="text" name="city" placeholder="" />
             </div>
           </div>
 

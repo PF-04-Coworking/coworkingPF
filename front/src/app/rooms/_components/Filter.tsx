@@ -14,28 +14,23 @@ import {
 import { ChevronDownIcon } from "lucide-react";
 import { Formik, Form } from "formik";
 import { Checkbox } from "@/components/common/checkbox";
-import create from 'zustand';
+import { create } from "zustand";
 
 interface IFilter {
   filters: {
     services: string[];
-    countries: string[];
+    location: string[];
   };
-  setFilters: (filters: {
-    services: string[];
-    countries: string[];
-  }) => void;
-} 
+  setFilters: (filters: { services: string[]; location: string[] }) => void;
+}
 
 const useFilterStore = create<IFilter>((set) => ({
   filters: {
     services: [],
-    countries: [],
+    location: [],
   },
   setFilters: (filters) => set({ filters }),
 }));
-
-
 
 const amenitiesOptions: string[] = [
   "Internet",
@@ -47,15 +42,10 @@ const amenitiesOptions: string[] = [
   "Acceso a transporte publico",
 ];
 
-const countriesOptions: string[] = [
-  "México",
-  "Perú",
-  "Colombia",
-  "Argentina",
-];
+const locationOptions: string[] = ["México", "Perú", "Colombia", "Argentina"];
 
-const Filter = ({onFilter}: any) => {
-  const {filters, setFilters} = useFilterStore();
+const Filter = ({ onFilter }: any) => {
+  const { filters, setFilters } = useFilterStore();
 
   return (
     <Sheet>
@@ -85,7 +75,7 @@ const Filter = ({onFilter}: any) => {
           initialValues={filters}
           onSubmit={(values) => {
             setFilters(values);
-           onFilter(values);
+            onFilter(values);
           }}
         >
           {({ values }) => (
@@ -108,16 +98,19 @@ const Filter = ({onFilter}: any) => {
               </div>
               <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-2">Países</h3>
-                {countriesOptions.map((country) => (
-                  <label key={country} className="flex gap-2 items-center mb-3">
+                {locationOptions.map((location) => (
+                  <label
+                    key={location}
+                    className="flex gap-2 items-center mb-3"
+                  >
                     <Checkbox
-                      name="countries"
-                      value={country}
+                      name="location"
+                      value={location}
                       className="border-primary"
                       type="submit"
                     />
 
-                    <div>{country}</div>
+                    <div>{location}</div>
                   </label>
                 ))}
               </div>

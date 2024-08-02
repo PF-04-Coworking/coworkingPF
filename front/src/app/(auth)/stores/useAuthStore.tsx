@@ -1,22 +1,29 @@
+import { IUserData } from "@/app/dashboard/types";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-interface AuthState {
+interface IAuthState {
   authToken: string | null;
+  userData: IUserData | null;
   setAuthToken: (token: string) => void;
   removeAuthToken: () => void;
+  setUserData: (userData: IUserData) => void;
+  removeUserData: () => void;
 }
 
-const useAuthStore = create<AuthState>()(
+const useAuthStore = create<IAuthState>()(
   persist(
     (set) => ({
       authToken: null,
+      userData: null,
       setAuthToken: (token) => set({ authToken: token }),
       removeAuthToken: () => set({ authToken: null }),
+      setUserData: (userData) => set({ userData }),
+      removeUserData: () => set({ userData: null }),
     }),
     {
       name: "auth-storage",
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

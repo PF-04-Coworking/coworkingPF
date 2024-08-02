@@ -4,35 +4,36 @@ import { Formik, Form } from "formik";
 import { validateRegister } from "@/app/(auth)/helpers/validateRegister";
 import { FieldValidate } from "@/components/common/FieldValidate";
 import { Button } from "@/components/common/Button";
-import { GoogleIcon } from "../../_components/GoogleIcon";
 import { InputLabel } from "@/components/common/InputLabel";
-import { apiUsers } from "@/lib/api/auth/apiUsers";
+import { apiAuth } from "@/lib/api/auth/apiAuth";
 import { IRegisterData } from "@/lib/api/types";
-import { GoogleLogin } from "@react-oauth/google";
-import { useEffect } from "react";
-import "../_components/Google.css";
+import { GoogleRegisterButton } from "./GoogleRegisterButton";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 const RegisterForm = () => {
   const router = useRouter();
+  const { setAuthToken, setUserData } = useAuthStore();
 
   const handleSubmitRegister = async (
     formData: IRegisterData,
     { setSubmitting }: any
   ) => {
-    const promise = apiUsers.register(formData);
+    const promise = apiAuth.register(formData);
     toast.promise(promise, {
       pending: "Validando...",
       success: "Registro exitoso",
       error: "Ya existe un usuario con ese correo",
     });
-    await promise;
-    toast.success("Registro exitoso");
-    router.push("/login"); // TODO: Redirect to user dashboard
+    const response = await promise;
+    const { email } = response;
+    const { token, userNoPassword } = await apiAuth.login({
+      email,
+      password: formData.password,
+    });
+    setAuthToken(token);
+    setUserData(userNoPassword);
+    router.push("/rooms");
     setSubmitting(false);
-  };
-
-  const handleGoogleRegister = (response: any) => {
-    console.log(response);
   };
 
   return (
@@ -106,12 +107,7 @@ const RegisterForm = () => {
             >
               Registrarse
             </Button>
-            <GoogleLogin
-              onSuccess={handleGoogleRegister}
-              logo_alignment="center"
-              text="signup_with"
-              // width={363}
-            />
+            <GoogleRegisterButton />
           </div>
         </Form>
       )}
