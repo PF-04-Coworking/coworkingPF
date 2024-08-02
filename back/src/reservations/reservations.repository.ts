@@ -4,7 +4,6 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
-import { UserRepository } from 'src/user/user.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reservation } from 'src/entities/Reservations.entity';
 import { Repository } from 'typeorm';
@@ -38,17 +37,13 @@ export class ReservationsRepository {
     }
 
     return reservationsByUserId;
-  } //!ojo
+  }
 
   // Rutas POST
   async addNewReservation(id: string, data: AddNewReservationDto) {
-    console.log('En reservations.repository. data: ', data);
-
     const foundUser = await this.userRepository.findOne({
       where: { id: id },
     });
-
-    console.log('En reservations.repository. foundUser: ', foundUser);
 
     if (!foundUser) {
       throw new NotFoundException(
