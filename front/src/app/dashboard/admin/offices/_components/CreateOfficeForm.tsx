@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { InputLabel } from "@/components/common/InputLabel";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
 import { useOfficesStore } from "../../_stores/useOfficesStore";
+import { Console } from "console";
 
 const CreateOfficeForm = () => {
   const { addStoredOffice } = useOfficesStore();
@@ -20,6 +21,7 @@ const CreateOfficeForm = () => {
     formData.append("file", values.file);
     try {
       const promise = apiOffices.createOffice(formData);
+      console.log("Agregando...");
       toast.promise(promise, {
         pending: "Agregando...",
         success: "Oficina creada exitosamente",

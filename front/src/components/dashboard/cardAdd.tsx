@@ -44,13 +44,7 @@ const CardAdd = () => {
   };
   return (
     <>
-      <Button
-        variant="primary"
-        className="ml-4 "
-        onClick={() => setIsModalOpen(true)}
-      >
-        Agregar oficina
-      </Button>
+ 
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="font-sans bg-background text-white border-primary ">
