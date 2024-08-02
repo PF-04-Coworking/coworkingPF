@@ -216,10 +216,10 @@ export class RegisterUserGoogleDto {
     maxLength: 15,
     example: 'NewPass2!',
   })
-  password: string; 
+  password: string;
 }
 
-export class LoginUserGoodleDto{
+export class LoginUserGoogleDto {
   @IsEmail()
   @IsString()
   @IsNotEmpty()
@@ -228,3 +228,4 @@ export class LoginUserGoodleDto{
   @ApiProperty({ description: 'User email', minLength: 3, maxLength: 50 })
   email: string;
 }
+
