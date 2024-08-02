@@ -38,6 +38,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 export class OfficeController {
   constructor(private readonly officeService: OfficeService) {}
 
+  //* GET
   @Get()
   @ApiOperation({ summary: 'Get all offices with pagination and filters' })
   @ApiQuery({ name: 'page', required: false, type: Number })
@@ -110,8 +111,8 @@ export class OfficeController {
     return this.officeService.createOffice(office, file);
   }
 
-  @ApiOperation({ summary: 'Update an office' })
   @Put(':id')
+  @ApiOperation({ summary: 'Update an office' })
   @ApiOperation({ summary: 'Update an office / Admin only' })
   @ApiResponse({ status: 200, description: 'The updated office', type: Office })
   @ApiResponse({ status: 404, description: 'Office not found' })
@@ -138,7 +139,7 @@ export class OfficeController {
     )
     file?: Express.Multer.File,
   ) {
-    return this.officeService.updateOffice(office, id, file);
+    //! return this.officeService.updateOffice(office, id, file);
   }
 
   @Delete(':id')

@@ -31,15 +31,15 @@ export class OfficeRepository {
     const limitNumber = Number(limit) || 10;
     const skip = (pageNumber - 1) * limitNumber;
     const take = limitNumber;
-  
+
     if (filters.services && typeof filters.services === 'string') {
       filters.services = [filters.services];
     }
-  
+
     const queryBuilder = this.officeRepository
       .createQueryBuilder('office')
       .leftJoinAndSelect('office.reservations', 'reservation');
-  
+
     if (Array.isArray(filters.services) && filters.services.length > 0) {
       filters.services.forEach((service, index) => {
         queryBuilder.andWhere(`office.services LIKE :service${index}`, {
@@ -47,7 +47,7 @@ export class OfficeRepository {
         });
       });
     }
-  
+
     if (filters.capacity) {
       queryBuilder.andWhere('office.capacity >= :capacity', {
         capacity: filters.capacity,
@@ -61,9 +61,9 @@ export class OfficeRepository {
     if (filters.price) {
       queryBuilder.andWhere('office.price <= :price', { price: filters.price });
     }
-  
+
     const dbOffices = await queryBuilder.skip(skip).take(take).getMany();
-  
+
     return dbOffices;
   }
 
@@ -74,7 +74,7 @@ export class OfficeRepository {
         const existingOffice = await this.officeRepository.findOne({
           where: { name: element.name, location: element.location },
         });
-  
+
         if (!existingOffice) {
           const office = new Office();
           office.name = element.name;
@@ -85,11 +85,13 @@ export class OfficeRepository {
           office.price = element.price;
           office.imgUrl = element.imgUrl;
           office.services = element.services;
-  
+
           await this.officeRepository.save(office);
           console.log('Office added successfully');
         } else {
-          console.log(`Office ${element.name} at ${element.location} already exists.`);
+          console.log(
+            `Office ${element.name} at ${element.location} already exists.`,
+          );
         }
       }
       console.log('All offices added successfully');
@@ -98,10 +100,23 @@ export class OfficeRepository {
     }
   }
 
-  async getOfficeById(id: string) {
-    const office = await this.officeRepository.findOneBy({ id });
-    if (!office) throw new Error('Office not found');
-    return office;
+  async getOfficeById(id: string): Promise<Office> {
+    try {
+      const office = await this.officeRepository.findOne({
+        where: { id },
+        relations: ['reservations'],
+      });
+
+      console.log('en office.repository. office:', office);
+      if (!office) {
+        throw new NotFoundException('Office not found');
+      }
+
+      return office;
+    } catch (error) {
+      console.error('Error fetching office by id:', error);
+      throw new Error('Error fetching office');
+    }
   }
 
   async createOffice(office: CreateOfficesDto) {
@@ -126,7 +141,6 @@ export class OfficeRepository {
   }
 
   async updateOffice(office: UpdateOfficeDto, id: string) {
-    
     const foundOffice = await this.officeRepository.findOneBy({ id });
 
     if (!foundOffice)

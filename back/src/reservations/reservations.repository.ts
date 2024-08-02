@@ -11,10 +11,6 @@ import { Repository } from 'typeorm';
 import { User } from 'src/entities/Users.entity';
 import { Office } from 'src/entities/Offices.entity'; // Importar la entidad Office
 
-const mockReservations = [
-  // Mock data aquí
-];
-
 @Injectable()
 export class ReservationsRepository {
   constructor(
@@ -45,10 +41,14 @@ export class ReservationsRepository {
   } //!ojo
 
   // Rutas POST
-  async addNewReservation(data: AddNewReservationDto) {
+  async addNewReservation(id: string, data: AddNewReservationDto) {
+    console.log('En reservations.repository. data: ', data);
+
     const foundUser = await this.userRepository.findOne({
-      where: { id: data.user_id },
+      where: { id: id },
     });
+
+    console.log('En reservations.repository. foundUser: ', foundUser);
 
     if (!foundUser) {
       throw new NotFoundException(
