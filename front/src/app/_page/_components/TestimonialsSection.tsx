@@ -2,7 +2,7 @@ import { Card } from "@/components/common/Card";
 import { Heading } from "@/components/common/Heading";
 import { Highlight } from "@/components/common/Highlight";
 import { Paragraph } from "@/components/common/Paragraph";
-import { Quote, QuoteIcon, Star, StarIcon } from "lucide-react";
+import { QuoteIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 
 const testimonials = [

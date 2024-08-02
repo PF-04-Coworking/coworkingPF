@@ -1,12 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import faceImage from "@/../public/images/face-1.png";
-import { EditProfileForm } from "./_components/EditProfileForm";
+import { EditProfileForm } from "../../_components/EditProfileForm";
 import { Paragraph } from "@/components/common/Paragraph";
 import { Heading } from "@/components/common/Heading";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { ADMIN_LINKS } from "../../user/links";
+import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
+import { useUser } from "../../_hooks/useUser";
 
 const Account = () => {
+  const { userData } = useUser();
+  const { name, lastname, email, role } = userData || {};
+
   return (
     <DashboardLayout
       headerTitle="Panel de administración"
@@ -20,9 +27,11 @@ const Account = () => {
             className="size-40 border border-primary rounded-full p-3"
           />
           <div className="space-y-1">
-            <Heading level="2">Bardo Untiveros</Heading>
-            <Paragraph variant="primary">bardountiveros@gmail.com</Paragraph>
-            <Paragraph variant="secondary">Administrador</Paragraph>
+            <Heading level="2">
+              {name} {lastname}
+            </Heading>
+            <Paragraph variant="primary">{email}</Paragraph>
+            <Paragraph variant="secondary">{role}</Paragraph>
           </div>
         </div>
       </div>

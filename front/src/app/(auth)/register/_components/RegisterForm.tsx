@@ -1,31 +1,39 @@
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { Formik, Form } from "formik";
-import validateRegister from "@/app/(auth)/helpers/validateRegister";
+import { validateRegister } from "@/app/(auth)/helpers/validateRegister";
 import { FieldValidate } from "@/components/common/FieldValidate";
 import { Button } from "@/components/common/Button";
-import { GoogleIcon } from "../../_components/GoogleIcon";
 import { InputLabel } from "@/components/common/InputLabel";
-import { apiUsers } from "@/lib/api/auth/apiUsers";
+import { apiAuth } from "@/lib/api/auth/apiAuth";
 import { IRegisterData } from "@/lib/api/types";
+import { GoogleRegisterButton } from "./GoogleRegisterButton";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 const RegisterForm = () => {
   const router = useRouter();
+  const { setAuthToken, setUserData } = useAuthStore();
 
   const handleSubmitRegister = async (
     formData: IRegisterData,
-    { setSubmitting, resetForm }: any
+    { setSubmitting }: any
   ) => {
-    try {
-      const response = await apiUsers.register(formData);
-      console.log(response);
-      toast.success("Registro exitoso");
-      router.push("/login");
-    } catch (error) {
-      toast.error("Hubo un error al registrarte");
-    } finally {
-      setSubmitting(false);
-    }
+    const promise = apiAuth.register(formData);
+    toast.promise(promise, {
+      pending: "Validando...",
+      success: "Registro exitoso",
+      error: "Ya existe un usuario con ese correo",
+    });
+    const response = await promise;
+    const { email } = response;
+    const { token, userNoPassword } = await apiAuth.login({
+      email,
+      password: formData.password,
+    });
+    setAuthToken(token);
+    setUserData(userNoPassword);
+    router.push("/rooms");
+    setSubmitting(false);
   };
 
   return (
@@ -91,13 +99,15 @@ const RegisterForm = () => {
           </div>
 
           <div className="pt-4 space-y-4">
-            <Button type="submit" className="w-full" variant="primary" disabled={isSubmitting}> 
+            <Button
+              type="submit"
+              className="w-full"
+              variant="primary"
+              disabled={isSubmitting}
+            >
               Registrarse
             </Button>
-            <Button variant="outline" className="w-full">
-              <GoogleIcon className="mr-2" />
-              Registrarse con Google
-            </Button>
+            <GoogleRegisterButton />
           </div>
         </Form>
       )}
