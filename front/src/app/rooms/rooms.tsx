@@ -78,7 +78,7 @@ const rooms = () => {
               <Sort onSort={handleSort} />
             </div>
 
-            <div>
+            <div className="relative">
               <TextInput
                 type="search"
                 placeholder="Buscar oficinas..."
@@ -88,7 +88,7 @@ const rooms = () => {
               />
               <SearchIcon
                 size={20}
-                className="text-white absolute right-[11rem] top-[8.5rem] lg:block hidden"
+                className="text-white absolute right-4 top-2"
               />
             </div>
           </div>

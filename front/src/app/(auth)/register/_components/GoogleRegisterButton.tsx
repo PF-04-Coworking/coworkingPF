@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { GoogleButton } from "../../_components/GoogleButton";
-import { fetchGoogleUserInfo, getHashParam } from "../../helpers/googleHelpers";
+import { getHashParam } from "../../helpers/googleHelpers";
 
 const GoogleRegisterButton = () => {
   const router = useRouter();
@@ -15,42 +15,35 @@ const GoogleRegisterButton = () => {
   useEffect(() => {
     const accessToken = getHashParam("access_token");
 
-    if (accessToken) {
-      const promise = fetch(
-        "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      const handleRegister = async () => {
-        const googleUserInfo = await fetchGoogleUserInfo(accessToken);
-        const promise = apiAuth.googleRegister({
-          name: googleUserInfo.given_name,
-          lastname: googleUserInfo.family_name,
-          email: googleUserInfo.email,
-        });
-        toast.promise(promise, {
-          pending: "Cargando...",
-          success: "Registro correcto",
-          error: "Ya existe un usuario con ese correo",
-        });
-        const response = await promise;
-        const { token, userNoPassword } = await apiAuth.googleLogin({
-          email: response.email,
-        });
-        setAuthToken(token);
-        setUserData(userNoPassword);
-        router.push("/rooms");
-      };
-
-      handleRegister();
+    if (!accessToken) {
+      return;
     }
+
+    const handleRegister = async () => {
+      const promise = apiAuth.googleRegister({ accessToken });
+      toast.promise(promise, {
+        pending: "Cargando...",
+        success: "Registro correcto",
+        error: "Ya existe un usuario con ese correo",
+      });
+      const response = await promise;
+      console.log("Response de Register", response);
+      const { token, user } = await apiAuth.googleLogin({
+        accessToken,
+      });
+      console.log("Token", token);
+      console.log("User", user);
+      setAuthToken(token);
+      setUserData(user);
+      router.push("/rooms");
+    };
+
+    handleRegister();
   }, []);
 
-  return <GoogleButton redirectRoute="/register" />;
+  return (
+    <GoogleButton redirectRoute="/register" text="Registrarse con Google" />
+  );
 };
 
 export { GoogleRegisterButton };

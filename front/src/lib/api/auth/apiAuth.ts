@@ -1,5 +1,5 @@
 import { axiosClient } from "../apiConfig";
-import { ILoginData, IRegisterData } from "../types";
+import { IGoogleLoginData, ILoginData, IRegisterData } from "../types";
 
 const apiAuth = {
   login: async (data: ILoginData) => {
@@ -12,12 +12,12 @@ const apiAuth = {
     return response.data;
   },
 
-  googleRegister: async (data: Partial<IRegisterData>) => {
+  googleRegister: async (data: IGoogleLoginData) => {
     const response = await axiosClient.post("/user/google/register", data);
     return response.data;
   },
 
-  googleLogin: async (data: Partial<ILoginData>) => {
+  googleLogin: async (data: IGoogleLoginData) => {
     const response = await axiosClient.post("/user/google/login", data);
     return response.data;
   },
