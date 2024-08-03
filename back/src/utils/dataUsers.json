@@ -1,0 +1,68 @@
+[
+    {
+      "id": "c4c85891-8950-4ad5-9943-13a6b5d1c00e",
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "password": "password123",
+      "username": "alicej",
+      "phone": 1234567890,
+      "country": "USA",
+      "city": "New York",
+      "age": 30,
+      "role": "USER",
+      "reservations": []
+    },
+    {
+      "id": "ac2bd106-4bc8-4ca9-8b5f-7269c1b6e4f3",
+      "name": "Bob Smith",
+      "email": "bob.smith@example.com",
+      "password": "securepass456",
+      "username": "bobsmith",
+      "phone": 2345678901,
+      "country": "USA",
+      "city": "Los Angeles",
+      "age": 28,
+      "role": "USER",
+      "reservations": []
+    },
+    {
+      "id": "f56580a1-b395-4b79-8a1c-c622c48c14cc",
+      "name": "Charlie Brown",
+      "email": "charlie.brown@example.com",
+      "password": "mypassword789",
+      "username": "charlieb",
+      "phone": 3456789012,
+      "country": "Canada",
+      "city": "Toronto",
+      "age": 35,
+      "role": "USER",
+      "reservations": []
+    },
+    {
+      "id": "7d6058d2-149a-4a5b-a837-b307001ab143",
+      "name": "Diana Prince",
+      "email": "diana.prince@example.com",
+      "password": "wonderwoman",
+      "username": "dianap",
+      "phone": 4567890123,
+      "country": "UK",
+      "city": "London",
+      "age": 32,
+      "role": "USER",
+      "reservations": []
+    },
+    {
+      "id": "7274e0e3-be4f-4ab1-8796-03d2a682c62a",
+      "name": "Evan Wright",
+      "email": "evan.wright@example.com",
+      "password": "wrightstuff",
+      "username": "evanw",
+      "phone": 5678901234,
+      "country": "Australia",
+      "city": "Sydney",
+      "age": 29,
+      "role": "USER",
+      "reservations": []
+    }
+  ]
+  

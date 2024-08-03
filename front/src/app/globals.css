@@ -3,5 +3,28 @@
 @tailwind utilities;
 
 body {
-  margin: 0;
+  background-color: #161616;
+}
+
+.layout {
+  max-width: 68.75rem;
+  width: 88%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.layout-admin {
+  max-width: 100rem;
+  width: 88%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  color: red;
+}
+
+@font-face {
+  font-family: "Clash";
+  src: url(../../public/font/ClashDisplay-Variable.ttf);
 }
