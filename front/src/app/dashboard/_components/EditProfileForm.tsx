@@ -11,7 +11,7 @@ import { apiUsers } from "@/lib/api/users/apiUsers";
 import { toast } from "react-toastify";
 
 const EditProfileForm = () => {
-  const { userData, setUserData } = useAuthStore();
+  const { authToken, userData, setUserData } = useAuthStore();
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Debes ingresar un nombre"),
@@ -19,8 +19,8 @@ const EditProfileForm = () => {
     phone: Yup.string()
       .required("Debes ingresar un número de teléfono")
       .matches(/^[0-9]+$/, "Número de teléfono unválido")
-      .min(7, "Debes ingresar al menos 7 dígitos")
-      .max(10, "No debes ingresar más de 15 dígitos")
+      .min(6, "Debes ingresar al menos 6 dígitos")
+      .max(20, "No debes ingresar más de 20 dígitos")
       .required("Debes ingresar un número de teléfono"),
     country: Yup.string()
       .required("Debes ingresar un país")
@@ -38,8 +38,8 @@ const EditProfileForm = () => {
     values: any,
     { setSubmitting, resetForm }: any
   ) => {
-    if (!userData) return;
-    const promise = apiUsers.updateUser(userData.id, values);
+    if (!userData || !authToken) return;
+    const promise = apiUsers.updateUser(userData.id, values, authToken);
     toast.promise(promise, {
       pending: "Actualizando...",
       success: "Datos actualizados",
@@ -51,16 +51,18 @@ const EditProfileForm = () => {
     resetForm({ values });
   };
 
+  if (!userData) return null;
+
   return (
     <Formik
       initialValues={{
-        name: userData?.name || "",
-        lastname: userData?.lastname || "",
-        phone: userData?.phone || "",
-        email: userData?.email || "",
-        age: userData?.age || "",
-        country: userData?.country || "",
-        city: userData?.city || "",
+        name: userData.name || "",
+        lastname: userData.lastname || "",
+        phone: userData.phone || "",
+        email: userData.email || "",
+        age: userData.age || "",
+        country: userData.country || "",
+        city: userData.city || "",
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
