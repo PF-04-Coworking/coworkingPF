@@ -7,21 +7,4 @@ const getHashParam = (paramName: string) => {
   return param;
 };
 
-const fetchGoogleUserInfo = async (accessToken: string) => {
-  try {
-    const response = await axios.get(
-      "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching user info:", error);
-    throw new Error("Error fetching user info");
-  }
-};
-
-export { getHashParam, fetchGoogleUserInfo };
+export { getHashParam };
