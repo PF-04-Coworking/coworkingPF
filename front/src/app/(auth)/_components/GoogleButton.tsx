@@ -8,10 +8,11 @@ import { toast } from "react-toastify";
 import { GoogleIcon } from "../_components/GoogleIcon";
 
 interface IProps {
+  text: string;
   redirectRoute: string;
 }
 
-const GoogleButton = ({ redirectRoute }: IProps) => {
+const GoogleButton = ({ redirectRoute, text }: IProps) => {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
   const redirectUri = process.env.NEXT_PUBLIC_DOMAIN + redirectRoute;
   const scope =
@@ -33,7 +34,7 @@ const GoogleButton = ({ redirectRoute }: IProps) => {
       onClick={() => handleClick()}
     >
       <GoogleIcon />
-      Iniciar sesión con Google
+      {text}
     </Button>
   );
 };

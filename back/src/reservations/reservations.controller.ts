@@ -9,13 +9,19 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ReservationsService } from './reservations.service';
 import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
 import { Roles } from 'src/auth/guards/roles.decorator';
 import { UserRole } from 'src/user/user-role.enum';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Office } from 'src/entities/Offices.entity';
 
 @ApiTags('reservations')
 @Controller('reservations')
@@ -26,7 +32,13 @@ export class ReservationsController {
   //solo admin
 
   @Get()
-  @ApiOperation({ summary: 'Get all reservations' })
+  @ApiOperation({ summary: 'Get all reservations / Admin only' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of reservations',
+    type: [Office],
+  })
+  @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   getReservations() {
@@ -36,9 +48,15 @@ export class ReservationsController {
   //* Rutas PUT
 
   //TODO agregar AUTH
-  //! con rol de usuario
+  //! con rol de admin
   @Put('/:id')
-  @ApiOperation({ summary: 'Update an existing reservation' })
+  @ApiOperation({ summary: 'Update an existing reservation / Admin only' })
+  @ApiResponse({
+    status: 200,
+    description: 'The reservation updated',
+    type: [Office],
+  })
+  @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   updateReservation(
@@ -61,7 +79,13 @@ export class ReservationsController {
 
   //* Rutas DELETE
   @Delete('/:id')
-  @ApiOperation({ summary: 'Delete a reservation by ID' })
+  @ApiOperation({ summary: 'Delete a reservation by ID / Admin only' })
+  @ApiResponse({
+    status: 200,
+    description: 'Succes message ',
+    type: Office,
+  })
+  @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   deleteReservation(@Param('id') id: string) {
