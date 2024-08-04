@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../common/Button";
 import {
   CircleParking,
@@ -10,13 +11,13 @@ import {
   Bus,
 } from "lucide-react";
 
-type Amenity =  Record<string, React.ReactNode>;
+type Amenity = Record<string, React.ReactNode>;
 
-const amenityIcons: Amenity = {
-  "Internet": <WifiIcon />,
-  "Estacionamiento": <CircleParking />,
-  "Cafe": <CoffeeIcon />,
-  "Gimnasio": <Dumbbell />,
+export const amenityIcons: Amenity = {
+  Internet: <WifiIcon />,
+  Estacionamiento: <CircleParking />,
+  Cafe: <CoffeeIcon />,
+  Gimnasio: <Dumbbell />,
   "Zona de descanso": <Armchair />,
   "Sala de conferencias": <Mic2 />,
   "Acceso a transporte publico": <Bus />,
@@ -30,6 +31,7 @@ const CardOffice: React.FC<IOffice1> = ({
   price,
   services,
   location,
+  id,
 }) => {
   return (
     <>
@@ -61,7 +63,9 @@ const CardOffice: React.FC<IOffice1> = ({
             ))}
           </div>
           <Button className="w-full" variant="primary">
-            <span className="text-black">Ver Detalles</span>
+            <Link href={`/rooms/${id}`} className="w-full">
+              <span className="text-black">Ver Detalles</span>
+            </Link>
           </Button>
         </div>
       </div>

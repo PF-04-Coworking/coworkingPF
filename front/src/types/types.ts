@@ -11,5 +11,15 @@ interface IProps {
     price: number;
     services: string[];
     location: string;
+    id: number;
   }
   
+
+  interface ILocation {
+    lat: number;
+    lng: number;
+  }
+  
+  interface LeafletMapComponentProps {
+    location: string;
+  }

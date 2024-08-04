@@ -14,7 +14,7 @@ import { useFetchFilteredOffices, useFetchAllOffices } from "./hooks/hooks";
 const page = 1;
 const limit = 100;
 
-const rooms = () => {
+const Rooms = () => {
   //estado de la store
   const { offices } = useOfficesRoomsStore();
   //estados de los ordenamientos
@@ -105,6 +105,7 @@ const rooms = () => {
               price={office.price}
               services={office.services}
               location={office.location}
+              id={office.id}
             />
           ))}
         </div>
@@ -113,4 +114,4 @@ const rooms = () => {
   );
 };
 
-export default rooms;
+export default Rooms;
