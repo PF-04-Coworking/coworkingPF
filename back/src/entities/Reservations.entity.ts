@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { User } from './Users.entity';
 import { Office } from './Offices.entity';
-import { ApiProperty, ApiResponse } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('reservations')
 export class Reservation {
@@ -9,31 +9,23 @@ export class Reservation {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ApiProperty({ description: 'Reservation date' })
+  @ApiProperty({ description: 'Reservation start date' })
   @Column()
-  date: Date;
+  start_day: Date;
 
-  @ApiProperty({ description: 'Reservation time' })
+  @ApiProperty({ description: 'Reservation end date' })
   @Column()
-  time: string;
+  end_day: Date;
 
-  @ApiProperty({ description: 'Reservation duration' })
-  @Column({ nullable: true })
-  duration: number;
-
-  @ApiProperty({ description: 'Reservation price' })
-  @Column('decimal', { precision: 10, scale: 2 })
-  price_per_day: number;
-
-  @ApiProperty({ description: 'Reservation guests' })
+  @ApiProperty({ description: 'Number of guests for the reservation' })
   @Column()
   guests: number;
 
-  @ApiProperty({ description: 'Reservation user' })
-  @ManyToOne(() => User, (user) => user.reservations)
-  user: User;
-
-  @ApiProperty({ description: 'Reservation office' })
+  @ApiProperty({ description: 'ID of the reserved office' })
   @ManyToOne(() => Office, (office) => office.reservations)
   office: Office;
+
+  @ApiProperty({ description: 'ID of the user who made the reservation' })
+  @ManyToOne(() => User, (user) => user.reservations)
+  user: User;
 }

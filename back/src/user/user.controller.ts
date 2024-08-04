@@ -118,7 +118,7 @@ export class UserController {
       }
 
       // Validate the input data
-      if (!data.date || !data.time || !data.guests || !data.office_id) {
+      if (!data.start_day || !data.end_day || !data.guests || !data.office_id) {
         throw new BadRequestException('Invalid input data');
       }
 

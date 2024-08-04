@@ -9,6 +9,7 @@ import { Reservation } from 'src/entities/Reservations.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/entities/Users.entity';
 import { Office } from 'src/entities/Offices.entity'; // Importar la entidad Office
+import { parse } from 'date-fns'; // Asegúrate de tener instalado date-fns para parsear las fechas
 
 @Injectable()
 export class ReservationsRepository {
@@ -40,6 +41,7 @@ export class ReservationsRepository {
   }
 
   // Rutas POST
+
   async addNewReservation(id: string, data: AddNewReservationDto) {
     const foundUser = await this.userRepository.findOne({
       where: { id: id },
@@ -62,10 +64,8 @@ export class ReservationsRepository {
     }
 
     const newReservation = this.reservationRepository.create({
-      date: new Date(data.date), // Asegúrate de convertir a Date si es necesario
-      time: data.time,
-      duration: data.duration,
-      price_per_day: data.price_per_day,
+      start_day: parse(data.start_day, 'dd/MM/yyyy', new Date()), // Parseamos la fecha de inicio
+      end_day: parse(data.end_day, 'dd/MM/yyyy', new Date()), // Parseamos la fecha de fin
       guests: data.guests,
       user: foundUser,
       office: foundOffice,

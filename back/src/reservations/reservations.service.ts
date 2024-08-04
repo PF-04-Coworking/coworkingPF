@@ -21,9 +21,18 @@ export class ReservationsService {
   //* Rutas POST
 
   async addNewReservation(paramId: string, data: AddNewReservationDto) {
-    const newReservation = this.reservationsRepository.addNewReservation(
+    const { start_day, end_day, guests, office_id } = data;
+
+    // El método del repositorio espera un objeto con estos campos
+    const newReservation = await this.reservationsRepository.addNewReservation(
       paramId,
-      data,
+      {
+        start_day,
+        end_day,
+        guests,
+        office_id,
+        user_id: paramId, // Usamos paramId como user_id ya que el controlador valida que sean iguales
+      },
     );
 
     return newReservation;
