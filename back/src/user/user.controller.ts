@@ -110,6 +110,7 @@ export class UserController {
   ) {
     try {
       const userId = request.user.id;
+      console.log('prueba');
 
       if (userId !== paramId) {
         throw new UnauthorizedException(
