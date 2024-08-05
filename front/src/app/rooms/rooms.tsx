@@ -42,7 +42,6 @@ const rooms = () => {
         </div>
       </div>
 
-<StripeCheckout />
 
       
 </>
