@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../common/Button";
 import {
   CircleParking,
@@ -9,20 +10,23 @@ import {
   Mic2,
   Bus,
 } from "lucide-react";
+import { IOffice } from "@/app/dashboard/admin/types";
+import Image from "next/image";
 
-type Amenity =  Record<string, React.ReactNode>;
+type Amenity = Record<string, React.ReactNode>;
 
-const amenityIcons: Amenity = {
-  "Internet": <WifiIcon />,
-  "Estacionamiento": <CircleParking />,
-  "Cafe": <CoffeeIcon />,
-  "Gimnasio": <Dumbbell />,
+export const amenityIcons: Amenity = {
+  Internet: <WifiIcon />,
+  Estacionamiento: <CircleParking />,
+  Cafe: <CoffeeIcon />,
+  Gimnasio: <Dumbbell />,
   "Zona de descanso": <Armchair />,
   "Sala de conferencias": <Mic2 />,
   "Acceso a transporte publico": <Bus />,
 };
 
-const CardOffice: React.FC<IOffice1> = ({
+const CardOffice = ({
+  id,
   imgUrl,
   name,
   description,
@@ -30,14 +34,21 @@ const CardOffice: React.FC<IOffice1> = ({
   price,
   services,
   location,
-}) => {
+}: IOffice) => {
   return (
     <>
       <div className=" bg-secondaryDark rounded-md p-4 shadow-md text-white">
-        <img
-          src={imgUrl}
+        <Image
+          src={
+            imgUrl
+              ? imgUrl
+              : "https://res.cloudinary.com/danpp1ys8/image/upload/v1722819564/arcbukd8qxep3aqfni71.webp"
+          }
           alt="Office Image"
-          className="object-cover rounded-md w-full  h-auto 2xl:h-[60%]"
+          className="object-cover rounded-md w-full h-auto 2xl:h-[60%]"
+          width={0}
+          height={0}
+          sizes="100vw"
         />
 
         <div className="p-4 space-y-2">
@@ -61,7 +72,9 @@ const CardOffice: React.FC<IOffice1> = ({
             ))}
           </div>
           <Button className="w-full" variant="primary">
-            <span className="text-black">Ver Detalles</span>
+            <Link href={`/rooms/${id}`} className="w-full">
+              <span className="text-black">Ver Detalles</span>
+            </Link>
           </Button>
         </div>
       </div>

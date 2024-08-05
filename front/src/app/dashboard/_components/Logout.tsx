@@ -27,6 +27,8 @@ const DialogButton = React.forwardRef<HTMLButtonElement, IDialogButtonProps>(
   )
 );
 
+DialogButton.displayName = "DialogButton";
+
 const Logout = () => {
   const router = useRouter();
   const { removeAuthToken, removeUserData } = useAuthStore();

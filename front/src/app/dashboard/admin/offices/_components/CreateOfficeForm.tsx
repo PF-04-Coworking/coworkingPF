@@ -1,32 +1,42 @@
 "use client";
 import { Button } from "@/components/common/Button";
 import { DialogFooter } from "@/components/common/dialog";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
 import { InputLabel } from "@/components/common/InputLabel";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
 import { useOfficesStore } from "../../_stores/useOfficesStore";
+import { IEditOfficeData } from "../../types";
+import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
+import { servicesOptions } from "@/lib/constants/offices-constants";
 
 const CreateOfficeForm = () => {
   const { addStoredOffice } = useOfficesStore();
+  const { authToken } = useAuthStore();
 
   const handleAddOffice = async (
-    values: any,
-    { setSubmitting, resetForm }: any
+    values: IEditOfficeData,
+    { setSubmitting, resetForm }: FormikHelpers<IEditOfficeData>
   ) => {
+    if (!authToken) return;
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("location", values.location);
+    formData.append("description", values.description);
+    formData.append("capacity", values.capacity);
+    formData.append("price", values.price);
+    formData.append("services", values.services.join(","));
+    // @ts-ignore
     formData.append("file", values.file);
     try {
-      const promise = apiOffices.createOffice(formData);
-      console.log("Agregando...");
+      const promise = apiOffices.createOffice(formData, authToken);
       toast.promise(promise, {
         pending: "Agregando...",
         success: "Oficina creada exitosamente",
         error: "Error",
       });
       const officeData = await promise;
+      officeData.services = officeData.services.split(",");
       addStoredOffice(officeData);
     } catch (error) {
       console.log(error);
@@ -40,8 +50,13 @@ const CreateOfficeForm = () => {
       initialValues={{
         name: "",
         location: "",
-        file: null,
+        description: "",
+        capacity: "",
+        price: "",
+        file: undefined,
+        services: [],
       }}
+      // @ts-ignore
       onSubmit={handleAddOffice}
     >
       {({ isSubmitting, dirty, setFieldValue }: any) => (
@@ -55,16 +70,53 @@ const CreateOfficeForm = () => {
               />
             </div>
             <div className="space-y-2">
-              <InputLabel htmlFor="direccion">Direccion</InputLabel>
+              <InputLabel htmlFor="direccion">País</InputLabel>
               <Field
                 name="location"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary pr-2"
               />
             </div>
-
+            <div className="space-y-2">
+              <InputLabel htmlFor="description">Dirección</InputLabel>
+              <Field
+                name="description"
+                className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
+              />
+            </div>
+            <div className="space-y-2">
+              <InputLabel htmlFor="description">Capacidad</InputLabel>
+              <Field
+                type="number"
+                name="capacity"
+                className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
+              />
+            </div>
+            <div className="space-y-2">
+              <InputLabel htmlFor="description">Precio</InputLabel>
+              <Field
+                type="number"
+                name="price"
+                className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
+              />
+            </div>
+            {servicesOptions.length > 0 && (
+              <div className="grid gap-2">
+                {servicesOptions.map((service) => (
+                  <label key={service} className="flex gap-2 items-center mb-3">
+                    <Field
+                      type="checkbox"
+                      name="services"
+                      value={service}
+                      className="border-primary"
+                    />
+                    {service}
+                  </label>
+                ))}
+              </div>
+            )}
             <div className="space-y-2">
               <InputLabel htmlFor="file">
-                Sube un archivo multimedia:
+                Sube una foto de la oficina:
               </InputLabel>
               <Field
                 id="file"

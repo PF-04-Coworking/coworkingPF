@@ -15,10 +15,7 @@ const Account = () => {
   const { name, lastname, email, role } = userData || {};
 
   return (
-    <DashboardLayout
-      headerTitle="Panel de administración"
-      navLinks={ADMIN_LINKS}
-    >
+    <DashboardLayout headerTitle="Mi cuenta" navLinks={ADMIN_LINKS}>
       <div className="flex flex-col items-center">
         <div className="flex flex-col text-center sm:text-left sm:flex-row items-center gap-8 pt-8">
           <Image

@@ -16,7 +16,7 @@ const useOffices = () => {
       }
     };
     fetchOffices();
-  }, []);
+  }, [setStoredOffices]);
 
   return { offices };
 };

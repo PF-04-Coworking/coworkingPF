@@ -1,15 +1,24 @@
-interface IProps {
-    name: string;
-    direccion: string;
-  }
+export interface IPaginationObject {
+  page: number;
+  limit: number;
+}
 
-  interface IOffice1 {
-    imgUrl: string;
-    name: string;
-    description: string;
-    capacity: number;
-    price: number;
-    services: string[];
-    location: string;
-  }
-  
+interface ILocation {
+  lat: number;
+  lng: number;
+}
+
+interface LeafletMapComponentProps {
+  location: string;
+}
+
+export interface IOffice {
+  id: string;
+  imgUrl: string;
+  name: string;
+  description: string;
+  capacity: string;
+  price: number;
+  services: string[];
+  location: string;
+}

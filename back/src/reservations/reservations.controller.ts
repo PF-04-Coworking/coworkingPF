@@ -63,12 +63,6 @@ export class ReservationsController {
     @Body() updateReservationDto: UpdateReservationDto,
     @Param('id') id: string,
   ) {
-    if (
-      !updateReservationDto ||
-      Object.keys(updateReservationDto).length === 0
-    ) {
-      throw new BadRequestException('Datos de actualización incompletos');
-    }
     const updateReservation = this.reservationsService.updateReservation(
       id,
       updateReservationDto,
@@ -92,3 +86,4 @@ export class ReservationsController {
     return this.reservationsService.deleteReservation(id);
   }
 }
+
