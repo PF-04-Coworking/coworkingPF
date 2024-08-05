@@ -17,15 +17,19 @@ const useUser = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      console.log("authToken", authToken);
       if (!authToken) return;
       const decodedToken = jwtDecode<IJwtData>(authToken);
-      const userData = await apiUsers.getUserData(decodedToken.id);
-      setUserData(userData);
+      try {
+        const userData = await apiUsers.getUserData(decodedToken.id, authToken);
+        setUserData(userData);
+      } catch (error) {
+        console.log("error", error);
+        return;
+      }
     };
 
     fetchUserData();
-  }, []);
+  }, [authToken, setUserData]);
 
   return { userData };
 };

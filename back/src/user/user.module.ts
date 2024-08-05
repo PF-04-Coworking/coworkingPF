@@ -11,6 +11,7 @@ import { ReservationsRepository } from 'src/reservations/reservations.repository
 import { Reservation } from 'src/entities/Reservations.entity';
 import { OfficeRepository } from 'src/offices/offices.repository';
 import { Office } from 'src/entities/Offices.entity';
+import { AuthService } from 'src/auth/auth.service';
 
 @Module({
   imports: [
@@ -25,6 +26,8 @@ import { Office } from 'src/entities/Offices.entity';
     UserRepository,
     ReservationsService,
     ReservationsRepository,
+    AuthService,
   ],
 })
 export class UserModule {}
+

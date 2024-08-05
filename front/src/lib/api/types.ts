@@ -3,6 +3,10 @@ export interface ILoginData {
   password: string;
 }
 
+export interface IGoogleLoginData {
+  accessToken: string;
+}
+
 export interface IRegisterData {
   name: string;
   lastname: string;

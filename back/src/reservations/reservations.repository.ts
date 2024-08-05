@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Reservation } from 'src/entities/Reservations.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/entities/Users.entity';
-import { Office } from 'src/entities/Offices.entity'; // Importar la entidad Office
+import { Office } from 'src/entities/Offices.entity';
 
 @Injectable()
 export class ReservationsRepository {
@@ -40,15 +40,14 @@ export class ReservationsRepository {
   }
 
   // Rutas POST
+
   async addNewReservation(id: string, data: AddNewReservationDto) {
     const foundUser = await this.userRepository.findOne({
       where: { id: id },
     });
 
     if (!foundUser) {
-      throw new NotFoundException(
-        `Usuario con id ${data.user_id} no fue encontrado`,
-      );
+      throw new NotFoundException(`Usuario con id ${id} no fue encontrado`);
     }
 
     const foundOffice = await this.officeRepository.findOne({
@@ -62,11 +61,10 @@ export class ReservationsRepository {
     }
 
     const newReservation = this.reservationRepository.create({
-      date: new Date(data.date), // Asegúrate de convertir a Date si es necesario
-      time: data.time,
-      duration: data.duration,
-      price_per_day: data.price_per_day,
-      guests: data.guests,
+      start_day: data.start_day,
+      end_day: data.end_day,
+      guests_number: data.guests_number,
+      paid_amount: data.paid_amount,
       user: foundUser,
       office: foundOffice,
     });
@@ -140,3 +138,4 @@ export class ReservationsRepository {
     };
   }
 }
+

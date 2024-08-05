@@ -2,9 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import {
   CreateUserDto,
+  GoogleAccessTokenDto,
   LoginUserDto,
-  LoginUserGoogleDto,
-  RegisterUserGoogleDto,
   UpdateUserDto,
 } from './user.dto';
 
@@ -40,11 +39,11 @@ export class UserService {
     return this.usersRepository.login(credentials);
   }
 
-  registerGoogle(credentials: RegisterUserGoogleDto) {
+  registerGoogle(credentials: GoogleAccessTokenDto) {
     return this.usersRepository.registerGoogle(credentials);
   }
 
-  loginGoogle(credentials: LoginUserGoogleDto) {
+  loginGoogle(credentials: GoogleAccessTokenDto) {
     return this.usersRepository.loginGoogle(credentials);
   }
 }

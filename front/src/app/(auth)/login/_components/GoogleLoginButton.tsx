@@ -6,8 +6,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { GoogleButton } from "../../_components/GoogleButton";
-import axios from "axios";
-import { fetchGoogleUserInfo, getHashParam } from "../../helpers/googleHelpers";
+import { getHashParam } from "../../helpers/googleHelpers";
 
 const GoogleLoginButton = () => {
   const router = useRouter();
@@ -17,33 +16,29 @@ const GoogleLoginButton = () => {
     const accessToken = getHashParam("access_token");
 
     if (!accessToken) {
-      console.error("Access token not found");
       return;
     }
 
     const handleLogin = async () => {
-      const googleUserInfo = await fetchGoogleUserInfo(accessToken);
-
-      const promise = apiAuth.googleLogin({
-        email: googleUserInfo.email,
-      });
+      const promise = apiAuth.googleLogin({ accessToken });
       toast.promise(promise, {
         pending: "Cargando...",
         success: "Sesión iniciada",
         error: "Credenciales incorrectas",
       });
       const response = await promise;
-      const { token, userNoPassword } = response;
-
+      const { token, user } = response;
       setAuthToken(token);
-      setUserData(userNoPassword);
+      setUserData(user);
       router.push("/rooms");
     };
 
     handleLogin();
-  }, []);
+  }, [router, setAuthToken, setUserData]);
 
-  return <GoogleButton redirectRoute="/login" />;
+  return (
+    <GoogleButton redirectRoute="/login" text="Iniciar sesión con Google" />
+  );
 };
 
 export { GoogleLoginButton };

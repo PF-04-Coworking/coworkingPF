@@ -123,21 +123,17 @@ export class OfficeRepository {
     const tempOffice = office;
 
     const foundOffice = await this.officeRepository.findOneBy({
-      location: tempOffice.location,
+      name: tempOffice.name,
     });
 
     if (foundOffice)
       return new BadRequestException(
-        `Office with name ${foundOffice.name} and location ${foundOffice.location} already exist`,
+        `Office with name ${foundOffice.name} already exist`,
       );
 
     const newOffice = await this.officeRepository.save(office);
 
-    const dbOffcie = await this.officeRepository.findOneBy({
-      id: newOffice.id,
-    });
-
-    return dbOffcie;
+    return newOffice;
   }
 
   async updateOffice(office: UpdateOfficeDto, id: string) {
@@ -145,6 +141,8 @@ export class OfficeRepository {
 
     if (!foundOffice)
       return new NotFoundException(`No office was found to update`);
+
+    delete office['file'];
 
     await this.officeRepository.update(id, office);
 
@@ -164,3 +162,4 @@ export class OfficeRepository {
     return 'Office deleted successfully';
   }
 }
+

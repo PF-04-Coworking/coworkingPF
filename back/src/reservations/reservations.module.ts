@@ -9,6 +9,7 @@ import { UserRepository } from 'src/user/user.repository';
 import { UserService } from 'src/user/user.service';
 import { User } from 'src/entities/Users.entity';
 import { Office } from 'src/entities/Offices.entity';
+import { AuthService } from 'src/auth/auth.service';
 
 @Module({
   imports: [
@@ -18,6 +19,12 @@ import { Office } from 'src/entities/Offices.entity';
     }),
   ],
   controllers: [ReservationsController],
-  providers: [ReservationsService, ReservationsRepository, UserRepository],
+  providers: [
+    ReservationsService,
+    ReservationsRepository,
+    UserRepository,
+    AuthService,
+  ],
 })
 export class ReservationsModule {}
+

@@ -21,9 +21,8 @@ import {
 import { UserService } from './user.service';
 import {
   CreateUserDto,
+  GoogleAccessTokenDto,
   LoginUserDto,
-  LoginUserGoogleDto,
-  RegisterUserGoogleDto,
   UpdateUserDto,
 } from './user.dto';
 import { ReservationsService } from 'src/reservations/reservations.service';
@@ -61,7 +60,7 @@ export class UserController {
   @ApiOperation({ summary: 'Get user by ID  / Admin only' })
   @ApiResponse({ status: 200, description: 'User data' })
   @ApiBearerAuth()
-  @Roles(UserRole.ADMIN)
+  @Roles(UserRole.USER, UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   getUserById(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.getUserById(id);
@@ -75,7 +74,7 @@ export class UserController {
     description: 'List users reservations',
   })
   @ApiBearerAuth()
-  @Roles(UserRole.USER)
+  @Roles(UserRole.USER, UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   getReservationsByUserId(@Param('id') id: string) {
     return this.reservationsService.getReservationsByUserId(id);
@@ -83,7 +82,7 @@ export class UserController {
 
   //* ruta para que un user loggeado cree una nueva reservación
   @Post(':id/reservations/new')
-  @Roles(UserRole.USER)
+  @Roles(UserRole.USER, UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   @ApiOperation({ summary: 'Add a new reservation (User only)' })
   @ApiResponse({
@@ -104,24 +103,10 @@ export class UserController {
     description: 'Internal Server Error.',
   })
   async addNewReservation(
-    @Req() request,
     @Param('id') paramId: string,
     @Body() data: AddNewReservationDto,
   ) {
     try {
-      const userId = request.user.id;
-
-      if (userId !== paramId) {
-        throw new UnauthorizedException(
-          'You can only add reservations for your own user ID',
-        );
-      }
-
-      // Validate the input data
-      if (!data.date || !data.time || !data.guests || !data.office_id) {
-        throw new BadRequestException('Invalid input data');
-      }
-
       // Add the reservation
       const newReservation = await this.reservationsService.addNewReservation(
         paramId,
@@ -159,7 +144,7 @@ export class UserController {
   @ApiOperation({ summary: 'Update user by ID / User' })
   @ApiResponse({ status: 200, description: 'User updated', type: User })
   @ApiBearerAuth()
-  @Roles(UserRole.USER)
+  @Roles(UserRole.USER, UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   updateUser(
     @Param('id', ParseUUIDPipe) id: string,
@@ -184,13 +169,14 @@ export class UserController {
 
   @Post('google/register')
   @ApiOperation({ summary: 'Register a user desde auth de google' })
-  registerGoogle(@Body() credentials: RegisterUserGoogleDto) {
+  registerGoogle(@Body() credentials: GoogleAccessTokenDto) {
     return this.userService.registerGoogle(credentials);
   }
 
   @Post('google/login')
   @ApiOperation({ summary: 'Login a user desde auth de google' })
-  loginGoogle(@Body() credentials: LoginUserGoogleDto) {
+  loginGoogle(@Body() credentials: GoogleAccessTokenDto) {
     return this.userService.loginGoogle(credentials);
   }
 }
+

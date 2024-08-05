@@ -3,9 +3,18 @@ export interface IOffice {
   name: string;
   location: string;
   description: string;
-  capacity: number;
-  stock: number;
-  price: number;
-  nombre: string;
+  capacity: string;
+  price: string;
   imgUrl: string;
+  services: string[];
+}
+
+export interface IEditOfficeData {
+  name: string;
+  location: string;
+  description: string;
+  capacity: string;
+  price: string;
+  services: string[];
+  file: File | undefined;
 }
