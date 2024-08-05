@@ -12,6 +12,7 @@ import { UserModule } from './user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ReservationsModule } from './reservations/reservations.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { PaymentsModule } from './payments/payments.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 @Module({
@@ -41,6 +42,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
       signOptions: { expiresIn: '60m' },
     }),
     FileUploadModule,
+   // StripeModule, //!Pendiente aquí
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -25,6 +25,12 @@ export class AddNewReservationDto {
   end_day: string;
 
   @ApiProperty({
+    description: 'Amount per day of the reservation',
+    example: 100,
+  })
+  amount: number;
+
+  @ApiProperty({
     description: 'Number of guests for the reservation',
     example: 4,
   })

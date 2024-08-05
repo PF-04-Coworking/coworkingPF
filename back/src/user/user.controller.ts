@@ -34,6 +34,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from 'src/entities/Users.entity';
 import { Reservation } from 'src/entities/Reservations.entity';
 import { request } from 'http';
+import { PaymentsService } from 'src/payments/payments.service';
 
 @ApiTags('user')
 @Controller('user')
@@ -41,6 +42,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly reservationsService: ReservationsService,
+    private readonly stripeService: PaymentsService
   ) {}
 
   //*GET
@@ -80,57 +82,64 @@ export class UserController {
     return this.reservationsService.getReservationsByUserId(id);
   }
 
-  //* ruta para que un user loggeado cree una nueva reservación
-  @Post(':id/reservations/new')
-  @Roles(UserRole.USER, UserRole.ADMIN)
-  @UseGuards(AuthGuard, RolesGuard)
-  @ApiOperation({ summary: 'Add a new reservation (User only)' })
-  @ApiResponse({
-    status: 201,
-    description: 'The reservation has been successfully created.',
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Bad Request. Invalid input data.',
-  })
-  @ApiResponse({
-    status: 401,
-    description:
-      'Unauthorized. User can only add reservations for their own ID.',
-  })
-  @ApiResponse({
-    status: 500,
-    description: 'Internal Server Error.',
-  })
-  async addNewReservation(
-    @Param('id') paramId: string,
-    @Body() data: AddNewReservationDto,
-  ) {
-    try {
-      // Add the reservation
-      const newReservation = await this.reservationsService.addNewReservation(
-        paramId,
-        data,
-      );
+//* ruta para que un user loggeado cree una nueva reservación
+@Post(':id/reservations/new')
+@Roles(UserRole.USER, UserRole.ADMIN)
+@UseGuards(AuthGuard, RolesGuard)
+@ApiOperation({ summary: 'Add a new reservation (User only)' })
+@ApiResponse({
+  status: 201,
+  description: 'The reservation has been successfully created.',
+})
+@ApiResponse({
+  status: 400,
+  description: 'Bad Request. Invalid input data.',
+})
+@ApiResponse({
+  status: 401,
+  description:
+    'Unauthorized. User can only add reservations for their own ID.',
+})
+@ApiResponse({
+  status: 500,
+  description: 'Internal Server Error.',
+})
+async addNewReservation(
+  @Param('id') paramId: string,
+  @Body() data: AddNewReservationDto,
+) {
+  try {
+    // Process the payment with Stripe
+    const paymentIntent = await this.stripeService.createPaymentIntent(
+      data.amount, // Ensure AddNewReservationDto includes the amount
+      'usd' // Specify the currency
+    );
 
-      return {
-        statusCode: 201,
-        message: 'The reservation has been successfully created.',
-        data: newReservation,
-      };
-    } catch (error) {
-      console.error('Error in addNewReservation:', error);
+    // Add the reservation
+    const newReservation = await this.reservationsService.addNewReservation(
+      paramId,
+      data,
+    );
 
-      if (
-        error instanceof UnauthorizedException ||
-        error instanceof BadRequestException
-      ) {
-        throw error;
-      } else {
-        throw new InternalServerErrorException('Internal Server Error');
-      }
+    return {
+      statusCode: 201,
+      message: 'The reservation has been successfully created.',
+      data: newReservation,
+      paymentIntent, // Return payment intent to complete the payment on the frontend
+    };
+  } catch (error) {
+    console.error('Error in addNewReservation:', error);
+
+    if (
+      error instanceof UnauthorizedException ||
+      error instanceof BadRequestException
+    ) {
+      throw error;
+    } else {
+      throw new InternalServerErrorException('Internal Server Error');
     }
   }
+}
 
   //*POST
   @Post()
@@ -179,4 +188,3 @@ export class UserController {
     return this.userService.loginGoogle(credentials);
   }
 }
-
