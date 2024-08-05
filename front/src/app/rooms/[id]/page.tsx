@@ -12,6 +12,7 @@ import { Highlight } from "@/components/common/Highlight";
 import ModalCalendar from "./_components/ModalCalendar";
 import { IOffice } from "@/types/types";
 import Image from "next/image";
+import { apiOffices } from "@/lib/api/offices/apiOffices";
 
 amenityIcons;
 
@@ -22,11 +23,8 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const fetchOfficeById = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/offices/${params.id}`
-        );
-        const data = response.data;
-        setOffice(data);
+        const response = await apiOffices.getOfficeById(params.id);
+        setOffice(response);
       } catch (error) {
         console.log(error);
         router.push("/404");
