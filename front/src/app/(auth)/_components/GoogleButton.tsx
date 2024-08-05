@@ -15,7 +15,6 @@ interface IProps {
 const GoogleButton = ({ redirectRoute, text }: IProps) => {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
   const redirectUri = process.env.NEXT_PUBLIC_DOMAIN + redirectRoute;
-  console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
   console.log(process.env.NEXT_PUBLIC_DOMAIN);
   console.log(redirectUri);
   const scope =
