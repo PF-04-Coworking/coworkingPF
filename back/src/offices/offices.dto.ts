@@ -52,11 +52,6 @@ export class CreateOfficesDto {
 
   @IsNotEmpty()
   @IsNumber()
-  @ApiProperty({ description: 'Office stock' })
-  stock: number;
-
-  @IsNotEmpty()
-  @IsNumber()
   @ApiProperty({ description: 'Office price' })
   price: number;
 
@@ -118,11 +113,6 @@ export class UpdateOfficeDto {
   price: number;
 
   @IsOptional()
-  @IsUrl({}, {each:true})
-  @ApiProperty({ description: 'Office image URL', required: false, type: [String] })
-  imgUrl: string[] | string;
-
-  @IsOptional()
   @IsArray()
   @IsEnum(ServicesEnum, { each: true })
   @ApiProperty({
@@ -133,3 +123,4 @@ export class UpdateOfficeDto {
   })
   services: ServicesEnum[];
 }
+

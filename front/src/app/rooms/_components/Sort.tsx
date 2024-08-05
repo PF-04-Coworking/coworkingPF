@@ -7,11 +7,9 @@ import {
 } from "@/components/common/popover";
 import { ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
-import {
-  Command
-} from "@/components/common/command";
+import { Command } from "@/components/common/command";
 
-const Sort = ({onSort}: any) => {
+const Sort = ({ onSort }: { onSort: (option: string) => void }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -21,7 +19,6 @@ const Sort = ({onSort}: any) => {
     setValue(option);
     onSort(option);
   };
-
 
   return (
     <Popover>
