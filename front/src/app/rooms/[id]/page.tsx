@@ -11,12 +11,12 @@ import { amenityIcons } from "@/components/dashboard/cardOffice";
 import { Highlight } from "@/components/common/Highlight";
 import ModalCalendar from "./_components/ModalCalendar";
 import { IOffice } from "@/types/types";
+import Image from "next/image";
 
 amenityIcons;
 
-const officeById = ({ params }: { params: { id: string } }) => {
+const OfficeById = ({ params }: { params: { id: string } }) => {
   const [office, setOffice] = useState<IOffice | null>(null);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const officeById = ({ params }: { params: { id: string } }) => {
       }
     };
     fetchOfficeById();
-  }, []);
+  }, [params.id, router]);
 
   return (
     <>
@@ -84,13 +84,20 @@ const officeById = ({ params }: { params: { id: string } }) => {
                   </p>
                 </div>
               </div>
-              <ModalCalendar/>
+              <ModalCalendar />
             </div>
             <div className="h-full relative">
-              <img
-                src={office.imgUrl}
+              <Image
+                src={
+                  office.imgUrl
+                    ? office.imgUrl
+                    : "https://res.cloudinary.com/danpp1ys8/image/upload/v1722819564/arcbukd8qxep3aqfni71.webp"
+                }
                 alt="oficina"
-                className="object-cover h-full rounded-tr-[5rem] rounded-bl-[5rem]"
+                className="object-cover h-full w-full rounded-tr-[5rem] rounded-bl-[5rem]"
+                width={0}
+                height={0}
+                sizes="100vw"
               />
               <div className=" border border-primary shadow-md shadow-black rounded-3xl p-4 top-2 left-2 absolute flex justify-center items-center bg-primary">
                 <p className="font-bold">USD: ${office.price}</p>
@@ -109,4 +116,4 @@ const officeById = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default officeById;
+export default OfficeById;
