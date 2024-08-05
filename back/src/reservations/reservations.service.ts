@@ -20,9 +20,11 @@ export class ReservationsService {
 
   //* Rutas POST
 
-  async addNewReservation(id: string, data: AddNewReservationDto) {
-    const newReservation = this.reservationsRepository.addNewReservation(data);
-
+  async addNewReservation(paramId: string, data: AddNewReservationDto) {
+    const newReservation = await this.reservationsRepository.addNewReservation(
+      paramId,
+      data,
+    );
     return newReservation;
   }
 
@@ -41,3 +43,4 @@ export class ReservationsService {
     return this.reservationsRepository.deleteReservation(id);
   }
 }
+

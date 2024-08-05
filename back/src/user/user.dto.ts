@@ -56,6 +56,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsNumber()
+  @MinLength(6)
   @MaxLength(20)
   @ApiProperty({ description: 'User phone number' })
   phone: number;
@@ -181,3 +182,17 @@ export class LoginUserDto extends PickType(CreateUserDto, [
   })
   password: string;
 }
+
+export class GoogleAccessTokenDto {
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(3)
+  @MaxLength(50)
+  @ApiProperty({
+    description: 'Google access token',
+    minLength: 3,
+    maxLength: 50,
+  })
+  accessToken: string;
+}
+

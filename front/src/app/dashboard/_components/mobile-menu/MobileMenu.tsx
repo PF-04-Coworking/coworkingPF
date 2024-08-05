@@ -8,33 +8,33 @@ import {
 import { CustomLink } from "@/components/common/CustomLink";
 import { TextLogo } from "@/components/common/TextLogo";
 import "./MobileMenu.css";
+import React from "react";
+import { ADMIN_LINKS } from "../../user/links";
 
-const links = [
-  {
-    name: "Mi cuenta",
-    href: "/dashboard/account",
-    icon: <CircleUserRoundIcon size={20} />,
-  },
-  {
-    name: "Gestionar oficinas",
-    href: "#",
-    icon: <BuildingIcon size={20} />,
-  },
-  {
-    name: "Gestionar reservas",
-    href: "#",
-    icon: <CalendarCheck2Icon size={20} />,
-  },
-];
+interface ISheetTriggerButtonProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
+
+const SheetTriggerButton = React.forwardRef<
+  HTMLDivElement,
+  ISheetTriggerButtonProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    {...props}
+    className="text-white hover:bg-background hover:border-background cursor-pointer p-2 rounded-md transition lg:hidden"
+  >
+    <Menu className="size-5" />
+    <span className="sr-only">Toggle navigation menu</span>
+  </div>
+));
+
+SheetTriggerButton.displayName = "SheetTriggerButton";
 
 const MobileMenu = () => {
   return (
     <Sheet>
-      <SheetTrigger asChild className="lg:hidden">
-        <div className="text-white hover:bg-background hover:border-background cursor-pointer p-2 rounded-md transition">
-          <Menu className="size-5" />
-          <span className="sr-only">Toggle navigation menu</span>
-        </div>
+      <SheetTrigger asChild>
+        <SheetTriggerButton />
       </SheetTrigger>
       <SheetContent
         side="left"
@@ -48,7 +48,7 @@ const MobileMenu = () => {
           <TextLogo />
         </CustomLink>
         <nav className="flex flex-col gap-y-4 mt-8">
-          {links.map((link) => (
+          {ADMIN_LINKS.map((link) => (
             <CustomLink
               key={link.name}
               href={link.href}

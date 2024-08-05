@@ -10,6 +10,10 @@ export class OfficeService {
     private fileUploadRepository: FileUploadRepository,
   ) {}
 
+  async onModuleInit() {
+    await this.addOffices();
+  }
+
   getAllOffices(page: number, limit: number, filters: any) {
     return this.officeRepository.getAllOffices(page, limit, filters);
   }
@@ -33,18 +37,42 @@ export class OfficeService {
     }
 
     // Temporalmente
-    office.stock = 100;
-    office.capacity = 20;
-    office.price = 100;
+    office['stock'] = 100;
 
     return this.officeRepository.createOffice(office);
   }
 
-  updateOffice(office: UpdateOfficeDto, id: string) {
-    return this.officeRepository.updateOffice(office, id);
+  async updateOffice(
+    id: string,
+    office: UpdateOfficeDto,
+    file: Express.Multer.File,
+  ) {
+    const foundOffice = await this.officeRepository.getOfficeById(id);
+
+    if (!foundOffice) {
+      throw new NotFoundException(`No office was found to update`);
+    }
+
+    console.log('FILE:', file);
+
+    if (file) {
+      const response = await this.fileUploadRepository.uploadImage(file);
+      const imgUrl = response.secure_url;
+      if (!imgUrl) {
+        throw new NotFoundException('File not uploaded');
+      }
+      office['imgUrl'] = imgUrl;
+    }
+
+    await this.officeRepository.updateOffice(office, id);
+
+    const dbOffice = await this.officeRepository.getOfficeById(id);
+
+    return dbOffice;
   }
 
   deleteOffice(id: string) {
     return this.officeRepository.deleteOffice(id);
   }
 }
+

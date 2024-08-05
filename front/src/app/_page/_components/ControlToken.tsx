@@ -1,25 +1,40 @@
 "use client";
-import { Paragraph } from "@/components/common/Paragraph";
-import { CircleUserRound } from "lucide-react";
+
 import Link from "next/link";
+import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
+import { CircleUserRound } from "lucide-react";
+import { Paragraph } from "@/components/common/Paragraph";
 import { useEffect, useState } from "react";
+import { useUser } from "@/app/dashboard/_hooks/useUser";
 
 const ControlToken = () => {
-  const [token, setToken] = useState<string | null>(null);
+  const { userData } = useUser();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("userSession");
-    setToken(token);
+    setIsMounted(true);
   }, []);
+
+  const dashboardLink =
+    userData?.role === "admin"
+      ? "/dashboard/admin/account"
+      : "/dashboard/user/account";
+
+  if (!isMounted) return null;
 
   return (
     <>
-      {token ? (
+      {userData?.name ? (
         <div className="items-center gap-x-4 hidden sm:flex">
-            <Link href={"/dashboard/admin/account"} className="!text-primary font-medium">
-          <CircleUserRound size={35} className="text-primary" />
-            </Link>
+          <Link href={dashboardLink} className="flex items-center gap-x-2">
+            <Paragraph
+              variant="primary"
+              className="!text-primary font-semibold"
+            >
+              {userData?.name}
+            </Paragraph>
+            <CircleUserRound size={35} className="text-primary" />
+          </Link>
         </div>
       ) : (
         <>

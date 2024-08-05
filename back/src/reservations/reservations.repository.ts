@@ -4,16 +4,11 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
-import { UserRepository } from 'src/user/user.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reservation } from 'src/entities/Reservations.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/entities/Users.entity';
-import { Office } from 'src/entities/Offices.entity'; // Importar la entidad Office
-
-const mockReservations = [
-  // Mock data aquí
-];
+import { Office } from 'src/entities/Offices.entity';
 
 @Injectable()
 export class ReservationsRepository {
@@ -32,25 +27,27 @@ export class ReservationsRepository {
   }
 
   async getReservationsByUserId(id: string) {
-    const reservationsByUserId = mockReservations.filter(
-      (reservation) => reservation.user_id === id,
-    );
-    if (!reservationsByUserId)
+    const reservationsByUserId = await this.reservationRepository.find({
+      where: { user: { id } },
+      relations: ['user', 'office'], // Incluye relaciones si es necesario
+    });
+
+    if (!reservationsByUserId.length) {
       throw new BadRequestException('Usuario no tiene reservaciones');
+    }
 
     return reservationsByUserId;
   }
 
   // Rutas POST
-  async addNewReservation(data: AddNewReservationDto) {
+
+  async addNewReservation(id: string, data: AddNewReservationDto) {
     const foundUser = await this.userRepository.findOne({
-      where: { id: data.user_id },
+      where: { id: id },
     });
 
     if (!foundUser) {
-      throw new NotFoundException(
-        `Usuario con id ${data.user_id} no fue encontrado`,
-      );
+      throw new NotFoundException(`Usuario con id ${id} no fue encontrado`);
     }
 
     const foundOffice = await this.officeRepository.findOne({
@@ -64,11 +61,10 @@ export class ReservationsRepository {
     }
 
     const newReservation = this.reservationRepository.create({
-      date: new Date(data.date), // Asegúrate de convertir a Date si es necesario
-      time: data.time,
-      duration: data.duration,
-      price_per_day: data.price_per_day,
-      guests: data.guests,
+      start_day: data.start_day,
+      end_day: data.end_day,
+      guests_number: data.guests_number,
+      paid_amount: data.paid_amount,
       user: foundUser,
       office: foundOffice,
     });
@@ -91,29 +87,55 @@ export class ReservationsRepository {
   }
 
   // Rutas PUT
-  updateReservation(id: string, updateReservationDto: UpdateReservationDto) {
-    const updateReservation = mockReservations.find(
-      (reservation) => reservation.id === id,
-    );
+  async updateReservation(
+    id: string,
+    updateReservationDto: UpdateReservationDto,
+  ) {
+    const updateReservation = await this.reservationRepository.findOne({
+      where: { id },
+    });
 
-    if (!updateReservation)
+    if (!updateReservation) {
       throw new BadRequestException('Reservación no encontrada');
+    }
 
-    // TODO: Actualizar reservation
+    // Actualizar los campos de la reserva con los datos de updateReservationDto
+    Object.assign(updateReservation, updateReservationDto);
+
+    // Guardar la reserva actualizada
+    await this.reservationRepository.save(updateReservation);
 
     return updateReservation;
   }
 
   // Rutas DELETE
-  deleteReservation(id) {
-    const deleteReservation = mockReservations.find(
-      (reservation) => reservation.id === id,
-    );
-    if (!deleteReservation)
-      throw new BadRequestException('Reservación no encontrada');
+  async deleteReservation(id: string) {
+    if (!id) {
+      throw new BadRequestException('ID de reservación es requerido');
+    }
 
-    // TODO: Actualizar reservation
+    let deleteReservation: Reservation;
+    try {
+      deleteReservation = await this.reservationRepository.findOne({
+        where: { id },
+      });
 
-    return deleteReservation;
+      if (!deleteReservation) {
+        throw new BadRequestException('Reservación no encontrada');
+      }
+
+      // Eliminar la reserva
+      await this.reservationRepository.remove(deleteReservation);
+    } catch (error) {
+      throw new BadRequestException(
+        `Error al eliminar la reservación: ${error.message}`,
+      );
+    }
+
+    return {
+      message: 'Reservación eliminada con éxito',
+      deletedReservation: deleteReservation,
+    };
   }
 }
+

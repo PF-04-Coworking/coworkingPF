@@ -4,7 +4,6 @@ import { Sidebar } from "./MobileMenu/MobileMenu";
 import { links } from "../links";
 import { ControlToken } from "./ControlToken";
 
-
 const Header = () => {
   return (
     <header className="fixed h-20 w-full py-4 z-10 backdrop-blur-xl bg-background/20">

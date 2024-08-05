@@ -1,3 +1,4 @@
+import React from "react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/common/Sheet";
 import { Menu } from "lucide-react";
 import { CustomLink } from "../../../../components/common/CustomLink";
@@ -5,14 +6,30 @@ import { TextLogo } from "../../../../components/common/TextLogo";
 import { links } from "../../links";
 import "./MobileMenu.css";
 
+interface ISheetTriggerButtonProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
+
+const SheetTriggerButton = React.forwardRef<
+  HTMLDivElement,
+  ISheetTriggerButtonProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    {...props}
+    className="text-white hover:bg-background hover:border-background cursor-pointer p-2 rounded-md transition lg:hidden"
+  >
+    <Menu className="size-5" />
+    <span className="sr-only">Toggle navigation menu</span>
+  </div>
+));
+
+SheetTriggerButton.displayName = "SheetTriggerButton";
+
 const Sidebar = () => {
   return (
     <Sheet>
-      <SheetTrigger asChild className="lg:hidden">
-        <div className="text-white hover:bg-background hover:border-background cursor-pointer p-2 rounded-md transition">
-          <Menu className="size-5" />
-          <span className="sr-only">Toggle navigation menu</span>
-        </div>
+      <SheetTrigger asChild>
+        <SheetTriggerButton />
       </SheetTrigger>
       <SheetContent
         side="right"

@@ -11,7 +11,11 @@ import { ReservationsRepository } from 'src/reservations/reservations.repository
 import { Reservation } from 'src/entities/Reservations.entity';
 import { OfficeRepository } from 'src/offices/offices.repository';
 import { Office } from 'src/entities/Offices.entity';
+<<<<<<< HEAD
 import { PaymentsService } from 'src/payments/payments.service';
+=======
+import { AuthService } from 'src/auth/auth.service';
+>>>>>>> f5a22473253ef01504f298488a560c9d7c3f4288
 
 @Module({
   imports: [
@@ -26,7 +30,12 @@ import { PaymentsService } from 'src/payments/payments.service';
     UserRepository,
     ReservationsService,
     ReservationsRepository,
+<<<<<<< HEAD
     PaymentsService
+=======
+    AuthService,
+>>>>>>> f5a22473253ef01504f298488a560c9d7c3f4288
   ],
 })
 export class UserModule {}
+

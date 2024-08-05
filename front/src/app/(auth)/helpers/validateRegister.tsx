@@ -45,9 +45,9 @@ const validateRegister = (values: FormValues) => {
       "Ingresa un número de teléfono válido (solo números y un '+' opcional al inicio)";
   } else if (values.phone.length < 6) {
     errors.phone = "Ingresa un número valido";
-  }
+  } 
 
   return errors;
 };
 
-export default validateRegister;
+export { validateRegister };
