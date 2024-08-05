@@ -4,7 +4,11 @@ import { IOffice } from "../types";
 interface IOfficesStore {
   offices: IOffice[];
   setStoredOffices: (offices: IOffice[]) => void;
-  updateStoredOffice: (id: string, updatedFields: Partial<IOffice>) => void;
+  updateStoredOffice: (
+    id: string,
+    updatedFields: Partial<IOffice>,
+    imgUrl?: string
+  ) => void;
   addStoredOffice: (office: IOffice) => void;
   removeStoredOffice: (id: string) => void;
 }

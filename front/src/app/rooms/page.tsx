@@ -8,21 +8,22 @@ import Sort from "./_components/Sort";
 import { Paragraph } from "@/components/common/Paragraph";
 import Filter from "./_components/Filter";
 import { useState } from "react";
-import useOfficesRoomsStore from "./_store/storeFilterOffice";
-import { useFetchFilteredOffices, useFetchAllOffices } from "./hooks/hooks";
+import { useOfficesRoomsStore } from "./_store/useStoreFilterOffice";
+import { useFetchAllOffices } from "./hooks/useFetchAllOffices";
+import { useFetchFilteredOffices } from "./hooks/useFetchFilteredOffices";
+import { IFilters } from "./types";
 
 const page = 1;
 const limit = 100;
 
-const rooms = () => {
-  //estado de la store
+const Rooms = () => {
   const { offices } = useOfficesRoomsStore();
-  //estados de los ordenamientos
   const [sortOption, setSortOption] = useState("");
-  //estados de la busqueda
   const [searchTerm, setSearchTerm] = useState("");
-  //estados de los filtros
-  const [filters, setFilters] = useState({ amenities: [], location: [] });
+  const [filters, setFilters] = useState<IFilters>({
+    services: [],
+    location: [],
+  });
 
   useFetchFilteredOffices(filters, page, limit);
   useFetchAllOffices();
@@ -31,30 +32,33 @@ const rooms = () => {
     setSortOption(option);
   };
 
-  const handleSearch = (event: any) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleFilter = (filterValues: any) => {
+  const handleFilter = (filterValues: IFilters) => {
     setFilters(filterValues);
   };
 
-  const filteredAndSearchedOffices = offices.filter(
-    (office) =>
-      office.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      office.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredAndSearchedOffices = offices.filter((office) => {
+    const name = office.name.toLowerCase();
+    const description = office.description.toLowerCase();
+    return (
+      name.includes(searchTerm.toLowerCase()) ||
+      description.includes(searchTerm.toLowerCase())
+    );
+  });
 
   const sortedOffices = [...filteredAndSearchedOffices].sort((a, b) => {
     switch (sortOption) {
       case "Precio Alto":
-        return b.price - a.price;
+        return parseInt(b.price) - parseInt(a.price);
       case "Precio Bajo":
-        return a.price - b.price;
+        return parseInt(a.price) - parseInt(b.price);
       case "Capacidad Alta":
-        return b.capacity - a.capacity;
+        return parseInt(b.capacity) - parseInt(a.capacity);
       case "Capacidad Baja":
-        return a.capacity - b.capacity;
+        return parseInt(a.capacity) - parseInt(b.capacity);
       default:
         return 0;
     }
@@ -98,6 +102,7 @@ const rooms = () => {
           {sortedOffices.map((office, index) => (
             <CardOffice
               key={index}
+              id={office.id}
               imgUrl={office.imgUrl}
               name={office.name}
               description={office.description}
@@ -113,4 +118,4 @@ const rooms = () => {
   );
 };
 
-export default rooms;
+export default Rooms;

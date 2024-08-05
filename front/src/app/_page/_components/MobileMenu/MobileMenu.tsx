@@ -23,6 +23,8 @@ const SheetTriggerButton = React.forwardRef<
   </div>
 ));
 
+SheetTriggerButton.displayName = "SheetTriggerButton";
+
 const Sidebar = () => {
   return (
     <Sheet>

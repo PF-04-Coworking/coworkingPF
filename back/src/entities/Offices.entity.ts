@@ -32,14 +32,15 @@ export class Office {
   @Column({ nullable: true })
   price: number;
 
-  @ApiProperty({ description: 'Office image URLs', type: [String] })
-  @Column('simple-array',{ nullable: true })
-  imgUrl: string[] | string;
+  @ApiProperty({ description: 'Office image URLs' })
+  @Column({ nullable: true })
+  imgUrl: string;
 
   @Column('simple-array', { nullable: true })
   services: string[];
-  
+
   @ApiProperty({ description: 'Office reservations' })
   @OneToMany(() => Reservation, (reservation) => reservation.office)
   reservations: Reservation[];
 }
+
