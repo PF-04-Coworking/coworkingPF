@@ -4,6 +4,10 @@ import "./globals.css";
 import Alert from "@/components/Toastify/Toastify";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+
+
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

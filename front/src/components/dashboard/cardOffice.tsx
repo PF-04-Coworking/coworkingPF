@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../common/Button";
 import {
   CircleParking,
@@ -14,7 +15,7 @@ import Image from "next/image";
 
 type Amenity = Record<string, React.ReactNode>;
 
-const amenityIcons: Amenity = {
+export const amenityIcons: Amenity = {
   Internet: <WifiIcon />,
   Estacionamiento: <CircleParking />,
   Cafe: <CoffeeIcon />,
@@ -25,6 +26,7 @@ const amenityIcons: Amenity = {
 };
 
 const CardOffice = ({
+  id,
   imgUrl,
   name,
   description,
@@ -70,7 +72,9 @@ const CardOffice = ({
             ))}
           </div>
           <Button className="w-full" variant="primary">
-            <span className="text-black">Ver Detalles</span>
+            <Link href={`/rooms/${id}`} className="w-full">
+              <span className="text-black">Ver Detalles</span>
+            </Link>
           </Button>
         </div>
       </div>
