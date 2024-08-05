@@ -7,7 +7,6 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    // return this.appService.getHello();
     return 'Acá va el index';
   }
 
@@ -18,3 +17,4 @@ export class AppController {
     };
   }
 }
+
