@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import geocodeAddress from "./GeoCoder";
 import L from "leaflet";
 import image from "../../../../../public/images/png-transparent-orange-and-white-location-icon-map-computer-icons-location-logo-text-orange-pin.png";
-import { ILocation, LeafletMapComponentProps } from "../../types";
+import { ILeafletMapComponentProps, ILocation } from "@/types/types";
 
 const img = image.src;
 
@@ -14,7 +14,7 @@ const MarkerLeaflet = L.icon({
   iconSize: [55, 58],
 });
 
-const LeafletMapComponent = ({ location }: LeafletMapComponentProps) => {
+const LeafletMapComponent = ({ location }: ILeafletMapComponentProps) => {
   const [coordinates, setCoordinates] = useState<ILocation>({ lat: 0, lng: 0 });
 
   useEffect(() => {

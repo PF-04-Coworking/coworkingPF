@@ -2,12 +2,13 @@ export interface IPaginationObject {
   page: number;
   limit: number;
 }
-interface ILocation {
+
+export interface ILocation {
   lat: number;
   lng: number;
 }
 
-interface LeafletMapComponentProps {
+export interface ILeafletMapComponentProps {
   location: string;
 }
 
