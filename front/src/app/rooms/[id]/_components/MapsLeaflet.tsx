@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import geocodeAddress from "./GeoCoder";
 import L from "leaflet";
 import image from "../../../../../public/images/png-transparent-orange-and-white-location-icon-map-computer-icons-location-logo-text-orange-pin.png";
+import { ILocation, LeafletMapComponentProps } from "../../types";
 
 const img = image.src;
 
@@ -37,7 +38,7 @@ const LeafletMapComponent = ({ location }: LeafletMapComponentProps) => {
           <MapContainer
             center={[coordinates.lat, coordinates.lng]}
             zoom={17}
-            style={{ height: "100%", borderRadius: "1rem", width: "100%" }}
+            style={{ height: "100%", borderRadius: "1rem", width: "100%", zIndex:0}}
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <Marker

@@ -2,7 +2,6 @@ export interface IPaginationObject {
   page: number;
   limit: number;
 }
-
 interface ILocation {
   lat: number;
   lng: number;
