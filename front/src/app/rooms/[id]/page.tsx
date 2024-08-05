@@ -10,11 +10,12 @@ import LeafletMapComponent from "./_components/MapsLeaflet";
 import { amenityIcons } from "@/components/dashboard/cardOffice";
 import { Highlight } from "@/components/common/Highlight";
 import ModalCalendar from "./_components/ModalCalendar";
+import { IOffice } from "@/types/types";
 
 amenityIcons;
 
 const officeById = ({ params }: { params: { id: string } }) => {
-  const [office, setOffice] = useState<IOffice1 | null>(null);
+  const [office, setOffice] = useState<IOffice | null>(null);
 
   const router = useRouter();
 

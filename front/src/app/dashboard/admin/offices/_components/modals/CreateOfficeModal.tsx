@@ -14,7 +14,7 @@ const CardAdd = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <>
+    <div className="flex-shrink-0">
       <Button
         variant="primary"
         className="ml-4"
@@ -24,7 +24,7 @@ const CardAdd = () => {
       </Button>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="font-sans bg-background text-white border-secondaryDark">
+        <DialogContent className="font-sans bg-background text-white border-secondaryDark max-h-[90%] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Añadir</DialogTitle>
             <DialogDescription className="text-secondary text-md pb-5">
@@ -34,7 +34,7 @@ const CardAdd = () => {
           <CreateOfficeForm />
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 };
 

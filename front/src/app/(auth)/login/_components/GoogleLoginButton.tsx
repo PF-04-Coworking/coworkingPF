@@ -34,7 +34,7 @@ const GoogleLoginButton = () => {
     };
 
     handleLogin();
-  }, []);
+  }, [router, setAuthToken, setUserData]);
 
   return (
     <GoogleButton redirectRoute="/login" text="Iniciar sesión con Google" />

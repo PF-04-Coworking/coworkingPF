@@ -196,8 +196,6 @@ export class UserRepository {
   async loginGoogle(credentials: GoogleAccessTokenDto) {
     const { accessToken } = credentials;
 
-    console.log('ACCESS_TOKEN', accessToken);
-
     // Verify the access token using AuthService
     let googleUserData: any;
 

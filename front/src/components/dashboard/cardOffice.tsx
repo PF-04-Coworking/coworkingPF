@@ -10,6 +10,8 @@ import {
   Mic2,
   Bus,
 } from "lucide-react";
+import { IOffice } from "@/app/dashboard/admin/types";
+import Image from "next/image";
 
 type Amenity = Record<string, React.ReactNode>;
 
@@ -23,7 +25,8 @@ export const amenityIcons: Amenity = {
   "Acceso a transporte publico": <Bus />,
 };
 
-const CardOffice: React.FC<IOffice1> = ({
+const CardOffice = ({
+  id,
   imgUrl,
   name,
   description,
@@ -31,15 +34,21 @@ const CardOffice: React.FC<IOffice1> = ({
   price,
   services,
   location,
-  id,
-}) => {
+}: IOffice) => {
   return (
     <>
       <div className=" bg-secondaryDark rounded-md p-4 shadow-md text-white">
-        <img
-          src={imgUrl}
+        <Image
+          src={
+            imgUrl
+              ? imgUrl
+              : "https://res.cloudinary.com/danpp1ys8/image/upload/v1722819564/arcbukd8qxep3aqfni71.webp"
+          }
           alt="Office Image"
-          className="object-cover rounded-md w-full  h-auto 2xl:h-[60%]"
+          className="object-cover rounded-md w-full h-auto 2xl:h-[60%]"
+          width={0}
+          height={0}
+          sizes="100vw"
         />
 
         <div className="p-4 space-y-2">

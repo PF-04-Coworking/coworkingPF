@@ -103,24 +103,10 @@ export class UserController {
     description: 'Internal Server Error.',
   })
   async addNewReservation(
-    @Req() request,
     @Param('id') paramId: string,
     @Body() data: AddNewReservationDto,
   ) {
     try {
-      const userId = request.user.id;
-
-      if (userId !== paramId) {
-        throw new UnauthorizedException(
-          'You can only add reservations for your own user ID',
-        );
-      }
-
-      // Validate the input data
-      if (!data.date || !data.time || !data.guests || !data.office_id) {
-        throw new BadRequestException('Invalid input data');
-      }
-
       // Add the reservation
       const newReservation = await this.reservationsService.addNewReservation(
         paramId,

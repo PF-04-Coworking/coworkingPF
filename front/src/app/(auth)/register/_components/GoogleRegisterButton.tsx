@@ -27,19 +27,16 @@ const GoogleRegisterButton = () => {
         error: "Ya existe un usuario con ese correo",
       });
       const response = await promise;
-      console.log("Response de Register", response);
       const { token, user } = await apiAuth.googleLogin({
         accessToken,
       });
-      console.log("Token", token);
-      console.log("User", user);
       setAuthToken(token);
       setUserData(user);
       router.push("/rooms");
     };
 
     handleRegister();
-  }, []);
+  }, [router, setAuthToken, setUserData]);
 
   return (
     <GoogleButton redirectRoute="/register" text="Registrarse con Google" />

@@ -11,38 +11,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../../../components/common/Sheet";
+import { create } from "zustand";
 import { ChevronDownIcon } from "lucide-react";
 import { Formik, Form } from "formik";
 import { Checkbox } from "@/components/common/checkbox";
-import { create } from "zustand";
-
-interface IFilter {
-  filters: {
-    services: string[];
-    location: string[];
-  };
-  setFilters: (filters: { services: string[]; location: string[] }) => void;
-}
-
-const useFilterStore = create<IFilter>((set) => ({
-  filters: {
-    services: [],
-    location: [],
-  },
-  setFilters: (filters) => set({ filters }),
-}));
-
-const amenitiesOptions: string[] = [
-  "Internet",
-  "Cafe",
-  "Gimnasio",
-  "Estacionamiento",
-  "Zona de descanso",
-  "Sala de conferencias",
-  "Acceso a transporte publico",
-];
-
-const locationOptions: string[] = ["México", "Perú", "Colombia", "Argentina"];
+import {
+  servicesOptions,
+  locationOptions,
+} from "@/lib/constants/offices-constants";
+import { useFilterStore } from "../_store/useFilterStore";
 
 const Filter = ({ onFilter }: any) => {
   const { filters, setFilters } = useFilterStore();
@@ -84,15 +61,15 @@ const Filter = ({ onFilter }: any) => {
                 <h3 className="text-lg font-semibold mb-2">
                   Servicios/Comodidades
                 </h3>
-                {amenitiesOptions.map((amenity) => (
-                  <label key={amenity} className="flex gap-2 items-center mb-3">
+                {servicesOptions.map((service) => (
+                  <label key={service} className="flex gap-2 items-center mb-3">
                     <Checkbox
                       name="services"
-                      value={amenity}
+                      value={service}
                       className="border-primary"
                       type="submit"
                     />
-                    <div className="">{amenity}</div>
+                    <div className="">{service}</div>
                   </label>
                 ))}
               </div>
