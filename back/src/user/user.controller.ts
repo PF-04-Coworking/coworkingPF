@@ -20,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import {
+  contactInfoDto,
   CreateUserDto,
   GoogleAccessTokenDto,
   LoginUserDto,
@@ -186,5 +187,10 @@ async addNewReservation(
   @ApiOperation({ summary: 'Login a user desde auth de google' })
   loginGoogle(@Body() credentials: GoogleAccessTokenDto) {
     return this.userService.loginGoogle(credentials);
+  }
+
+  @Post('contact/form')
+  contactInfo(@Body() contactInfo: contactInfoDto){
+    return this.userService.contactInfo(contactInfo)
   }
 }

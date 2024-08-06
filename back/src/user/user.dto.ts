@@ -7,6 +7,7 @@ import {
   IsString,
   IsStrongPassword,
   IsUUID,
+  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
@@ -55,11 +56,8 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  @MinLength(6)
-  @MaxLength(20)
-  @ApiProperty({ description: 'User phone number' })
-  phone: number;
+ @Matches('^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$')
+  phone: string;
 
   @IsOptional()
   @IsString()
@@ -134,9 +132,8 @@ export class UpdateUserDto {
   password: string;
 
   @IsOptional()
-  @IsNumber()
-  @ApiProperty({ description: 'User phone number', required: false })
-  phone: number;
+  @Matches('^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$')
+   phone: string;
 
   @IsOptional()
   @MinLength(4)
@@ -194,5 +191,23 @@ export class GoogleAccessTokenDto {
     maxLength: 50,
   })
   accessToken: string;
+}
+
+export class contactInfoDto extends PickType(CreateUserDto, [
+  'name',
+  'lastname',
+  'email',
+  'phone'
+]){
+
+  @IsNotEmpty()
+  @MaxLength(60)
+  @MinLength(10)
+  @ApiProperty({
+    description: 'Description of contact purpose',
+    maxLength:60,
+    minLength:10
+  })
+  description: string;
 }
 
