@@ -42,6 +42,7 @@ export class ReservationsController {
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   getReservations() {
+    console.log('prueba');
     return this.reservationsService.getReservations();
   }
 
