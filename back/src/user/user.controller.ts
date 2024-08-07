@@ -111,23 +111,22 @@ export class UserController {
   ) {
     try {
       // Process the payment with Stripe
-      const paymentIntent = await this.stripeService.createPaymentIntent(
-        data.amount,
-        'usd',
-      );
+      // const paymentIntent = await this.stripeService.createPaymentIntent(
+      //   data.amount,
+      //   'usd',
+      // );
 
       // Add the reservation
       const newReservation = await this.reservationsService.addNewReservation(
         paramId,
         data,
       );
-      console.log('hola');
 
       return {
         statusCode: 201,
         message: 'The reservation has been successfully created.',
         data: newReservation,
-        paymentIntent, // Return payment intent to complete the payment on the frontend
+        // paymentIntent, // Return payment intent to complete the payment on the frontend
       };
     } catch (error) {
       console.error('Error in addNewReservation:', error);

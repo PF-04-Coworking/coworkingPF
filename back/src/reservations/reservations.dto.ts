@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsDate,
   IsEmpty,
   IsNotEmpty,
   IsNumber,
   IsOptional,
+  IsString,
   IsUUID,
 } from 'class-validator';
 
@@ -13,16 +15,16 @@ export class AddNewReservationDto {
     description: 'Start day of the reservation',
     example: '05/08/2024',
   })
-  @IsDate()
   @IsNotEmpty()
+  @Type(()=> Date)
   start_day: Date;
 
   @ApiProperty({
     description: 'End day of the reservation',
     example: '07/08/2024',
   })
-  @IsDate()
   @IsNotEmpty()
+  @Type(()=> Date)
   end_day: Date;
 
   @ApiProperty({
@@ -39,13 +41,13 @@ export class AddNewReservationDto {
   @IsNotEmpty()
   guests_number: number;
 
-  @ApiProperty({ description: 'Paid amount', nullable: true })
+  @ApiProperty({ description: 'Paid amount'})
   @IsNumber()
-  @IsEmpty()
+  @IsOptional()
   paid_amount?: number;
 
   @ApiProperty({ description: 'ID of the office reserved' })
-  @IsUUID('4')
+  @IsString()
   office_id: string;
 }
 
