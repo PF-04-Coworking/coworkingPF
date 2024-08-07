@@ -20,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import {
+  contactInfoDto,
   CreateUserDto,
   GoogleAccessTokenDto,
   LoginUserDto,
@@ -34,6 +35,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from 'src/entities/Users.entity';
 import { Reservation } from 'src/entities/Reservations.entity';
 import { request } from 'http';
+import { PaymentsService } from 'src/payments/payments.service';
 
 @ApiTags('user')
 @Controller('user')
@@ -41,6 +43,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly reservationsService: ReservationsService,
+    private readonly stripeService: PaymentsService,
   ) {}
 
   //*GET
@@ -95,33 +98,41 @@ export class UserController {
   })
   @ApiResponse({
     status: 401,
-    description:
-      'Unauthorized. User can only add reservations for their own ID.',
+    description: 'Unauthorized. User can only add reservations for their own ID.',
   })
   @ApiResponse({
     status: 500,
     description: 'Internal Server Error.',
   })
   async addNewReservation(
-    @Param('id') paramId: string,
+    @Param('id', ParseUUIDPipe) paramId: string,
     @Body() data: AddNewReservationDto,
   ) {
     try {
+      console.log('Amount:', data.amount); // Añade este log para verificar el valor del amount
+
+      // Process the payment with Stripe
+      const paymentIntent = await this.stripeService.createPaymentIntent(
+        data.amount,
+        'usd'
+      );
+  
       // Add the reservation
       const newReservation = await this.reservationsService.addNewReservation(
         paramId,
         data,
       );
-
+      
       return {
         statusCode: 201,
         message: 'The reservation has been successfully created.',
         data: newReservation,
+        clientSecret: paymentIntent.client_secret, // Return client secret to complete the payment on the frontend
       };
     } catch (error) {
       console.error('Error in addNewReservation:', error);
 
-      if (
+      if (  
         error instanceof UnauthorizedException ||
         error instanceof BadRequestException
       ) {
@@ -129,9 +140,10 @@ export class UserController {
       } else {
         throw new InternalServerErrorException('Internal Server Error');
       }
+
     }
   }
-
+  
   //*POST
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
@@ -178,5 +190,9 @@ export class UserController {
   loginGoogle(@Body() credentials: GoogleAccessTokenDto) {
     return this.userService.loginGoogle(credentials);
   }
-}
 
+  @Post('contact/form')
+  contactInfo(@Body() contactInfo: contactInfoDto) {
+    return this.userService.contactInfo(contactInfo);
+  }
+}
