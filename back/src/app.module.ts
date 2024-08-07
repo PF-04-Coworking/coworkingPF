@@ -14,6 +14,7 @@ import { ReservationsModule } from './reservations/reservations.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { PaymentsModule } from './payments/payments.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ChatbotModule } from './chatbot/wit.module';
 
 @Module({
   imports: [
@@ -42,8 +43,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
       signOptions: { expiresIn: '60m' },
     }),
     FileUploadModule,
-   // StripeModule, //!Pendiente aquí
+    // StripeModule, //!Pendiente aquí
     PaymentsModule,
+    ChatbotModule,
   ],
   controllers: [AppController],
   providers: [AppService],

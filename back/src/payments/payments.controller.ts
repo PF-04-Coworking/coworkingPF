@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 
@@ -7,12 +7,14 @@ export class PaymentsController {
   private stripe: Stripe; 
 
   constructor(private configService: ConfigService) {
-    this.stripe = new Stripe(
-      this.configService.get<string>(process.env.STRIPE_SECRET_KEY), // Asegúrate de que STRIPE_SECRET_KEY esté definido en tu archivo de configuración
-      {
-        apiVersion: '2024-06-20',
-      },
-    );
+    const stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
+    if (!stripeSecretKey) {
+      throw new Error('Stripe secret key not defined in configuration');
+    }
+
+    this.stripe = new Stripe(stripeSecretKey, {
+      apiVersion: '2024-06-20',
+    });
   }
 
   @Post('create-checkout-session')
@@ -42,9 +44,10 @@ export class PaymentsController {
         cancel_url: 'http://localhost:3000/cancel', // Cambia esto por la URL de tu página de cancelación
       });
 
-      return res.json({ id: session.id });
+      return res.status(HttpStatus.OK).json({ id: session.id });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      console.error('Error creating checkout session:', error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: error.message });
     }
   }
 }
