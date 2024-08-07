@@ -109,12 +109,11 @@ export class UserController {
     @Param('id', ParseUUIDPipe) paramId: string,
     @Body() data: AddNewReservationDto,
   ) {
-    console.log('Paramid: ', paramId);
     try {
       // Process the payment with Stripe
       const paymentIntent = await this.stripeService.createPaymentIntent(
-        data.amount, // Ensure AddNewReservationDto includes the amount
-        'usd', // Specify the currency
+        data.amount,
+        'usd',
       );
 
       // Add the reservation
