@@ -14,8 +14,9 @@ export class PaymentsService {
   async createPaymentIntent(amount: number, currency: string) {
     try {
       return await this.stripe.paymentIntents.create({
-        amount,
+        amount: amount*100,
         currency,
+        payment_method_types: ['card'], // Añade los métodos de pago que quieres aceptar
       });
     } catch (error) {
       // Manejo de errores más específico puede ser añadido aquí

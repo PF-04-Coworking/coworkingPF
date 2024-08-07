@@ -22,7 +22,7 @@ export class Reservation {
   guests_number: number;
 
   @ApiProperty({ description: 'Paid amount' })
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, nullable: true })
   paid_amount: number;
 
   @ApiProperty({ description: 'ID of the reserved office' })
@@ -33,4 +33,3 @@ export class Reservation {
   @ManyToOne(() => User, (user) => user.reservations)
   user: User;
 }
-
