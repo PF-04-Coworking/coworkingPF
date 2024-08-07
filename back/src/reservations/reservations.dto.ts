@@ -13,9 +13,9 @@ export class AddNewReservationDto {
     description: 'Start day of the reservation',
     example: '05/08/2024',
   })
-  @IsDate()
+  @IsDate() 
   @IsNotEmpty()
-  start_day: Date;
+  start_day: string; //cambie el formato de fecha porque  no me dejaba hacer peticiones en thunderClient(renata)
 
   @ApiProperty({
     description: 'End day of the reservation',
@@ -23,12 +23,13 @@ export class AddNewReservationDto {
   })
   @IsDate()
   @IsNotEmpty()
-  end_day: Date;
+  end_day: string;
 
   @ApiProperty({
     description: 'Amount per day of the reservation',
     example: 100,
   })
+  @IsNotEmpty() //añadi esto para que me dejara hacer peticiones a thunder
   amount: number;
 
   @ApiProperty({
@@ -41,7 +42,7 @@ export class AddNewReservationDto {
 
   @ApiProperty({ description: 'Paid amount', nullable: true })
   @IsNumber()
-  @IsEmpty()
+  //@IsEmpty()  comente esto porque me daba error
   paid_amount?: number;
 
   @ApiProperty({ description: 'ID of the office reserved' })
