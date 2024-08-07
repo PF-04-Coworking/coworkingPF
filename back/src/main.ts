@@ -2,11 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { LoggerGlobalMiddleware } from './middlewares/logger.middleware';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // app.use(LoggerGlobalMiddleware);
+  app.use(LoggerGlobalMiddleware);
+
+  app.useGlobalPipes(new ValidationPipe({ whitelist:true}))
 
   // Configuración de CORS
   app.enableCors({

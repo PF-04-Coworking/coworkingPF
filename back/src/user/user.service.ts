@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import {
+  contactInfoDto,
   CreateUserDto,
   GoogleAccessTokenDto,
   LoginUserDto,
   UpdateUserDto,
 } from './user.dto';
+import { transporter } from 'src/Config/mailer';
 
 @Injectable()
 export class UserService {
@@ -45,6 +47,24 @@ export class UserService {
 
   loginGoogle(credentials: GoogleAccessTokenDto) {
     return this.usersRepository.loginGoogle(credentials);
+  }
+
+  async contactInfo(contactInfo: contactInfoDto){
+
+    try {
+      await transporter.sendMail({
+        from: '"Redux team"', // sender address
+        to: contactInfo.email, // list of receivers
+        subject: 'Confirmacion de cuenta', // Subject line
+        html: `<b>Hola, bienvenid@ ${contactInfo.name} a Relux!</b>`, // html body
+      });
+    } catch (error) {
+      throw new BadRequestException(
+        'Something went wrong. No emails were sent ',
+      );
+    }
+
+    return 'Contact email sent successfully'
   }
 }
 

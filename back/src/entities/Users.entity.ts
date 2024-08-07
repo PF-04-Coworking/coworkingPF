@@ -26,8 +26,8 @@ export class User {
   password: string;
 
   @ApiProperty({ description: 'User phone' })
-  @Column({ type: 'int', nullable: true })
-  phone: number;
+  @Column({ type: 'varchar', nullable: true })
+  phone: string;
 
   @ApiProperty({ description: 'User country' })
   @Column({ type: 'varchar', length: 50, nullable: true })
