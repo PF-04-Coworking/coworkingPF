@@ -10,8 +10,6 @@ import { Repository } from 'typeorm';
 import { User } from 'src/entities/Users.entity';
 import { Office } from 'src/entities/Offices.entity';
 import { transporter } from 'src/Config/mailer';
-import { format } from 'date-fns';
-import { start } from 'repl';
 
 @Injectable()
 export class ReservationsRepository {
@@ -65,9 +63,6 @@ export class ReservationsRepository {
 
     const startDate = data.start_day;
     const endDate = data.end_day;
-
-    console.log(startDate, endDate)
-
 
     const newReservation = this.reservationRepository.create({
       start_day: startDate,

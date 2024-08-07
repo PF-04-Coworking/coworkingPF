@@ -6,8 +6,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsString,
-  IsUUID,
+  IsString
 } from 'class-validator';
 
 export class AddNewReservationDto {
@@ -31,6 +30,7 @@ export class AddNewReservationDto {
     description: 'Amount per day of the reservation',
     example: 100,
   })
+  @IsNotEmpty() //añadi esto para que me dejara hacer peticiones a thunder
   amount: number;
 
   @ApiProperty({

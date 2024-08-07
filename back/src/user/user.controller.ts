@@ -34,7 +34,6 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from 'src/entities/Users.entity';
 import { Reservation } from 'src/entities/Reservations.entity';
-import { request } from 'http';
 import { PaymentsService } from 'src/payments/payments.service';
 
 @ApiTags('user')
@@ -98,8 +97,7 @@ export class UserController {
   })
   @ApiResponse({
     status: 401,
-    description:
-      'Unauthorized. User can only add reservations for their own ID.',
+    description: 'Unauthorized. User can only add reservations for their own ID.',
   })
   @ApiResponse({
     status: 500,
@@ -110,28 +108,31 @@ export class UserController {
     @Body() data: AddNewReservationDto,
   ) {
     try {
+      // console.log('Amount:', data.amount); // Añade este log para verificar el valor del amount
+
       // Process the payment with Stripe
-      // const paymentIntent = await this.stripeService.createPaymentIntent(
-      //   data.amount,
-      //   'usd',
-      // );
+      const paymentIntent = await this.stripeService.createPaymentIntent(
+        data.amount,
+        'usd'
+      );
 
       // Add the reservation
       const newReservation = await this.reservationsService.addNewReservation(
         paramId,
         data,
       );
+      
 
       return {
         statusCode: 201,
         message: 'The reservation has been successfully created.',
         data: newReservation,
-        // paymentIntent, // Return payment intent to complete the payment on the frontend
+        clientSecret: paymentIntent.client_secret, // Return client secret to complete the payment on the frontend
       };
     } catch (error) {
       console.error('Error in addNewReservation:', error);
 
-      if (
+      if (  
         error instanceof UnauthorizedException ||
         error instanceof BadRequestException
       ) {
@@ -139,9 +140,10 @@ export class UserController {
       } else {
         throw new InternalServerErrorException('Internal Server Error');
       }
+
     }
   }
-
+  
   //*POST
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
