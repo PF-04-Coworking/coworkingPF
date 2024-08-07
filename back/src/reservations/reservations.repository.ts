@@ -61,8 +61,8 @@ export class ReservationsRepository {
     }
 
     const newReservation = this.reservationRepository.create({
-      start_day: data.start_day,
-      end_day: data.end_day,
+      start_day: new Date(data.start_day),
+      end_day: new Date(data.end_day),
       guests_number: data.guests_number,
       paid_amount: data.paid_amount,
       user: foundUser,
@@ -138,4 +138,3 @@ export class ReservationsRepository {
     };
   }
 }
-
