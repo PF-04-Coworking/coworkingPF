@@ -190,6 +190,7 @@ async addNewReservation(
   }
 
   @Post('contact/form')
+  @ApiOperation({ summary: 'Submit de información de contacto' })
   contactInfo(@Body() contactInfo: contactInfoDto){
     return this.userService.contactInfo(contactInfo)
   }
