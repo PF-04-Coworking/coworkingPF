@@ -98,8 +98,7 @@ export class UserController {
 })
 @ApiResponse({
   status: 401,
-  description:
-    'Unauthorized. User can only add reservations for their own ID.',
+  description: 'Unauthorized. User can only add reservations for their own ID.',
 })
 @ApiResponse({
   status: 500,
@@ -113,7 +112,7 @@ async addNewReservation(
     // Process the payment with Stripe
     const paymentIntent = await this.stripeService.createPaymentIntent(
       data.amount, 
-      'usd' 
+      'usd'
     );
 
     // Add the reservation
@@ -126,7 +125,7 @@ async addNewReservation(
       statusCode: 201,
       message: 'The reservation has been successfully created.',
       data: newReservation,
-      paymentIntent, // Return payment intent to complete the payment on the frontend
+      clientSecret: paymentIntent.client_secret, // Return client secret to complete the payment on the frontend
     };
   } catch (error) {
     console.error('Error in addNewReservation:', error);
@@ -141,6 +140,7 @@ async addNewReservation(
     }
   }
 }
+
 
   //*POST
   @Post()
