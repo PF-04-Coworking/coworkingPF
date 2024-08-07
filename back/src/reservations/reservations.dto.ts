@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsDate,
   IsEmpty,
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsUUID,
+  IsString
 } from 'class-validator';
 
 export class AddNewReservationDto {
@@ -13,17 +14,17 @@ export class AddNewReservationDto {
     description: 'Start day of the reservation',
     example: '05/08/2024',
   })
-  @IsDate() 
   @IsNotEmpty()
-  start_day: string; //cambie el formato de fecha porque  no me dejaba hacer peticiones en thunderClient(renata)
+  @Type(()=> Date)
+  start_day: Date;
 
   @ApiProperty({
     description: 'End day of the reservation',
     example: '07/08/2024',
   })
-  @IsDate()
   @IsNotEmpty()
-  end_day: string;
+  @Type(()=> Date)
+  end_day: Date;
 
   @ApiProperty({
     description: 'Amount per day of the reservation',
@@ -40,13 +41,13 @@ export class AddNewReservationDto {
   @IsNotEmpty()
   guests_number: number;
 
-  @ApiProperty({ description: 'Paid amount', nullable: true })
+  @ApiProperty({ description: 'Paid amount'})
   @IsNumber()
-  //@IsEmpty()  comente esto porque me daba error
+  @IsOptional()
   paid_amount?: number;
 
   @ApiProperty({ description: 'ID of the office reserved' })
-  @IsUUID('4')
+  @IsString()
   office_id: string;
 }
 
