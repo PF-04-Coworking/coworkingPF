@@ -22,3 +22,11 @@ export interface IOffice {
   services: string[];
   location: string;
 }
+
+export interface IOfficeStripe {
+  
+    id: string;
+    imgUrl: string;
+    price: number;
+
+}

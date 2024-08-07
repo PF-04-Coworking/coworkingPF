@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LocateIcon } from "lucide-react";
-import { Button } from "@/components/common/Button";
 import { Header } from "@/app/_page/_components/HeaderSection";
 import LeafletMapComponent from "./_components/MapsLeaflet";
 import { amenityIcons } from "@/components/dashboard/cardOffice";
@@ -84,7 +83,7 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
                   </p>
                 </div>
               </div>
-              <ModalCalendar />
+              <ModalCalendar officeParams={{ id: office.id, price: office.price, imgUrl: office.imgUrl }}/>
             </div>
             <div className="h-full relative">
               <Image
@@ -106,7 +105,7 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
           </div>
 
           <div className="w-full flex items-center h-[40%] justify-center px-4">
-            <LeafletMapComponent location={office.description} />
+            <LeafletMapComponent location={office.description}/>
           </div>
         </div>
       ) : (
