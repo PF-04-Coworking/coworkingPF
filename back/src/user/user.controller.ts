@@ -84,8 +84,8 @@ export class UserController {
 
 //* ruta para que un user loggeado cree una nueva reservación
 @Post(':id/reservations/new')
-@Roles(UserRole.USER, UserRole.ADMIN)
-@UseGuards(AuthGuard, RolesGuard)
+//@Roles(UserRole.USER, UserRole.ADMIN)
+//@UseGuards(AuthGuard, RolesGuard)
 @ApiOperation({ summary: 'Add a new reservation (User only)' })
 @ApiResponse({
   status: 201,
