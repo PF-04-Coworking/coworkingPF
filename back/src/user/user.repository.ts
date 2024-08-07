@@ -108,7 +108,7 @@ export class UserRepository {
         from: '"Redux team"', // sender address
         to: userNoPassword.email, // list of receivers
         subject: 'Confirmacion de cuenta', // Subject line
-        html: '<b>Hola, bienvenido a Relux!</b>', // html body
+        html: `<b>Hola, bienvenid@ ${user.name} a Relux!</b>`, // html body
       });
     } catch (error) {
       throw new BadRequestException(
@@ -181,6 +181,19 @@ export class UserRepository {
       throw new BadRequestException(
         `Email ${googleUserData.data.email} is already a registered account`,
       );
+
+      try {
+        await transporter.sendMail({
+          from: '"Redux team"', // sender address
+          to: foundUser.email, // list of receivers
+          subject: 'Confirmacion de cuenta', // Subject line
+          html: `<b>Hola, bienvenid@ ${foundUser.name} a Relux!</b>`, // html body
+        });
+      } catch (error) {
+        throw new BadRequestException(
+          'Something went wrong. No emails were sent ',
+        );
+      }
 
     const newUser = await this.userRepository.save({
       name: googleUserData.data.given_name,
