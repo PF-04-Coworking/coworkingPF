@@ -12,10 +12,17 @@ export class PaymentsService {
   }
 
   async createPaymentIntent(amount: number, currency: string) {
-    return await this.stripe.paymentIntents.create({
-      amount,
-      currency,
-    });
+    try {
+      return await this.stripe.paymentIntents.create({
+        amount,
+        currency,
+      });
+    } catch (error) {
+      // Manejo de errores más específico puede ser añadido aquí
+      console.error('Error creating payment intent:', error);
+      throw new Error('Unable to create payment intent');
+    }
   }
 }
+
 

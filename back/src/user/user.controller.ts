@@ -112,8 +112,8 @@ async addNewReservation(
   try {
     // Process the payment with Stripe
     const paymentIntent = await this.stripeService.createPaymentIntent(
-      data.amount, // Ensure AddNewReservationDto includes the amount
-      'usd' // Specify the currency
+      data.amount, 
+      'usd' 
     );
 
     // Add the reservation
