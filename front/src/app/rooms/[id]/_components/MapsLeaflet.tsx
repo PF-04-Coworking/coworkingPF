@@ -38,7 +38,12 @@ const LeafletMapComponent = ({ location }: ILeafletMapComponentProps) => {
           <MapContainer
             center={[coordinates.lat, coordinates.lng]}
             zoom={17}
-            style={{ height: "100%", borderRadius: "1rem", width: "100%", zIndex:0}}
+            style={{
+              height: "100%",
+              borderRadius: "1rem",
+              width: "100%",
+              zIndex: 0,
+            }}
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <Marker

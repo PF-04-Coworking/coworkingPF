@@ -69,15 +69,16 @@ const CheckoutForm = ({
 
   const handleReservation = async (values: FormValues) => {
     if (selectedRange?.from && selectedRange?.to) {
-      const startDate = selectedRange.from.toLocaleDateString("es-ES");
-      const endDate = selectedRange.to.toLocaleDateString("es-ES");
+      const startDate = selectedRange.from.toISOString().split("T")[0];
+      const endDate = selectedRange.to.toISOString().split("T")[0];
 
       const requestData = {
         start_day: startDate,
         end_day: endDate,
         guests_number: values.guests,
-        paid_amount: price,
-        office_id: officeParams.id,
+        amount: price,
+        office: officeParams.id,
+        user: userData.userData?.id,
       };
 
       try {
@@ -113,6 +114,22 @@ const CheckoutForm = ({
     }
   };
 
+  const cardElementOptions = {
+    style: {
+      base: {
+        fontSize: "16px",
+        color: "#ffffff",
+        "::placeholder": {
+          color: "#aab7c4",
+        },
+      },
+      invalid: {
+        color: "#fa755a",
+      },
+    },
+    placeholder: "Número de tarjeta",
+  };
+
   return (
     <Formik
       initialValues={{
@@ -121,6 +138,7 @@ const CheckoutForm = ({
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
         handleReservation(values);
+        handleSubmit(values);
         setSubmitting(false);
       }}
     >
@@ -142,7 +160,10 @@ const CheckoutForm = ({
           </div>
           <div className="grid gap-4 mb-6">
             <label htmlFor="name">Tarjeta de crédito o débito</label>
-            <CardElement className="rounded-md py-3 px-3 text-sm w-full bg-inherit !text-white border focus:outline-none border-primary" />
+            <CardElement
+              className="rounded-md py-3 px-3 text-sm w-full bg-inherit !text-white border focus:outline-none border-primary"
+              options={cardElementOptions}
+            />
           </div>
           <Button
             type="submit"
