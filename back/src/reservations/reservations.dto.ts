@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDate,
+  IsEmpty,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -14,7 +15,7 @@ export class AddNewReservationDto {
   })
   @IsDate()
   @IsNotEmpty()
-  start_day: string;
+  start_day: Date;
 
   @ApiProperty({
     description: 'End day of the reservation',
@@ -22,7 +23,7 @@ export class AddNewReservationDto {
   })
   @IsDate()
   @IsNotEmpty()
-  end_day: string;
+  end_day: Date;
 
   @ApiProperty({
     description: 'Amount per day of the reservation',
@@ -38,10 +39,10 @@ export class AddNewReservationDto {
   @IsNotEmpty()
   guests_number: number;
 
-  @ApiProperty({ description: 'Paid amount' })
+  @ApiProperty({ description: 'Paid amount', nullable: true })
   @IsNumber()
-  @IsNotEmpty()
-  paid_amount: number;
+  @IsEmpty()
+  paid_amount?: number;
 
   @ApiProperty({ description: 'ID of the office reserved' })
   @IsUUID('4')
@@ -79,4 +80,3 @@ export class UpdateReservationDto {
   @IsNotEmpty()
   guests_number: number;
 }
-

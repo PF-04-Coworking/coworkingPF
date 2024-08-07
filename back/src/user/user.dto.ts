@@ -56,7 +56,9 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
- @Matches('^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$')
+  @Matches(
+    '^+?(d{1,3})?[-.s]?((?d{1,4})?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}$',
+  )
   phone: string;
 
   @IsOptional()
@@ -132,8 +134,10 @@ export class UpdateUserDto {
   password: string;
 
   @IsOptional()
-  @Matches('^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$')
-   phone: string;
+  @Matches(
+    '^+?(d{1,3})?[-.s]?((?d{1,4})?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}$',
+  )
+  phone: string;
 
   @IsOptional()
   @MinLength(4)
@@ -197,17 +201,15 @@ export class contactInfoDto extends PickType(CreateUserDto, [
   'name',
   'lastname',
   'email',
-  'phone'
-]){
-
+  'phone',
+]) {
   @IsNotEmpty()
   @MaxLength(60)
   @MinLength(10)
   @ApiProperty({
     description: 'Description of contact purpose',
-    maxLength:60,
-    minLength:10
+    maxLength: 60,
+    minLength: 10,
   })
   description: string;
 }
-
