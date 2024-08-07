@@ -16,6 +16,11 @@ const apiOffices = {
     return response.data;
   },
 
+  getOfficeById: async (officeId: string) => {
+    const response = await axiosClient.get(`/offices/${officeId}`);
+    return response.data;
+  },
+
   createOffice: async (data: any, authToken: string) => {
     const response = await axiosClient.post("/offices", data, {
       headers: {
