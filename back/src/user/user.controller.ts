@@ -121,6 +121,7 @@ export class UserController {
         paramId,
         data,
       );
+      console.log('hola');
 
       return {
         statusCode: 201,
