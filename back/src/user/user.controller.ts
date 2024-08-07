@@ -53,8 +53,8 @@ export class UserController {
   @ApiOperation({ summary: 'Get all users / Admin only' })
   @ApiResponse({ status: 200, description: 'List of users', type: [User] })
   @ApiBearerAuth()
-  //@Roles(UserRole.ADMIN)
-  //@UseGuards(AuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
   getUsers() {
     return this.userService.getUsers();
   }
@@ -85,8 +85,8 @@ export class UserController {
 
 //* ruta para que un user loggeado cree una nueva reservación
 @Post(':id/reservations/new')
-//@Roles(UserRole.USER, UserRole.ADMIN)
-//@UseGuards(AuthGuard, RolesGuard)
+@Roles(UserRole.USER, UserRole.ADMIN)
+@UseGuards(AuthGuard, RolesGuard)
 @ApiOperation({ summary: 'Add a new reservation (User only)' })
 @ApiResponse({
   status: 201,
