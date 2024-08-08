@@ -1,11 +1,12 @@
-import { CircleUserRound, CircleUserRoundIcon } from "lucide-react";
+import { CircleUserRound } from "lucide-react";
 import { Heading } from "../../../components/common/Heading";
 import { MobileMenu } from "../_components/mobile-menu/MobileMenu";
-import { useUser } from "../_hooks/useUser";
 import { Paragraph } from "@/components/common/Paragraph";
+import Link from "next/link";
+import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 
 const Header = ({ title }: { title: string }) => {
-  const { userData } = useUser();
+  const { userData } = useAuthStore();
 
   return (
     <header className="w-full py-5 flex justify-between items-center lg:pl-72">
@@ -15,12 +16,15 @@ const Header = ({ title }: { title: string }) => {
           {title}
         </Heading>
       </div>
-      <div className="items-center gap-x-4 hidden sm:flex">
+      <Link
+        href={"/dashboard/admin/account"}
+        className="flex items-center gap-x-4"
+      >
         <Paragraph variant="primary" className="!text-primary font-semibold">
           {userData?.name}
         </Paragraph>
-        <CircleUserRound size={32} className="text-primary" />
-      </div>
+        <CircleUserRound size={35} className="text-primary" />
+      </Link>
     </header>
   );
 };

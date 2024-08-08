@@ -1,10 +1,16 @@
+"use client";
+
 import React from "react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/common/Sheet";
 import { Menu } from "lucide-react";
 import { CustomLink } from "../../../../components/common/CustomLink";
 import { TextLogo } from "../../../../components/common/TextLogo";
-import { links } from "../../links";
+import { authLinks, links } from "../../links";
 import "./MobileMenu.css";
+import Link from "next/link";
+import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
+import { Logout } from "@/app/dashboard/_components/Logout";
+import { Button } from "@/components/common/Button";
 
 interface ISheetTriggerButtonProps
   extends React.HTMLAttributes<HTMLDivElement> {}
@@ -25,7 +31,11 @@ const SheetTriggerButton = React.forwardRef<
 
 SheetTriggerButton.displayName = "SheetTriggerButton";
 
-const Sidebar = () => {
+const MobileMenu = () => {
+  const { userData } = useAuthStore();
+
+  console.log("userData", userData);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -54,9 +64,28 @@ const Sidebar = () => {
             </CustomLink>
           ))}
         </nav>
+        {!userData && (
+          <nav className="flex flex-col gap-y-4 mt-8">
+            <Link href="/login">
+              <Button variant="outline" className="w-full">
+                Iniciar sesión
+              </Button>
+            </Link>
+            <Link href="/register">
+              <Button variant="primary" className="w-full">
+                Registrarse
+              </Button>
+            </Link>
+          </nav>
+        )}
+        {userData && (
+          <div className="p-2 mt-4">
+            <Logout />
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );
 };
 
-export { Sidebar };
+export { MobileMenu };

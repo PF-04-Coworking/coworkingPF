@@ -38,7 +38,7 @@ const CardOffice = ({
         <div className="space-y-2">
           <div className="flex items-center gap-4">
             <UserIcon className="text-primary flex-shrink-0" size={20} />
-            <Paragraph variant="secondary">{capacity}</Paragraph>
+            <Paragraph variant="secondary">{capacity} personas máx.</Paragraph>
           </div>
           <div className="flex items-center gap-4">
             <MapPinIcon className="text-primary flex-shrink-0" size={20} />
@@ -46,7 +46,7 @@ const CardOffice = ({
           </div>
           <div className="flex items-center gap-4">
             <DollarSignIcon className="text-primary flex-shrink-0" size={20} />
-            <Paragraph variant="secondary">{capacity} / día</Paragraph>
+            <Paragraph variant="secondary">{price} / día</Paragraph>
           </div>
         </div>
         <div className="flex gap-4">

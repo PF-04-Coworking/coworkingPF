@@ -5,65 +5,45 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/common/popover";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
 import { Command } from "@/components/common/command";
+import { sortOptions } from "@/lib/constants/sortOptions";
+import { Paragraph } from "@/components/common/Paragraph";
 
 const Sort = ({ onSort }: { onSort: (option: string) => void }) => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
-
-  const selectedFramework = value;
+  const [selectedSortOption, setSelectedSortOption] = useState("");
 
   const handleSort = (option: string) => {
-    setValue(option);
+    setSelectedSortOption(option);
     onSort(option);
   };
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div>
-          <Button variant="primary">
-            {selectedFramework
-              ? `Ordenar por: ${selectedFramework}`
-              : "Ordenar por:"}
-            <ChevronsUpDown />
-          </Button>
-        </div>
+        <Button variant="outline" className="flex items-center gap-2">
+          {selectedSortOption
+            ? `Ordenar por ${sortOptions[selectedSortOption]}`
+            : "Ordenar por"}
+          <ChevronDownIcon size={20} />
+        </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-58 bg-background border-primary">
+      <PopoverContent className="border-2 border-primary bg-background p-2">
         <div className="flex flex-col gap-3">
-          <Command>
-            <div className="flex flex-col gap-3 bg-background">
-              <Button
-                variant="primary"
-                value="next.js"
-                onClick={() => handleSort("Precio Alto")}
-              >
-                Precio: Alto-Bajo
-              </Button>
-              <Button
-                variant="primary"
-                value="next.js"
-                onClick={() => handleSort("Precio Bajo")}
-              >
-                Precio: Bajo-Alto
-              </Button>
-              <Button
-                variant="primary"
-                value="next.js"
-                onClick={() => handleSort("Capacidad Alta")}
-              >
-                Capacidad: Alto-Bajo
-              </Button>
-              <Button
-                variant="primary"
-                value="next.js"
-                onClick={() => handleSort("Capacidad Baja")}
-              >
-                Capacidad: Bajo-Alto
-              </Button>
+          <Command className="bg-transparent">
+            <div className="flex flex-col gap-3">
+              {Object.keys(sortOptions).map((option, index) => (
+                <Paragraph
+                  key={index}
+                  variant="primary"
+                  value="next.js"
+                  onClick={() => handleSort(option)}
+                  className="p-3 hover:bg-secondaryDark cursor-pointer rounded-md bg-transparent transition"
+                >
+                  {sortOptions[option]}
+                </Paragraph>
+              ))}
             </div>
           </Command>
         </div>
@@ -72,4 +52,4 @@ const Sort = ({ onSort }: { onSort: (option: string) => void }) => {
   );
 };
 
-export default Sort;
+export { Sort };

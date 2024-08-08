@@ -57,10 +57,12 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @ApiProperty({
-    description:"User phone number",
-    example: "+55 55555555"
+    description: 'User phone number',
+    example: '+55 55555555',
   })
-  @Matches(/^(\+?\d{1,3}-?)\s*\d{6,14}\s*$/, {message: 'Número de telefono debe ser de formato: +11 111111111'})
+  @Matches(/^(\+?\d{1,3}-?)\s*\d{6,14}\s*$/, {
+    message: 'Número de telefono debe ser de formato: +11 111111111',
+  })
   phone: string;
 
   @IsOptional()
@@ -189,8 +191,6 @@ export class LoginUserDto extends PickType(CreateUserDto, [
 export class GoogleAccessTokenDto {
   @IsString()
   @IsNotEmpty()
-  @MinLength(3)
-  @MaxLength(50)
   @ApiProperty({
     description: 'Google access token',
     minLength: 3,
@@ -215,3 +215,4 @@ export class contactInfoDto extends PickType(CreateUserDto, [
   })
   description: string;
 }
+

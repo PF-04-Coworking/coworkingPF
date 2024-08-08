@@ -1,15 +1,16 @@
 "use client";
 
-import { Button } from "@/components/common/Button";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { ADMIN_LINKS } from "../../user/links";
 import { TextInput } from "@/components/common/TextInput";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { CreateReservationModal } from "./_components/modals/CreateReservationModal";
+import { useReservations } from "./_hooks/useReservations";
 
 const ReservationsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { reservations } = useReservations();
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);

@@ -9,12 +9,17 @@ const useReservations = () => {
   useEffect(() => {
     const fetchReservations = async () => {
       if (!authToken) return;
-      const response = await apiReservations.getAllReservations(authToken);
-      setReservations(response.data);
+      try {
+        const response = await apiReservations.getAllReservations(authToken);
+        console.log(response);
+        setReservations(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchReservations();
-  }, []);
+  }, [authToken]);
 
   return { reservations };
 };

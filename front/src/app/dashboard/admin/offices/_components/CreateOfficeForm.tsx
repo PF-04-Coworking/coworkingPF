@@ -9,8 +9,9 @@ import { apiOffices } from "@/lib/api/offices/apiOffices";
 import { useOfficesStore } from "../../../../../stores/useOfficesStore";
 import { IEditOfficeData } from "../../types";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
-import { servicesOptions } from "@/lib/constants/offices-constants";
+import { servicesOptions } from "@/lib/constants/servicesOptions";
 import { FieldValidate } from "@/components/common/FieldValidate";
+import { Checkbox } from "@/components/common/Checkbox";
 
 const CreateOfficeForm = () => {
   const { addStoredOffice } = useOfficesStore();
@@ -27,7 +28,7 @@ const CreateOfficeForm = () => {
     formData.append("description", values.description);
     formData.append("capacity", values.capacity);
     formData.append("price", values.price);
-    formData.append("services", values.services.join(","));
+    values.services.forEach((service) => formData.append("services", service));
     // @ts-ignore
     formData.append("file", values.file);
     try {
@@ -48,12 +49,20 @@ const CreateOfficeForm = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Requerido"),
-    location: Yup.string().required("Requerido"),
-    description: Yup.string().required("Requerido"),
-    capacity: Yup.string().required("Requerido"),
-    price: Yup.string().required("Requerido"),
-    services: Yup.array().required("Requerido"),
+    name: Yup.string().required("Debes ingresar un nombre"),
+    location: Yup.string()
+      .required("Debes ingresar una ciudad")
+      .min(2, "Debes ingresar al menos 2 caracteres"),
+    description: Yup.string()
+      .required("Debes ingresar una descripción")
+      .min(2, "Debes ingresar al menos 2 caracteres"),
+    capacity: Yup.number()
+      .required("Debes ingresar un número máximo de invitados")
+      .min(1, "Debes ingresar al menos 1 espacio"),
+    price: Yup.number()
+      .required("Debes ingresar un precio")
+      .min(1, "Debes ingresar al menos 1 euro"),
+    file: Yup.mixed().required("Debes subir una imagen"),
   });
 
   return (
@@ -115,11 +124,10 @@ const CreateOfficeForm = () => {
               />
             </div>
             {servicesOptions.length > 0 && (
-              <div className="grid gap-2">
+              <div className="grid gap-4">
                 {servicesOptions.map((service) => (
-                  <label key={service} className="flex gap-2 items-center mb-3">
-                    <Field
-                      type="checkbox"
+                  <label key={service} className="flex gap-4 items-center">
+                    <Checkbox
                       name="services"
                       value={service}
                       className="border-primary"
@@ -133,7 +141,7 @@ const CreateOfficeForm = () => {
               <InputLabel htmlFor="file">
                 Sube una foto de la oficina:
               </InputLabel>
-              <Field
+              <FieldValidate
                 id="file"
                 name="file"
                 type="file"

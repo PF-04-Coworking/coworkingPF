@@ -5,4 +5,9 @@ const links = [
   { name: "Contacto", href: "#" },
 ];
 
-export { links };
+const authLinks = [
+  { name: "Iniciar Sesión", href: "/login" },
+  { name: "Registrarse", href: "/register" },
+];
+
+export { links, authLinks };

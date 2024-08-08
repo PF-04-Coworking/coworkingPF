@@ -3,13 +3,12 @@
 import { TextInput } from "@/components/common/TextInput";
 import { Header } from "../_page/_components/HeaderSection";
 import { SearchIcon } from "lucide-react";
-import CardOffice from "@/components/dashboard/cardOffice";
-import Sort from "./_components/Sort";
-import Filter from "./_components/Filter";
+import CardOffice from "@/components/dashboard/CardOffice";
+import { Sort } from "./_components/Sort";
+import { Filter } from "./_components/Filter";
 import { useState } from "react";
 import { IFilters } from "./types";
 import { Heading } from "@/components/common/Heading";
-import { useOfficesStore } from "@/stores/useOfficesStore";
 import { useOffices } from "@/hooks/useOffices";
 import { FooterSection } from "@/components/FooterSection";
 
@@ -49,13 +48,13 @@ const Rooms = () => {
 
   const sortedOffices = [...filteredAndSearchedOffices].sort((a, b) => {
     switch (sortOption) {
-      case "Precio Alto":
+      case "priceDesc":
         return parseInt(b.price) - parseInt(a.price);
-      case "Precio Bajo":
+      case "priceAsc":
         return parseInt(a.price) - parseInt(b.price);
-      case "Capacidad Alta":
+      case "capacityDesc":
         return parseInt(b.capacity) - parseInt(a.capacity);
-      case "Capacidad Baja":
+      case "capacityAsc":
         return parseInt(a.capacity) - parseInt(b.capacity);
       default:
         return 0;
@@ -68,12 +67,10 @@ const Rooms = () => {
       style={{ backgroundImage: "url(/images/fondo-1.png)" }}
     >
       <Header />
-      <div className="layout pt-32 pb-8">
-        <div className="flex justify-between mb-4">
-          <div className="lg:flex hidden ">
-            <Heading level="3">Encuentra tu espacio favorito</Heading>
-          </div>
-          <div className="md:flex md:gap-5 md:flex-row flex-col gap-5 flex">
+      <div className="layout pt-32 pb-8 space-y-12">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
+          <Heading level="3">Encuentra tu espacio favorito</Heading>
+          <div className="flex flex-col lg:flex-row gap- w-full lg:w-auto gap-4">
             <div className="flex gap-5 ">
               <Filter onFilter={handleFilter} />
               <Sort onSort={handleSort} />
@@ -84,11 +81,11 @@ const Rooms = () => {
                 placeholder="Buscar oficinas..."
                 value={searchTerm}
                 onChange={handleSearch}
-                className="w-[20rem] border-gradient py-2 focus:outline-none text-white text-[1.1rem]"
+                className="w-full min-w-72"
               />
               <SearchIcon
                 size={20}
-                className="text-white absolute right-4 top-2"
+                className="text-white absolute right-4 top-3"
               />
             </div>
           </div>

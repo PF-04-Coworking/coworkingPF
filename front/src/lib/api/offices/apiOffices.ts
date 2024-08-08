@@ -17,7 +17,7 @@ const apiOffices = {
         ...(location && { location: location.join(",") }),
       },
     });
-    return response.data;
+    return response;
   },
 
   getOfficeById: async (officeId: string) => {

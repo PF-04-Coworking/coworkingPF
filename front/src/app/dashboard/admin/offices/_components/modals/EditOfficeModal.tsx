@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/common/dialog";
-import { Checkbox } from "@/components/common/checkbox";
+import { Checkbox } from "@/components/common/Checkbox";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { servicesOptions } from "@/lib/constants/offices-constants";
+import { servicesOptions } from "@/lib/constants/servicesOptions";
 import { IEditOfficeData, IOffice } from "../../../types";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { useOfficesStore } from "../../../../../../stores/useOfficesStore";
@@ -61,7 +61,9 @@ const EditOfficeModal = ({
       formData.append("description", values.description);
       formData.append("capacity", values.capacity);
       formData.append("price", values.price);
-      formData.append("services", values.services.join(","));
+      values.services.forEach((service) =>
+        formData.append("services", service)
+      );
       // @ts-ignore
       formData.append("file", values.file);
       console.log("authToken", authToken);
@@ -94,7 +96,7 @@ const EditOfficeModal = ({
       .required("Debes ingresar una descripción")
       .min(2, "Debes ingresar al menos 2 caracteres"),
     capacity: Yup.number()
-      .required("Debes ingresar una capacidad")
+      .required("Debes ingresar un número máximo de invitados")
       .min(1, "Debes ingresar al menos 1 espacio"),
     price: Yup.number()
       .required("Debes ingresar un precio")
@@ -184,7 +186,7 @@ const EditOfficeModal = ({
                             value={service}
                             className="border-primary"
                           />
-                          <div className="">{service}</div>
+                          {service}
                         </label>
                       ))}
                     </div>

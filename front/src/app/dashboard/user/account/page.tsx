@@ -7,7 +7,7 @@ import { Paragraph } from "@/components/common/Paragraph";
 import { Heading } from "@/components/common/Heading";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { USER_LINKS } from "../links";
-import { useUser } from "../../_hooks/useUser";
+import { useUser } from "../../../../hooks/useUser";
 
 const Account = () => {
   const { userData } = useUser();

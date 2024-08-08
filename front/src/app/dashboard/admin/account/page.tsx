@@ -8,11 +8,10 @@ import { Heading } from "@/components/common/Heading";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { ADMIN_LINKS } from "../../user/links";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
-import { useUser } from "../../_hooks/useUser";
 
 const Account = () => {
-  const { userData } = useUser();
-  const { name, lastname, email, role } = userData || {};
+  const { userData } = useAuthStore();
+  const { name, lastname, email } = userData || {};
 
   return (
     <DashboardLayout headerTitle="Mi cuenta" navLinks={ADMIN_LINKS}>
@@ -28,7 +27,7 @@ const Account = () => {
               {name} {lastname}
             </Heading>
             <Paragraph variant="primary">{email}</Paragraph>
-            <Paragraph variant="secondary">{role}</Paragraph>
+            <Paragraph variant="secondary">Administrador</Paragraph>
           </div>
         </div>
       </div>

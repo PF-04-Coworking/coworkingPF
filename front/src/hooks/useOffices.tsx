@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
 import { useOfficesStore } from "../stores/useOfficesStore";
 import { IPaginationObject } from "@/types/types";
@@ -21,7 +21,7 @@ const useOffices = ({
           services,
           location,
         });
-        setStoredOffices(response);
+        setStoredOffices(response.data);
       } catch (error) {
         setStoredOffices([]);
         console.error(error);
@@ -29,7 +29,7 @@ const useOffices = ({
     };
 
     fetchData();
-  }, [page, limit, services, location, setStoredOffices]);
+  }, [page, limit, services, location]);
 
   return { offices };
 };

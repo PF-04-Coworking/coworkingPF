@@ -13,6 +13,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { ServicesEnum } from 'src/utils/services.enum';
+import { Type } from 'class-transformer';
 
 export class CreateOfficesDto {
   @IsOptional()
@@ -46,11 +47,13 @@ export class CreateOfficesDto {
   description: string;
 
   @IsNotEmpty()
+  @Type(() => Number)
   @IsNumber()
   @ApiProperty({ description: 'Office capacity' })
   capacity: number;
 
   @IsNotEmpty()
+  @Type(() => Number)
   @IsNumber()
   @ApiProperty({ description: 'Office price' })
   price: number;
@@ -98,16 +101,19 @@ export class UpdateOfficeDto {
   description: string;
 
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
   @ApiProperty({ description: 'Office capacity' })
   capacity: number;
 
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
   @ApiProperty({ description: 'Office stock' })
   stock: number;
 
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
   @ApiProperty({ description: 'Office price' })
   price: number;
