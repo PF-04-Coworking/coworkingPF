@@ -6,7 +6,7 @@ import {
 import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reservation } from 'src/entities/Reservations.entity';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { User } from 'src/entities/Users.entity';
 import { Office } from 'src/entities/Offices.entity';
 import { transporter } from 'src/Config/mailer';
@@ -23,8 +23,36 @@ export class ReservationsRepository {
   ) {}
 
   // Rutas GET
-  async getReservations() {
-    return this.reservationRepository.find();
+  async getReservations(search?: string) {
+    const query = this.reservationRepository.createQueryBuilder('reservation')
+      .leftJoinAndSelect('reservation.office', 'office')
+      .leftJoinAndSelect('reservation.user', 'user');
+
+      if (search) {
+        const searchTerms = search.split(' ');
+      
+        query.where('office.name LIKE :search', { search: `%${search}%` })
+             .orWhere('office.location LIKE :search', { search: `%${search}%` });
+      
+        if (searchTerms.length > 1) {
+          query.orWhere(
+            new Brackets(qb => {
+              qb.where('user.name LIKE :name', { name: `%${searchTerms[0]}%` })
+                .andWhere('user.lastname LIKE :lastname', { lastname: `%${searchTerms[1]}%` });
+            })
+          );
+        } else {
+          query.orWhere(
+            new Brackets(qb => {
+              qb.where('user.name LIKE :name', { name: `%${searchTerms[0]}%` })
+                .orWhere('user.lastname LIKE :lastname', { lastname: `%${searchTerms[0]}%` });
+            })
+          );
+        }
+      }
+      
+  
+    return query.getMany();
   }
 
   async getReservationsByUserId(id: string) {
