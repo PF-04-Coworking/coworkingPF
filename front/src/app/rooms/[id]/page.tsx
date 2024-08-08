@@ -2,14 +2,15 @@
 import { LocateIcon } from "lucide-react";
 import { Header } from "@/app/_page/_components/HeaderSection";
 import LeafletMapComponent from "./_components/MapsLeaflet";
-import { amenityIcons } from "@/components/dashboard/cardOffice";
 import { Highlight } from "@/components/common/Highlight";
 import ModalCalendar from "./_components/ModalCalendar";
 import Image from "next/image";
 import { useFetchOfficeById } from "../hooks/useFetchOfficeById";
+import { servicesIcons } from "@/lib/constants/servicesIcons";
 
 const OfficeById = ({ params }: { params: { id: string } }) => {
   const { office } = useFetchOfficeById({ params });
+
   return (
     <>
       <Header />
@@ -33,7 +34,7 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
                   </h3>
                   {office.services.map((service, index) => (
                     <div key={index} className="flex">
-                      <div className="">{amenityIcons[service] || service}</div>
+                      <div className="">{servicesIcons[service].icon}</div>
                       <p className="ml-2 italic text-[1rem]">{service}</p>
                     </div>
                   ))}
@@ -91,4 +92,4 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default officeById;
+export default OfficeById;

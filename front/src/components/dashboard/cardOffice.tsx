@@ -1,17 +1,6 @@
 import Link from "next/link";
 import { Button } from "../common/Button";
-import {
-  CircleParking,
-  UserIcon,
-  WifiIcon,
-  CoffeeIcon,
-  Dumbbell,
-  Armchair,
-  Mic2,
-  Bus,
-  MapPinIcon,
-  DollarSignIcon,
-} from "lucide-react";
+import { UserIcon, MapPinIcon, DollarSignIcon } from "lucide-react";
 import { IOffice } from "@/app/dashboard/admin/types";
 import Image from "next/image";
 import { Paragraph } from "../common/Paragraph";
