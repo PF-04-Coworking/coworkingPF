@@ -10,8 +10,8 @@ export class ReservationsService {
 
   //* Rutas GET
 
-  async getReservations() {
-    return this.reservationsRepository.getReservations();
+  async getReservations(search?: string) {
+    return this.reservationsRepository.getReservations(search);
   }
 
   async getReservationsByUserId(id: string) {
