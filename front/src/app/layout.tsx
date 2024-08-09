@@ -3,8 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Alert from "@/components/Toastify/Toastify";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { I18nextProvider } from "react-i18next";
-import i18n from "../../i18n";
+import "../lib/utils/i18n"
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,14 +22,12 @@ export default function RootLayout({
     <GoogleOAuthProvider
       clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}
     >
-    <I18nextProvider i18n={i18n}>
       <html lang="es">
         <body className={inter.className}>
           {children}
           <Alert />
         </body>
       </html>
-    </I18nextProvider>
     </GoogleOAuthProvider>
   );
 }

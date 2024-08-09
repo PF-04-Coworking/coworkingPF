@@ -1,0 +1,19 @@
+{
+    "coworking": "Coworking",
+    "relux": "Relux",
+    "primary_text": "Spaces that inspire productivity and creativity",
+    "secondary_text": "Explore and book offices in your city for meetings and individual work. Discover spaces designed to inspire you and enhance your productivity.",
+    "features": {
+      "feature1": "+150 locations",
+      "feature2": "Personal support",
+      "feature3": "86% in LATAM",
+      "feature4": "24-hour attention"
+    },
+    "search_prompt": "Start searching for your ideal office!",
+    "badges": {
+      "safe_payment": "Secure payment",
+      "easy_to_use": "Easy to use",
+      "instant": "Instant"
+    }
+  }
+  
