@@ -7,4 +7,13 @@ export class NodeMailerService {
     registerEmail() {
         return this.nodeMailerRepository.registerEmail();
     }
+    reservationEmail() {
+        return this.nodeMailerRepository.reservationEmail();
+    }
+    successEmail() {
+        return this.nodeMailerRepository.successEmail();
+    }
+    contactEmail() {
+        return this.nodeMailerRepository.contactEmail();
+    }
 }

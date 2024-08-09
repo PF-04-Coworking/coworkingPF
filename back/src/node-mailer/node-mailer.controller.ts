@@ -6,6 +6,18 @@ export class NodeMailerController {
     constructor(private readonly nodeMailerService: NodeMailerService){}
 
     registerEmail(){
-        return this.nodeMailerService.registerEmail()
+        return this.nodeMailerService.registerEmail();
+    }
+
+    contactEmail(){
+        return this.nodeMailerService.contactEmail();
+    }
+    
+    successEmail(){
+        return this.nodeMailerService.successEmail();
+    }
+    
+    reservationEmail(){
+        return this.nodeMailerService.reservationEmail();
     }
 }
