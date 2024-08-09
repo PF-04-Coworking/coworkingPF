@@ -26,34 +26,45 @@ export class ReservationsRepository {
   async getReservations(search?: string) {
     const query = this.reservationRepository.createQueryBuilder('reservation')
       .leftJoinAndSelect('reservation.office', 'office')
-      .leftJoinAndSelect('reservation.user', 'user');
-
-      if (search) {
-        const searchTerms = search.split(' ');
-      
-        query.where('office.name LIKE :search', { search: `%${search}%` })
-             .orWhere('office.location LIKE :search', { search: `%${search}%` });
-      
-        if (searchTerms.length > 1) {
-          query.orWhere(
-            new Brackets(qb => {
-              qb.where('user.name LIKE :name', { name: `%${searchTerms[0]}%` })
-                .andWhere('user.lastname LIKE :lastname', { lastname: `%${searchTerms[1]}%` });
-            })
-          );
-        } else {
-          query.orWhere(
-            new Brackets(qb => {
-              qb.where('user.name LIKE :name', { name: `%${searchTerms[0]}%` })
-                .orWhere('user.lastname LIKE :lastname', { lastname: `%${searchTerms[0]}%` });
-            })
-          );
-        }
+      .leftJoinAndSelect('reservation.user', 'user')
+      .select([
+        'reservation',
+        'office',
+        'user.id',
+        'user.name',
+        'user.lastname',
+        'user.email'
+      ]);
+  
+    if (search) {
+      const searchTerms = search.split(' ');
+  
+      const lowerSearch = search.toLowerCase();
+  
+      query.where('LOWER(office.name) LIKE :search', { search: `%${lowerSearch}%` })
+           .orWhere('LOWER(office.location) LIKE :search', { search: `%${lowerSearch}%` })
+           .orWhere('LOWER(user.email) LIKE :search', { search: `%${lowerSearch}%` });
+  
+      if (searchTerms.length > 1) {
+        query.orWhere(
+          new Brackets(qb => {
+            qb.where('LOWER(user.name) LIKE :name', { name: `%${searchTerms[0].toLowerCase()}%` })
+              .andWhere('LOWER(user.lastname) LIKE :lastname', { lastname: `%${searchTerms[1].toLowerCase()}%` });
+          })
+        );
+      } else {
+        query.orWhere(
+          new Brackets(qb => {
+            qb.where('LOWER(user.name) LIKE :name', { name: `%${searchTerms[0].toLowerCase()}%` })
+              .orWhere('LOWER(user.lastname) LIKE :lastname', { lastname: `%${searchTerms[0].toLowerCase()}%` });
+          })
+        );
       }
-      
+    }
   
     return query.getMany();
   }
+  
 
   async getReservationsByUserId(id: string) {
     const reservationsByUserId = await this.reservationRepository.find({
