@@ -3,9 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Alert from "@/components/Toastify/Toastify";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-
-
-
+import "../lib/utils/i18n"
 
 
 const inter = Inter({ subsets: ["latin"] });
