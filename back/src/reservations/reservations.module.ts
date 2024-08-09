@@ -9,6 +9,7 @@ import { UserRepository } from 'src/user/user.repository';
 import { User } from 'src/entities/Users.entity';
 import { Office } from 'src/entities/Offices.entity';
 import { AuthService } from 'src/auth/auth.service';
+import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AuthService } from 'src/auth/auth.service';
     ReservationsRepository,
     UserRepository,
     AuthService,
+    NodeMailerRepository,
   ],
 })
 export class ReservationsModule {}

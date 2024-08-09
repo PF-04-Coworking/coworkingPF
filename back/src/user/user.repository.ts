@@ -14,16 +14,15 @@ import {
   LoginUserDto,
   UpdateUserDto,
 } from './user.dto';
-import { transporter } from '../Config/mailer';
-import { AuthService } from 'src/auth/auth.service';
 import axios from 'axios';
+import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
 
 @Injectable()
 export class UserRepository {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly authService: AuthService,
+    private readonly nodeMailerRepository: NodeMailerRepository,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -103,18 +102,8 @@ export class UserRepository {
 
     const { password: _, ...userNoPassword } = user;
 
-    try {
-      await transporter.sendMail({
-        from: '"Redux team"', // sender address
-        to: userNoPassword.email, // list of receivers
-        subject: 'Confirmacion de cuenta', // Subject line
-        html: `<b>Hola, bienvenid@ ${user.name} a Relux!</b>`, // html body
-      });
-    } catch (error) {
-      throw new BadRequestException(
-        'Something went wrong. No emails were sent ',
-      );
-    }
+    //nodeMailer envía mail de registro
+    await this.nodeMailerRepository.registerEmail(userNoPassword)
 
     return userNoPassword;
   }
@@ -182,19 +171,7 @@ export class UserRepository {
         `Email ${googleUserData.data.email} is already a registered account`,
       );
 
-      try {
-        await transporter.sendMail({
-          from: '"Redux team"', // sender address
-          to: foundUser.email, // list of receivers
-          subject: 'Confirmacion de cuenta', // Subject line
-          html: `<b>Hola, bienvenid@ ${foundUser.name} a Relux!</b>`, // html body
-        });
-      } catch (error) {
-        throw new BadRequestException(
-          'Something went wrong. No emails were sent ',
-        );
-      }
-
+  
     const newUser = await this.userRepository.save({
       name: googleUserData.data.given_name,
       lastname: googleUserData.data.family_name,
@@ -202,6 +179,9 @@ export class UserRepository {
     });
 
     const { password: _, ...userNoPassword } = newUser;
+
+    //nodeMailer envía email de registro
+    await this.nodeMailerRepository.registerEmail(userNoPassword);
 
     return userNoPassword;
   }

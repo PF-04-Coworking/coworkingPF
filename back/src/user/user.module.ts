@@ -11,6 +11,7 @@ import { Reservation } from 'src/entities/Reservations.entity';
 import { Office } from 'src/entities/Offices.entity';
 import { PaymentsService } from 'src/payments/payments.service';
 import { AuthService } from 'src/auth/auth.service';
+import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AuthService } from 'src/auth/auth.service';
     ReservationsRepository,
     PaymentsService, 
     AuthService,
+    NodeMailerRepository
   ],
 })
 export class UserModule {}
