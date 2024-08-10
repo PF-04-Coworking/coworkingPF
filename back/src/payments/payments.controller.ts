@@ -19,16 +19,21 @@ export class PaymentsController {
 
   @Post('create-payment-intent')
   async createPaymentIntent(
-    @Body() body: { amount: number; currency: string },
+    @Body() body: { amount: number; currency: string, payment_method: string },
     @Res() res,
   ) {
-    const { amount, currency } = body;
+    const { amount, currency, payment_method } = body;
 
     try {
       const paymentIntent = await this.stripe.paymentIntents.create({
         amount,
         currency,
-        payment_method_types: ['card'],
+        payment_method,
+        confirm: true,
+        automatic_payment_methods: {
+          enabled: true, 
+          allow_redirects: 'never', 
+        },
       });
 
       return res.status(HttpStatus.OK).json({ 

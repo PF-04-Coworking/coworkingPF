@@ -1,10 +1,5 @@
 import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import {
   Dialog,
   DialogContent,
@@ -15,73 +10,67 @@ import {
   DialogTrigger,
 } from "../../../../components/common/dialog";
 import { Button } from "@/components/common/Button";
-const stripePromise = loadStripe(
-  "pk_test_51PjNriFOrepWZ951sCAoM84bnpXcImLS7UaD5bKdb3Bc5J9uTGok241gZ9Dz8VgC0DPPWsxXbkBzrqwkrrLKPjop00lN2nR2M3"
-);
+import { DateRange } from "react-day-picker";
+import { IOfficeStripe } from "@/types/types";
+import CheckoutForm from "./FormStripe";
+import useStripeLogic from "../../hooks/useStripeLogic";
 
-const CheckoutForm: React.FC = () => {
-  const stripe = useStripe();
-  const elements = useElements();
+const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC;
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+if (!stripePublicKey) {
+  throw new Error("Stripe public key no encontrado");
+}
 
-    if (!stripe || !elements) {
-      //Stripe.js aún no se ha cargado.
-      return;
-    }
+const stripePromise = loadStripe(stripePublicKey);
 
-    const cardElement = elements.getElement(CardElement);
-
-    if (!cardElement) {
-      // Card element no encontrado.
-      return;
-    }
-
-    const result = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-    });
-
-    if (result.error) {
-      // Handle error.
-      console.error(result.error.message);
-    } else {
-      // Handle success.
-      console.log("Payment method created:", result.paymentMethod);
-    }
-  };
-
-  return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <CardElement />
-
-        <Button type="submit" variant="primary">
-          Pagar
-        </Button>
-      </form>
-    </>
+const Stripe = ({
+  selectedRange,
+  officeParams,
+}: {
+  selectedRange: DateRange | undefined;
+  officeParams: IOfficeStripe;
+}) => {
+  const { Price, selectedText, handleToken } = useStripeLogic(
+    selectedRange,
+    officeParams
   );
-};
 
-const Stripe = () => {
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="primary">Confirmar reserva</Button>
+          <Button
+            variant="primary"
+            className="w-full"
+            onClick={handleToken}
+            disabled={!selectedRange}
+          >
+            Confirmar reserva
+          </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[525px] bg-background border border-primary text-white">
           <DialogHeader>
-            <DialogTitle>Confirma tu reserva</DialogTitle>
-            <DialogDescription>
-              Realiza el pago completo para poder confirmar tu reserva.
+            <DialogTitle className="text-primary text-xl text-center">
+              Confirma tu reserva
+            </DialogTitle>
+            <DialogDescription className="text-white text-center">
+              Llena y confirma cuantas personas asistirán, completa el
+              formulario de pago para poder confirmar tu reserva.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
+            <div className="flex justify-between">
+              <p>{selectedText}</p>
+              <p className="text-primary font-semibold">
+                Precio total: USD ${Price}
+              </p>
+            </div>
             <Elements stripe={stripePromise}>
-              <CheckoutForm />
+              <CheckoutForm
+                price={Price}
+                officeParams={officeParams}
+                selectedRange={selectedRange}
+              />
             </Elements>
           </div>
         </DialogContent>

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -21,7 +23,6 @@ const LeafletMapComponent = ({ location }: ILeafletMapComponentProps) => {
     const fetchCoordinates = async () => {
       try {
         const response = await geocodeAddress(location);
-
         setCoordinates(response);
       } catch (error) {
         console.error("Error en la geocodificación:", error);
@@ -38,7 +39,12 @@ const LeafletMapComponent = ({ location }: ILeafletMapComponentProps) => {
           <MapContainer
             center={[coordinates.lat, coordinates.lng]}
             zoom={17}
-            style={{ height: "100%", borderRadius: "1rem", width: "100%" }}
+            style={{
+              height: "100%",
+              borderRadius: "1rem",
+              width: "100%",
+              zIndex: 0,
+            }}
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <Marker
