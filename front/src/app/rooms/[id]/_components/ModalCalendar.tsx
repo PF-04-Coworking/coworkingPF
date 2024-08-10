@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/common/Button";
 import {
   Sheet,
@@ -15,25 +17,30 @@ import { useState } from "react";
 import Stripe from "./Stripe";
 import { IOfficeStripe } from "@/types/types";
 import { es } from "date-fns/locale";
+import {
+  selectedDates,
+  convertToYMD,
+  getDisabledDays,
+} from "@/lib/utils/dateUtils";
 
-export const selectedDates = (selectedRange: DateRange | undefined): string => {
-  if (!selectedRange || !selectedRange.from) {
-    return "Por favor, selecciona un día.";
-  }
-  const { from, to } = selectedRange;
-  if (from && !to) {
-    return `Fecha: ${from.toLocaleDateString()}`;
-  }
-  if (from && to) {
-    return `Fechas: ${from.toLocaleDateString()} - ${to.toLocaleDateString()}`;
-  }
-  return "Por favor, selecciona un día.";
-};
-
-const ModalCalendar = ( { officeParams }: { officeParams: IOfficeStripe }) => {
+const ModalCalendar = ({ officeParams }: { officeParams: IOfficeStripe }) => {
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(
     undefined
   );
+  const reservations = officeParams.reservations;
+  const disabledDays: DateRange[] = getDisabledDays(reservations);
+
+  const normalizedDisabledDays = disabledDays.map(({ from, to }) => ({
+    from: from ? convertToYMD(from) : undefined,
+    to: to ? convertToYMD(to) : undefined,
+  }));
+
+  const today = new Date();
+  const disabledDaysConfig = [
+    ...normalizedDisabledDays,
+    { before: convertToYMD(today) },
+  ];
+
   const defaultClassNames = getDefaultClassNames();
   const selectedText = selectedDates(selectedRange);
 
@@ -60,16 +67,16 @@ const ModalCalendar = ( { officeParams }: { officeParams: IOfficeStripe }) => {
           max={1}
           selected={selectedRange}
           onSelect={setSelectedRange}
-          disabled={{ before: new Date() }}
+          disabled={disabledDaysConfig}
           footer={
             <p className="text-center mt-10 border-primary border p-1 rounded-md">
               {selectedText}
             </p>
           }
           classNames={{
-            today: `border-amber-500`, // Add a border to today's date
-            selected: `bg-primary text-white rounded-3xl`, // Highlight the selected day
-            chevron: `${defaultClassNames.chevron} !fill-amber-500`, // Change the color of the chevron
+            today: `border-amber-500`,
+            selected: `bg-primary text-white rounded-3xl`,
+            chevron: `${defaultClassNames.chevron} !fill-amber-500`,
             disabled: `bg-secondaryDark text-secondary`,
             month_caption: `text-center mb-5`,
             range_start: `rounded-tr-none rounded-br-none`,
