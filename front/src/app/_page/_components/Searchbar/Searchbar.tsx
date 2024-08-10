@@ -10,7 +10,7 @@ const Searchbar = () => {
         <TextInput
           type="text"
           placeholder="Ingresa tu ciudad"
-          className="w-full border-gradient text-white"
+          className="w-full text-white"
         />
         <Search
           size={16}

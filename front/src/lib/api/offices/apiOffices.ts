@@ -1,16 +1,20 @@
 import { IFilters } from "@/app/rooms/types";
 import { axiosClient } from "../apiConfig";
+import { IPaginationObject } from "@/types/types";
 
 const apiOffices = {
-  getOffices: async (filters?: IFilters) => {
+  getOffices: async ({
+    page = 1,
+    limit = 100,
+    services,
+    location,
+  }: IPaginationObject & IFilters) => {
     const response = await axiosClient.get("/offices", {
       params: {
-        page: 1,
-        limit: 100,
-        ...(filters && {
-          services: filters.services.join(","),
-          location: filters.location.join(","),
-        }),
+        page,
+        limit,
+        ...(services && { services: services.join(",") }),
+        ...(location && { location: location.join(",") }),
       },
     });
     return response.data;

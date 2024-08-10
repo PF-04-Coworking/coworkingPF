@@ -13,7 +13,7 @@ const CustomLink = ({ children, className, ...props }: IProps): JSX.Element => {
   const pathname = usePathname();
 
   const baseClassName = "text-secondary hover:text-white text-sm";
-  const activeClassName = "text-white underline";
+  const activeClassName = "text-white";
   const finalClassName = clsx(baseClassName, className, {
     [activeClassName]: props.href === pathname,
   });

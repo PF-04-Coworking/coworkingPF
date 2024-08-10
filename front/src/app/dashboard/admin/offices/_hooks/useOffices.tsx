@@ -1,6 +1,6 @@
 import { apiOffices } from "@/lib/api/offices/apiOffices";
 import { useEffect, useState } from "react";
-import { useOfficesStore } from "../../_stores/useOfficesStore";
+import { useOfficesStore } from "../../../../../stores/useOfficesStore";
 
 const useOffices = () => {
   const { offices, setStoredOffices } = useOfficesStore();

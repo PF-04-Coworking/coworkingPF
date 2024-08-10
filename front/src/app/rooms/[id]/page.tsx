@@ -69,17 +69,10 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
               />
             </div>
             <div className="h-full relative">
-              <Image
-                src={
-                  office.imgUrl
-                    ? office.imgUrl
-                    : "https://res.cloudinary.com/danpp1ys8/image/upload/v1722819564/arcbukd8qxep3aqfni71.webp"
-                }
+              <img
+                src={office.imgUrl}
                 alt="oficina"
-                className="object-cover h-full w-full rounded-tr-[5rem] rounded-bl-[5rem]"
-                width={0}
-                height={0}
-                sizes="100vw"
+                className="object-cover h-full rounded-tr-[5rem] rounded-bl-[5rem]"
               />
               <div className=" border border-primary shadow-md shadow-black rounded-3xl p-4 top-2 left-2 absolute flex justify-center items-center bg-primary">
                 <p className="font-bold">USD: ${office.price}</p>
@@ -98,4 +91,4 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default OfficeById;
+export default officeById;

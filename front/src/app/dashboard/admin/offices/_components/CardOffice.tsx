@@ -16,12 +16,13 @@ import { Paragraph } from "@/components/common/Paragraph";
 import { Heading } from "@/components/common/Heading";
 import { InputLabel } from "@/components/common/InputLabel";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
-import { useOfficesStore } from "../../_stores/useOfficesStore";
+import { useOfficesStore } from "../../../../../stores/useOfficesStore";
 import "react-toastify/dist/ReactToastify.css";
 import { IEditOfficeData, IOffice } from "../../types";
 import { servicesOptions } from "@/lib/constants/offices-constants";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import Image from "next/image";
+import { EditOfficeModal } from "./modals/EditOfficeModal";
 
 const CardOffice = ({
   id,
@@ -165,129 +166,11 @@ const CardOffice = ({
         </div>
       </div>
 
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="font-sans bg-background text-white border-secondaryDark max-h-[90%] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Editar</DialogTitle>
-            <DialogDescription className="text-secondary text-md pb-5">
-              Modifica los siguientes datos para editar el espacio.
-            </DialogDescription>
-          </DialogHeader>
-          <div>
-            <Formik
-              initialValues={{
-                name: selectedOffice.name,
-                description: selectedOffice.description,
-                location: selectedOffice.location,
-                capacity: selectedOffice.capacity,
-                price: selectedOffice.price,
-                file: undefined,
-                services: selectedOffice.services,
-              }}
-              // @ts-ignore
-              onSubmit={handleEditOffice}
-            >
-              {({ isSubmitting, dirty, setFieldValue }: any) => (
-                <Form>
-                  <div className="grid gap-4">
-                    <div className="grid gap-2">
-                      <InputLabel htmlFor="name">Nombre</InputLabel>
-                      <Field
-                        name="name"
-                        className="rounded-md py-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none px-3 border-primary text-sm"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <InputLabel htmlFor="location">País</InputLabel>
-                      <Field
-                        name="location"
-                        className="rounded-md py-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <InputLabel htmlFor="description">Direccion</InputLabel>
-                      <Field
-                        name="description"
-                        className="rounded-md py-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <InputLabel htmlFor="capacity">
-                        Capacidad de espacio:
-                      </InputLabel>
-                      <Field
-                        name="capacity"
-                        className="rounded-md py-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <InputLabel htmlFor="price">Precio de venta:</InputLabel>
-                      <Field
-                        name="price"
-                        className="rounded-md py-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
-                      />
-                    </div>
-                    {servicesOptions.length > 0 && (
-                      <div className="grid gap-2">
-                        {servicesOptions.map((service) => (
-                          <label
-                            key={service}
-                            className="flex gap-2 items-center mb-3"
-                          >
-                            <Field
-                              type="checkbox"
-                              name="services"
-                              value={service}
-                            />
-                            {service}
-                          </label>
-                        ))}
-                      </div>
-                    )}
-                    <div className="space-y-2">
-                      <InputLabel htmlFor="file">
-                        Imagen de la oficina:
-                      </InputLabel>
-                      <Field
-                        id="file"
-                        name="file"
-                        type="file"
-                        value={undefined}
-                        onChange={(
-                          event: React.ChangeEvent<HTMLInputElement>
-                        ) => {
-                          const file = event.currentTarget.files?.[0];
-                          setFieldValue("file", file);
-                        }}
-                        className="mt-1 mb-5 file:bg-inherit file:text-white file:border file:border-primary file:rounded-md file:p-2 text-sm file:hover:text-primary cursor-pointer file:cursor-pointer file:mr-4 w-full max-w-[350px]"
-                      />
-                    </div>
-                  </div>
-
-                  <DialogFooter className="flex gap-2 mt-8">
-                    <Button
-                      variant="primary"
-                      className="w-full"
-                      type="submit"
-                      disabled={isSubmitting || !dirty}
-                    >
-                      Confirmar
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      className="w-full"
-                      onClick={() => handleDeleteOffice({ id })}
-                    >
-                      Eliminar
-                    </Button>
-                  </DialogFooter>
-                </Form>
-              )}
-            </Formik>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <EditOfficeModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        selectedOffice={selectedOffice}
+      />
     </>
   );
 };

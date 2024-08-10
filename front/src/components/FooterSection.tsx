@@ -20,7 +20,7 @@ const socials = [
   },
 ];
 
-const Footer = () => {
+const FooterSection = () => {
   return (
     <div className="layout py-12 space-y-8">
       <div className="flex items-center justify-center gap-x-4">
@@ -38,4 +38,4 @@ const Footer = () => {
   );
 };
 
-export { Footer };
+export { FooterSection };

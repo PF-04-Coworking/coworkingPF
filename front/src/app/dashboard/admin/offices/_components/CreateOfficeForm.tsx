@@ -3,12 +3,14 @@ import { Button } from "@/components/common/Button";
 import { DialogFooter } from "@/components/common/dialog";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 import { InputLabel } from "@/components/common/InputLabel";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
-import { useOfficesStore } from "../../_stores/useOfficesStore";
+import { useOfficesStore } from "../../../../../stores/useOfficesStore";
 import { IEditOfficeData } from "../../types";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { servicesOptions } from "@/lib/constants/offices-constants";
+import { FieldValidate } from "@/components/common/FieldValidate";
 
 const CreateOfficeForm = () => {
   const { addStoredOffice } = useOfficesStore();
@@ -45,6 +47,15 @@ const CreateOfficeForm = () => {
     }
   };
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Requerido"),
+    location: Yup.string().required("Requerido"),
+    description: Yup.string().required("Requerido"),
+    capacity: Yup.string().required("Requerido"),
+    price: Yup.string().required("Requerido"),
+    services: Yup.array().required("Requerido"),
+  });
+
   return (
     <Formik
       initialValues={{
@@ -56,6 +67,7 @@ const CreateOfficeForm = () => {
         file: undefined,
         services: [],
       }}
+      validationSchema={validationSchema}
       // @ts-ignore
       onSubmit={handleAddOffice}
     >
@@ -64,36 +76,39 @@ const CreateOfficeForm = () => {
           <div className="space-y-8">
             <div className="space-y-2">
               <InputLabel htmlFor="name">Nombre</InputLabel>
-              <Field
+              <FieldValidate
+                type="text"
                 name="name"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
               />
             </div>
             <div className="space-y-2">
               <InputLabel htmlFor="direccion">País</InputLabel>
-              <Field
+              <FieldValidate
+                type="text"
                 name="location"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary pr-2"
               />
             </div>
             <div className="space-y-2">
               <InputLabel htmlFor="description">Dirección</InputLabel>
-              <Field
+              <FieldValidate
+                type="text"
                 name="description"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
               />
             </div>
             <div className="space-y-2">
               <InputLabel htmlFor="description">Capacidad</InputLabel>
-              <Field
-                type="number"
+              <FieldValidate
+                type="text"
                 name="capacity"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
               />
             </div>
             <div className="space-y-2">
               <InputLabel htmlFor="description">Precio</InputLabel>
-              <Field
+              <FieldValidate
                 type="number"
                 name="price"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
