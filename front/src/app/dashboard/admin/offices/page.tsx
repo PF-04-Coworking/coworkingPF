@@ -9,6 +9,7 @@ import { ADMIN_LINKS } from "../../user/links";
 import { useMemo, useState } from "react";
 import { useOffices } from "@/hooks/useOffices";
 import { IFilters } from "@/app/rooms/types";
+import { EditReservationsModal } from "../reservations/_components/modals/EditReservationsModal";
 
 const DashboardOffices = () => {
   const [filters] = useState<IFilters>({

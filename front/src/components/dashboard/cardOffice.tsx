@@ -68,4 +68,4 @@ const CardOffice = ({
   );
 };
 
-export default CardOffice;
+export { CardOffice };

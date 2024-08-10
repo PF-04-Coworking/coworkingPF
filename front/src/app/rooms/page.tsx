@@ -3,7 +3,6 @@
 import { TextInput } from "@/components/common/TextInput";
 import { Header } from "../_page/_components/HeaderSection";
 import { SearchIcon } from "lucide-react";
-import CardOffice from "@/components/dashboard/CardOffice";
 import { Sort } from "./_components/Sort";
 import { Filter } from "./_components/Filter";
 import { useState } from "react";
@@ -11,6 +10,8 @@ import { IFilters } from "./types";
 import { Heading } from "@/components/common/Heading";
 import { useOffices } from "@/hooks/useOffices";
 import { FooterSection } from "@/components/FooterSection";
+import { sortOptions } from "@/lib/constants/sortOfficesOptions";
+import { CardOffice } from "@/components/dashboard/CardOffice";
 
 const Rooms = () => {
   const [sortOption, setSortOption] = useState("");
@@ -73,7 +74,7 @@ const Rooms = () => {
           <div className="flex flex-col lg:flex-row gap- w-full lg:w-auto gap-4">
             <div className="flex gap-5 ">
               <Filter onFilter={handleFilter} />
-              <Sort onSort={handleSort} />
+              <Sort onSort={handleSort} sortOptions={sortOptions} />
             </div>
             <div className="relative">
               <TextInput

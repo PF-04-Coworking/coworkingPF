@@ -8,10 +8,14 @@ import {
 import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
 import { Command } from "@/components/common/command";
-import { sortOptions } from "@/lib/constants/sortOptions";
 import { Paragraph } from "@/components/common/Paragraph";
 
-const Sort = ({ onSort }: { onSort: (option: string) => void }) => {
+interface ISortProps {
+  onSort: (option: string) => void;
+  sortOptions: Record<string, string>;
+}
+
+const Sort = ({ onSort, sortOptions }: ISortProps) => {
   const [selectedSortOption, setSelectedSortOption] = useState("");
 
   const handleSort = (option: string) => {
@@ -21,10 +25,10 @@ const Sort = ({ onSort }: { onSort: (option: string) => void }) => {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild className="flex-shrink-0">
         <Button variant="outline" className="flex items-center gap-2">
           {selectedSortOption
-            ? `Ordenar por ${sortOptions[selectedSortOption]}`
+            ? `${sortOptions[selectedSortOption]}`
             : "Ordenar por"}
           <ChevronDownIcon size={20} />
         </Button>

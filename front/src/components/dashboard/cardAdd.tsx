@@ -7,7 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/common/dialog";
+} from "@/components/common/Dialog";
 import { Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -44,8 +44,6 @@ const CardAdd = () => {
   };
   return (
     <>
- 
-
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="font-sans bg-background text-white border-primary ">
           <DialogHeader>

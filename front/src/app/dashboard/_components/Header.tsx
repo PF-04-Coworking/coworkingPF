@@ -1,3 +1,5 @@
+"use client";
+
 import { CircleUserRound } from "lucide-react";
 import { Heading } from "../../../components/common/Heading";
 import { MobileMenu } from "../_components/mobile-menu/MobileMenu";
