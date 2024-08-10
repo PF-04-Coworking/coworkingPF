@@ -3,7 +3,7 @@ import { Sheet, SheetTrigger, SheetContent } from "@/components/common/Sheet";
 import { Menu } from "lucide-react";
 import { CustomLink } from "../../../../components/common/CustomLink";
 import { TextLogo } from "../../../../components/common/TextLogo";
-import { useLinks } from "../../links";
+import { links } from "../../links";
 import "./MobileMenu.css";
 
 interface ISheetTriggerButtonProps
@@ -26,8 +26,6 @@ const SheetTriggerButton = React.forwardRef<
 SheetTriggerButton.displayName = "SheetTriggerButton";
 
 const Sidebar = () => {
-const links = useLinks();
-
   return (
     <Sheet>
       <SheetTrigger asChild>
