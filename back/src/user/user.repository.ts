@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/entities/Users.entity';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -16,6 +16,7 @@ import {
 } from './user.dto';
 import axios from 'axios';
 import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
+import { Reservation } from 'src/entities/Reservations.entity';
 
 @Injectable()
 export class UserRepository {
@@ -26,10 +27,49 @@ export class UserRepository {
     private readonly jwtService: JwtService,
   ) {}
 
-  async getUsers() {
-    const users = await this.userRepository.find();
-    return users;
+  async getUsers(search?: string) {
+    const query = this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.reservations', 'reservations')
+      .select([
+        'user.id',
+        'user.name',
+        'user.lastname',
+        'user.email',
+        'user.phone',
+        'user.country',
+        'user.city',
+        'user.age',
+        'user.role',
+        'user.imgUrl',
+        'reservations',
+      ]);
+  
+    if (search) {
+      const searchTerms = search.split(' ').map(term => term.toLowerCase());
+  
+      query.where('LOWER(user.email) LIKE :email', { email: `%${searchTerms.join(' ')}%` });
+  
+      if (searchTerms.length > 1) {
+        query.orWhere(
+          new Brackets((qb) => {
+            qb.where('LOWER(user.name) LIKE :name', { name: `%${searchTerms[0]}%` })
+              .andWhere('LOWER(user.lastname) LIKE :lastname', { lastname: `%${searchTerms[1]}%` });
+          }),
+        );
+      } else {
+        query.orWhere(
+          new Brackets((qb) => {
+            qb.where('LOWER(user.name) LIKE :name', { name: `%${searchTerms[0]}%` })
+              .orWhere('LOWER(user.lastname) LIKE :lastname', { lastname: `%${searchTerms[0]}%` });
+          }),
+        );
+      }
+    }
+  
+    return await query.getMany();
   }
+  
 
   async getuserById(id: string) {
     const user = await this.userRepository.findOne({

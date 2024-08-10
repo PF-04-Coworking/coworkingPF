@@ -15,8 +15,8 @@ export class UserService {
     private readonly nodeMailerRepository: NodeMailerRepository
   ) {}
 
-  getUsers() {
-    return this.usersRepository.getUsers();
+  getUsers(search?: string) {
+    return this.usersRepository.getUsers(search);
   }
 
   getUserById(id: string) {
