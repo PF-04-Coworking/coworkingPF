@@ -1,0 +1,83 @@
+{
+  "links": {
+    "home": "Inicio",
+    "offices": "Oficinas",
+    "about_us": "Sobre nosotros",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "coworking": "Coworking",
+    "relux": "Relux",
+    "primary_text": "Espacios que inspiran productividad y creatividad",
+    "secondary_text": "Explora y reserva oficinas en tu ciudad para juntas y trabajo individual. Descubre espacios diseñados para inspirarte y facilitar tu productividad.",
+    "features": {
+      "feature1": "+150 lugares",
+      "feature2": "Soporte personal",
+      "feature3": "86% en LATAM",
+      "feature4": "Atención 24 horas"
+    },
+    "search_prompt": "¡Comienza a buscar tu oficina ideal!",
+    "badges": {
+      "safe_payment": "Pago seguro",
+      "easy_to_use": "Fácil de usar",
+      "instant": "Inmediato"
+    }
+  },
+  "Searchbar": {
+    "placeholder": "Ingresa tu ciudad",
+    "button_text": "Buscar"
+  },
+  "DescriptionSection": {
+    "logo_text": "Cualquier tamaño,",
+    "logo_text1": "en cualquier lugar.",
+    "heading": "Tenemos oficinas para",
+    "heading2": "cualquier tamaño",
+    "heading3": " de equipo.",
+    "paragraph": "No importa cuantas personas necesites acomodar, tenemos oficinas perfectas para cualquier tamaño de equipo, desde 2 hasta 200 personas, o más.",
+    "button_text": "Explora oficinas",
+    "badges": {
+      "description1": "Para equipos pequeños",
+      "capacity1": "2-8 personas",
+      "description2": "Para equipos medianos",
+      "capacity2": "20-80 personas",
+      "description3": "Para equipos grandes",
+      "capacity3": "100-200 personas"
+    }
+  },
+  "FeaturesSection": {
+    "header1": "¿Por qué escoger",
+    "header2": "Relux",
+    "intro": "Descubre las ventajas únicas que ofrecemos y entiende por qué nuestros espacios de coworking son la mejor opción para tu productividad y crecimiento profesional.",
+    "features": {
+      "title1": "Ubicaciones convenientes",
+      "description1": "Ofrecemos espacios de coworking en ubicaciones estratégicas en LATAM, cercanas a centros de negocios, transporte público y áreas comerciales.",
+      "title2": "Flexibilidad y variedad",
+      "description2": "Disponemos de una amplia variedad de oficinas y salas de reuniones que se adaptan a todas las necesidades, ya sea para reuniones rápidas, jornadas de trabajo individuales o colaboraciones en equipo.",
+      "title3": "Ambiente profesional",
+      "description3": "Nuestros espacios están diseñados para proporcionar un entorno profesional con todas las comodidades necesarias, incluyendo internet de alta velocidad.",
+      "title4": "Oficinas",
+      "description4": "Además del espacio de trabajo, ofrecemos servicios adicionales como recepción, soporte técnico, catering para eventos, entre otras.",
+      "title5": "Precios competitivos",
+      "description5": "Ofrecemos tarifas competitivas con opciones de pago flexibles, sin cargos ocultos. Los clientes pueden elegir planes adaptándose a sus necesidades específicas y presupuesto.",
+      "title6": "Comunidad y networking",
+      "description6": "Formar parte de nuestros espacios de coworking brinda la oportunidad de conectar con otros profesionales, emprendedores y empresas."
+    },
+    "discover_more": "Descubrir más"
+  },
+  "TestimonialsSection": {
+    "title": "No confíes en nosotros,",
+    "title2": "confía en su voz",
+    "description": "Escucha a nuestros clientes satisfechos y descubre cómo nuestros coworking mejoran su forma de trabajar. Sus testimonios demuestran nuestra calidad. ¡Inspírate!",
+    "testimonials": {
+      "name1": "Carlos Ramírez",
+      "position1": "Desarrollador de software",
+      "description1": "Buscaba un lugar tranquilo para trabajar en mis proyectos y los espacios de Relux superaron mis expectativas. La conexión a internet es excelente, y el ambiente es motivador.",
+      "name2": "María Gómez",
+      "position2": "CEO de Tech Innovators",
+      "description2": "Como líder de una startup, necesitaba un espacio flexible que se adaptara a las necesidades cambiantes de mi equipo. Los lugares de Relux fueron perfectos para abarcar mis requerimientos.",
+      "name3": "Juan Pérez",
+      "position3": "Freelancer de marketing digital",
+      "description3": "Los espacios de coworking han revolucionado mi forma de trabajar. Encontré un ambiente profesional y lleno de recursos que me ayudaron a ser más productivo y a conectar con otros profesionales."
+    }
+  }
+}

@@ -3,43 +3,41 @@ import { Heading } from "@/components/common/Heading";
 import { Highlight } from "@/components/common/Highlight";
 import { Paragraph } from "@/components/common/Paragraph";
 import { QuoteIcon, StarIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-const testimonials = [
-  {
-    name: "Carlos Ramírez",
-    image: "/images/face-1.png",
-    position: "Desarrollador de software",
-    description:
-      "Buscaba un lugar tranquilo para trabajar en mis proyectos y los espacios de Relux superaron mis expectativas. La conexión a internet es excelente, y el ambiente es motivador.",
-  },
-  {
-    name: "María Gómez",
-    image: "/images/face-2.png",
-    position: "CEO de Tech Innovators",
-    description:
-      "Como líder de una startup, necesitaba un espacio flexible que se adaptara a las necesidades cambiantes de mi equipo. Los lugares de Relux fueron perfectos para abarcar mis requerimientos.",
-  },
-  {
-    name: "Juan Pérez",
-    image: "/images/face-3.png",
-    position: "Freelancer de marketing digital",
-    description:
-      "Los espacios de coworking han revolucionado mi forma de trabajar. Encontré un ambiente profesional y lleno de recursos que me ayudaron a ser más productivo y a conectar con otros profesionales.",
-  },
-];
-
 const Testimonials = () => {
+  const t = useTranslations("TestimonialsSection");
+
+  const testimonials = [
+    {
+      name: t("testimonials.name1"),
+      image: "/images/face-1.png",
+      position: t("testimonials.position1"),
+      description: t("testimonials.description1"),
+    },
+    {
+      name: t("testimonials.name2"),
+      image: "/images/face-2.png",
+      position: t("testimonials.position2"),
+      description: t("testimonials.description2"),
+    },
+    {
+      name: t("testimonials.name3"),
+      image: "/images/face-3.png",
+      position: t("testimonials.position3"),
+      description: t("testimonials.description3"),
+    },
+  ];
+
   return (
     <div className="layout space-y-12 py-12">
       <div className="space-y-12 text-center">
         <Heading level="2" className="font-medium">
-          No confíes en nosotros, <Highlight>confía en su voz</Highlight>
+          {t("title")} <Highlight>{t("title2")}</Highlight>
         </Heading>
         <Paragraph variant="secondary" className="max-w-xl mx-auto">
-          Escucha a nuestros clientes satisfechos y descubre cómo nuestros
-          coworking mejoran su forma de trabajar. Sus testimonios demuestran
-          nuestra calidad. ¡Inspírate!
+          {t("description")}
         </Paragraph>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-32 pt-24">

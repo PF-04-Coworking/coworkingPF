@@ -1,0 +1,89 @@
+{
+  "links": {
+    "home": "Home",
+    "offices": "Offices",
+    "about_us": "About Us",
+    "Contact": "Contact"
+  },
+  "hero": {
+    "coworking": "Coworking",
+    "relux": "Relux",
+    "primary_text": "Spaces that inspire productivity and creativity",
+    "secondary_text": "Explore and book offices in your city for meetings and individual work. Discover spaces designed to inspire you and enhance your productivity.",
+    "features": {
+      "feature1": "+150 locations",
+      "feature2": "Personal support",
+      "feature3": "86% in LATAM",
+      "feature4": "24-hour attention"
+    },
+    "search_prompt": "¡Start searching for your ideal office!",
+    "badges": {
+      "safe_payment": "Secure payment",
+      "easy_to_use": "Easy to use",
+      "instant": "Instant"
+    }
+  },
+  "Searchbar": {
+    "placeholder": "Enter your city",
+    "button_text": "Search"
+  },
+  "DescriptionSection": {
+    "logo_text": "Any size,",
+    "logo_text1": "anywhere.",
+    "heading": "We have offices",
+    "heading2": "for any",
+    "heading3": "team size.",
+    "paragraph": "No matter how many people you need to accommodate, we have offices that are perfect for any team size, from 2 to 200 people, or more.",
+    "button_text": "Explore offices",
+    "badges": {
+      "description1": "For small teams",
+      "capacity1": "2-8 people",
+      "description2": "For medium teams",
+      "capacity2": "20-80 people",
+      "description3": "For large teams",
+      "capacity3": "100-200 people"
+    }
+  },
+  "FeaturesSection": {
+    "header1": "¿Why choose",
+    "header2": "Relux",
+    "intro": "Discover the unique advantages we offer and understand why our coworking spaces are the best choice for your productivity and professional growth.",
+    "features": {
+      "title1": "Convenient Locations",
+      "description1": "We offer coworking spaces in strategic locations across LATAM, close to business centers, public transport, and commercial areas.",
+      "title2": "Flexibility and Variety",
+      "description2": "We have a wide variety of offices and meeting rooms that adapt to all needs, whether for quick meetings, individual workdays, or team collaborations.",
+      "title3": "Professional Environment",
+      "description3": "Our spaces are designed to provide a professional environment with all the necessary amenities, including high-speed internet.",
+      "title4": "Offices",
+      "description4": "In addition to workspace, we offer additional services such as reception, technical support, event catering, and more.",
+      "title5": "Competitive Pricing",
+      "description5": "We offer competitive rates with flexible payment options, no hidden fees. Clients can choose plans tailored to their specific needs and budget.",
+      "title6": "Community and Networking",
+      "description6": "Being part of our coworking spaces provides the opportunity to connect with other professionals, entrepreneurs, and companies."
+    },
+    "discover_more": "Discover More"
+  },
+  "TestimonialsSection": {
+    "title": "Don't just take our word for it,",
+    "title2": "trust their voice",
+    "description": "Hear from our satisfied clients and see how our coworking spaces enhance their work. Their testimonials showcase our quality. Get inspired!",
+    "testimonials": {
+      "name1": "Carlos Ramírez",
+      "position1": "Software Developer",
+      "description1": "I was looking for a quiet place to work on my projects, and Relux's spaces exceeded my expectations. The internet connection is excellent, and the environment is motivating.",
+      "name2": "María Gómez",
+      "position2": "CEO of Tech Innovators",
+      "description2": "As a leader of a startup, I needed a flexible space that adapted to my team's changing needs. Relux's locations were perfect to meet my requirements.",
+      "name3": "Juan Pérez",
+      "position3": "Digital Marketing Freelancer",
+      "description3": "Coworking spaces have revolutionized the way I work. I found a professional environment full of resources that helped me be more productive and connect with other professionals."
+    }
+  },
+  "CallToActionSection": {
+    "heading": "Comfortable.",
+    "heading1": "Professional",
+    "heading2": "Affordable.",
+    "paragraph": "We are a diverse and passionate team dedicated to designing and executing your vision. We stay agile and enjoy creating great work. Thank you for trusting us and allowing us to be part of your success!"
+  }
+}
