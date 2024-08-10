@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -41,10 +42,10 @@ export class ReservationsController {
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  getReservations() {
-    return this.reservationsService.getReservations();
+  getReservations(@Query('search') search?: string) {
+    return this.reservationsService.getReservations(search);
   }
-
+  
   //* Rutas PUT
 
   //TODO agregar AUTH

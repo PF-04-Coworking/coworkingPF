@@ -15,6 +15,10 @@ import { FileUploadModule } from './file-upload/file-upload.module';
 import { PaymentsModule } from './payments/payments.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ChatbotModule } from './chatbot/wit.module';
+import { NodeMailerModule } from './node-mailer/node-mailer.module';
+import { NodeMailerController } from './node-mailer/node-mailer.controller';
+import { NodeMailerService } from './node-mailer/node-mailer.service';
+import { NodeMailerRepository } from './node-mailer/node-mailer.repository';
 
 @Module({
   imports: [
@@ -46,9 +50,10 @@ import { ChatbotModule } from './chatbot/wit.module';
     // StripeModule, //!Pendiente aquí
     PaymentsModule,
     ChatbotModule,
+    NodeMailerModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, NodeMailerController],
+  providers: [AppService, NodeMailerService, NodeMailerRepository],
 })
 export class AppModule {
   constructor(private readonly appService: AppService) {}

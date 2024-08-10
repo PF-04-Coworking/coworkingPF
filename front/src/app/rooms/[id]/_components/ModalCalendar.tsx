@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/common/Button";
 import {
   Sheet,
@@ -13,22 +15,35 @@ import { DayPicker, DateRange, getDefaultClassNames } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useState } from "react";
 import Stripe from "./Stripe";
+import { IOfficeStripe } from "@/types/types";
+import { es } from "date-fns/locale";
+import {
+  selectedDates,
+  convertToYMD,
+  getDisabledDays,
+} from "@/lib/utils/dateUtils";
 
-const ModalCalendar = () => {
+const ModalCalendar = ({ officeParams }: { officeParams: IOfficeStripe }) => {
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(
     undefined
   );
+  const reservations = officeParams.reservations;
+  const disabledDays: DateRange[] = getDisabledDays(reservations);
+
+  const normalizedDisabledDays = disabledDays.map(({ from, to }) => ({
+    from: from ? convertToYMD(from) : undefined,
+    to: to ? convertToYMD(to) : undefined,
+  }));
+
+  const today = new Date();
+  const disabledDaysConfig = [
+    ...normalizedDisabledDays,
+    { before: convertToYMD(today) },
+  ];
 
   const defaultClassNames = getDefaultClassNames();
+  const selectedText = selectedDates(selectedRange);
 
-  let footerText = "Por favor, selecciona un día.";
-  if (selectedRange) {
-    if (selectedRange.from && !selectedRange.to) {
-      footerText = `Fecha: ${selectedRange.from.toLocaleDateString()}`;
-    } else if (selectedRange.from && selectedRange.to) {
-      footerText = `Fechas: ${selectedRange.from.toLocaleDateString()} - ${selectedRange.to.toLocaleDateString()}`;
-    }
-  }
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -39,26 +54,29 @@ const ModalCalendar = () => {
           <SheetTitle className="text-primary text-xl text-center">
             Selecciona los días de tu reserva
           </SheetTitle>
-          <SheetDescription className="text-white text-lg pb-20 text-center">
-            Ten en cuenta que podrás reservar 3 días seguidos como maximo, si no
-            lo deseas puedes seleccionar solo un día.
+          <SheetDescription className="text-white pb-10 text-center">
+            Ten en cuenta que solo podrás reservar 2 días seguidos como maximo.
+            Si deseas reservar más días debarás hacerlo en otra reserva.
           </SheetDescription>
         </SheetHeader>
 
         <DayPicker
           mode="range"
+          locale={es}
           min={1}
-          max={2}
+          max={1}
           selected={selectedRange}
           onSelect={setSelectedRange}
-          disabled={{ before: new Date() }}
+          disabled={disabledDaysConfig}
           footer={
-            <p className="text-center mt-10 border-primary border p-1 rounded-md">{footerText}</p>
+            <p className="text-center mt-10 border-primary border p-1 rounded-md">
+              {selectedText}
+            </p>
           }
           classNames={{
-            today: `border-amber-500`, // Add a border to today's date
-            selected: `bg-primary text-white rounded-3xl`, // Highlight the selected day
-            chevron: `${defaultClassNames.chevron} !fill-amber-500`, // Change the color of the chevron
+            today: `border-amber-500`,
+            selected: `bg-primary text-white rounded-3xl`,
+            chevron: `${defaultClassNames.chevron} !fill-amber-500`,
             disabled: `bg-secondaryDark text-secondary`,
             month_caption: `text-center mb-5`,
             range_start: `rounded-tr-none rounded-br-none`,
@@ -69,7 +87,7 @@ const ModalCalendar = () => {
 
         <SheetFooter className="mt-20">
           <SheetClose asChild>
-            <Stripe/>
+            <Stripe selectedRange={selectedRange} officeParams={officeParams} />
           </SheetClose>
         </SheetFooter>
       </SheetContent>

@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 
 @Controller('payments')
 export class PaymentsController {
-  private stripe: Stripe; 
+  private stripe: Stripe;
 
   constructor(private configService: ConfigService) {
     const stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
@@ -17,37 +17,32 @@ export class PaymentsController {
     });
   }
 
-  @Post('create-checkout-session')
-  async createCheckoutSession(
-    @Body() body: { amount: number; currency: string; officeId: string; quantity: number },
+  @Post('create-payment-intent')
+  async createPaymentIntent(
+    @Body() body: { amount: number; currency: string, payment_method: string },
     @Res() res,
   ) {
-    const { amount, currency, officeId, quantity } = body;
+    const { amount, currency, payment_method } = body;
 
     try {
-      const session = await this.stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [
-          {
-            price_data: {
-              currency,
-              product_data: {
-                name: officeId,
-              },
-              unit_amount: amount,
-            },
-            quantity,
-          },
-        ],
-        mode: 'payment',
-        success_url: 'http://localhost:3000/success', // Cambia esto por la URL de tu página de éxito
-        cancel_url: 'http://localhost:3000/cancel', // Cambia esto por la URL de tu página de cancelación
+      const paymentIntent = await this.stripe.paymentIntents.create({
+        amount,
+        currency,
+        payment_method,
+        confirm: true,
+        automatic_payment_methods: {
+          enabled: true, 
+          allow_redirects: 'never', 
+        },
       });
 
-      return res.status(HttpStatus.OK).json({ id: session.id });
+      return res.status(HttpStatus.OK).json({ 
+        clientSecret: paymentIntent.client_secret 
+      });
     } catch (error) {
-      console.error('Error creating checkout session:', error);
+      console.error('Error creating payment intent:', error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: error.message });
     }
   }
 }
+

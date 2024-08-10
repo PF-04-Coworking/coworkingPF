@@ -67,4 +67,3 @@ export class UserService {
     return 'Contact email sent successfully'
   }
 }
-

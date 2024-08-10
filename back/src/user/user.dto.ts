@@ -56,9 +56,11 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  @Matches(
-    '^+?(d{1,3})?[-.s]?((?d{1,4})?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}$',
-  )
+  @ApiProperty({
+    description:"User phone number",
+    example: "+55 55555555"
+  })
+  @Matches(/^(\+?\d{1,3}-?)\s*\d{6,14}\s*$/, {message: 'Número de telefono debe ser de formato: +11 111111111'})
   phone: string;
 
   @IsOptional()

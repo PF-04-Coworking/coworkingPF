@@ -34,6 +34,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cloudinary": "^2.3.1",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "google-auth-library": "^9.13.0",
     "multer": "^1.4.5-lts.1",
@@ -103,4 +104,3 @@
     "testEnvironment": "node"
   }
 }
-
