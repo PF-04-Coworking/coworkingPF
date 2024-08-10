@@ -1,41 +1,18 @@
 "use client";
-
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { LocateIcon } from "lucide-react";
 import { Header } from "@/app/_page/_components/HeaderSection";
 import LeafletMapComponent from "./_components/MapsLeaflet";
 import { amenityIcons } from "@/components/dashboard/cardOffice";
 import { Highlight } from "@/components/common/Highlight";
 import ModalCalendar from "./_components/ModalCalendar";
-import { IOffice } from "@/types/types";
 import Image from "next/image";
-import { apiOffices } from "@/lib/api/offices/apiOffices";
-
-amenityIcons;
+import { useFetchOfficeById } from "../hooks/useFetchOfficeById";
 
 const OfficeById = ({ params }: { params: { id: string } }) => {
-  const [office, setOffice] = useState<IOffice | null>(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    const fetchOfficeById = async () => {
-      try {
-        const response = await apiOffices.getOfficeById(params.id);
-        setOffice(response);
-      } catch (error) {
-        console.log(error);
-        router.push("/404");
-      }
-    };
-    fetchOfficeById();
-  }, [params.id, router]);
-
+  const { office } = useFetchOfficeById({ params });
   return (
     <>
       <Header />
-
       {office ? (
         <div className="text-white h-screen pt-[10vh] font-sans">
           <div className="grid md:grid-cols-2 gap-10 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
@@ -81,7 +58,15 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
                   </p>
                 </div>
               </div>
-              <ModalCalendar officeParams={{ id: office.id, price: office.price, imgUrl: office.imgUrl }}/>
+              <ModalCalendar
+                officeParams={{
+                  id: office.id,
+                  price: office.price,
+                  imgUrl: office.imgUrl,
+                  reservations: office.reservations,
+                  capacity: office.capacity,
+                }}
+              />
             </div>
             <div className="h-full relative">
               <Image
@@ -103,7 +88,7 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
           </div>
 
           <div className="w-full flex items-center h-[40%] justify-center px-4">
-            <LeafletMapComponent location={office.description}/>
+            <LeafletMapComponent location={office.description} />
           </div>
         </div>
       ) : (

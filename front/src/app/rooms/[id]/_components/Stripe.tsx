@@ -10,18 +10,18 @@ import {
   DialogTrigger,
 } from "../../../../components/common/dialog";
 import { Button } from "@/components/common/Button";
-import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import { DateRange } from "react-day-picker";
-import { selectedDates } from "./ModalCalendar";
 import { IOfficeStripe } from "@/types/types";
 import CheckoutForm from "./FormStripe";
-import { useEffect, useState } from "react";
+import useStripeLogic from "../../hooks/useStripeLogic";
 
-const stripePromise = loadStripe(
-  "pk_test_51PjNriFOrepWZ951sCAoM84bnpXcImLS7UaD5bKdb3Bc5J9uTGok241gZ9Dz8VgC0DPPWsxXbkBzrqwkrrLKPjop00lN2nR2M3"
-);
+const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC;
+
+if (!stripePublicKey) {
+  throw new Error("Stripe public key no encontrado");
+}
+
+const stripePromise = loadStripe(stripePublicKey);
 
 const Stripe = ({
   selectedRange,
@@ -30,31 +30,11 @@ const Stripe = ({
   selectedRange: DateRange | undefined;
   officeParams: IOfficeStripe;
 }) => {
-  const { authToken } = useAuthStore();
-  const router = useRouter();
+  const { Price, selectedText, handleToken } = useStripeLogic(
+    selectedRange,
+    officeParams
+  );
 
-  const [Price, setPrice] = useState(0);
-
-  useEffect(() => {
-    const calcutePrice = () => {
-      if (selectedRange && selectedRange.from && selectedRange.to) {
-        setPrice(officeParams.price * 2);
-      } else {
-        setPrice(officeParams.price);
-      }
-    };
-
-    calcutePrice();
-  }, [selectedRange, officeParams]);
-
-  const handleToken = () => {
-    if (!authToken) {
-      toast.error("Debes iniciar sesión para seguir con la reserva");
-      router.push("/login");
-    }
-  };
-
-  const selectedText = selectedDates(selectedRange);
   return (
     <>
       <Dialog>

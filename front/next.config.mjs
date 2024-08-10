@@ -12,7 +12,6 @@ export default {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        hostname: "www.officelovin.com",
         pathname: "/**",
       },
     ],

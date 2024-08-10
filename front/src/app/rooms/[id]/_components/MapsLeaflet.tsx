@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -21,7 +23,6 @@ const LeafletMapComponent = ({ location }: ILeafletMapComponentProps) => {
     const fetchCoordinates = async () => {
       try {
         const response = await geocodeAddress(location);
-
         setCoordinates(response);
       } catch (error) {
         console.error("Error en la geocodificación:", error);
