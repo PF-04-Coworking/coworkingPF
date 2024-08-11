@@ -22,7 +22,7 @@ const EditReservationsModal = ({
 
   return (
     <div className="">
-      <Tooltip text="Editar reserva">
+      <Tooltip text="Editar">
         <div
           className="p-2 hover:bg-primary transition rounded-md cursor-pointer w-min"
           onClick={() => setIsModalOpen(true)}

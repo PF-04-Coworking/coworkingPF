@@ -1,46 +1,43 @@
 import { Paragraph } from "@/components/common/Paragraph";
 import { utcDateFormatter } from "@/lib/utils/dateUtils";
-import { IReservation } from "@/types/types";
+import { IFullReservation } from "@/types/types";
 import {
   CalendarCheckIcon,
   CalendarClockIcon,
-  CalendarCogIcon,
   CalendarIcon,
-  CalendarX,
-  CheckCircleIcon,
   UserIcon,
 } from "lucide-react";
 import Image from "next/image";
 import { EditReservationsModal } from "./modals/EditReservationsModal";
-import { CardAdd } from "../../offices/_components/modals/CreateOfficeModal";
 
 const ReservationsTable = ({
   reservations,
 }: {
-  reservations: IReservation[];
+  reservations: IFullReservation[];
 }) => {
   return (
-    <div className="rounded-md border-2 border-primary/25">
-      <table className="w-full text-sm bg-background/50 backdrop-blur-md rounded-md table-fixed">
+    <div className="rounded-md border-2 border-primary overflow-auto">
+      <table className="w-full text-sm bg-background/50 backdrop-blur-md rounded-md">
         <thead className="text-left">
           <tr>
-            <th className="px-6 py-3 w-4/12">Usuario</th>
-            <th className="px-6 py-3 w-5/12">Oficina</th>
-            <th className="px-6 py-3 w-2/12">Fecha</th>
-            <th className="px-6 py-3 w-2/12">Invitados</th>
-            <th className="px-6 py-3 w-1/12"></th>
+            <th className="px-8 py-3 w-4/12">Usuario</th>
+            <th className="px-8 py-3 w-4/12">Oficina</th>
+            <th className="px-8 py-3 w-2/12">Fecha</th>
+            <th className="px-8 py-3 w-2/12">Invitados</th>
+            <th className="px-8 py-3 w-2/12"></th>
           </tr>
         </thead>
         <tbody>
           {reservations.map((reservation) => (
-            <tr key={reservation.id} className="border-t-2 border-primary/50">
-              <td className="p-6">
+            <tr key={reservation.id} className="border-t-2 border-primary">
+              <td className="py-6 px-8">
                 <div className="flex items-center gap-4">
                   <Image
                     src={reservation.user.imgUrl}
                     alt="user"
                     width={35}
                     height={35}
+                    className="flex-shrink-0"
                   />
                   <div className="overflow-hidden">
                     <Paragraph variant="primary">
@@ -55,7 +52,7 @@ const ReservationsTable = ({
                   </div>
                 </div>
               </td>
-              <td className="p-6">
+              <td className="py-6 px-8">
                 <div className="flex flex-col gap-1">
                   <Paragraph variant="primary">
                     {reservation.office.name}
@@ -65,12 +62,15 @@ const ReservationsTable = ({
                     {reservation.office.location})
                   </Paragraph>
                   <Paragraph variant="secondary" className="flex gap-x-2">
-                    <UserIcon size={20} className="text-primary" />
+                    <UserIcon
+                      size={20}
+                      className="text-primary flex-shrink-0"
+                    />
                     {reservation.office.capacity} máx.
                   </Paragraph>
                 </div>
               </td>
-              <td className="p-6">
+              <td className="py-6 px-8">
                 <div className="flex flex-col gap-1">
                   <Paragraph variant="primary">
                     Inicio: {utcDateFormatter(reservation.start_day)}
@@ -84,7 +84,7 @@ const ReservationsTable = ({
                       variant="secondary"
                       className=" flex items-center gap-x-2"
                     >
-                      <CalendarCheckIcon size={20} />
+                      <CalendarCheckIcon size={20} className="flex-shrink-0" />
                       Terminada
                     </Paragraph>
                   ) : new Date(reservation.start_day).getDate() >
@@ -93,7 +93,7 @@ const ReservationsTable = ({
                       variant="secondary"
                       className="!text-green-500 flex items-center gap-x-2"
                     >
-                      <CalendarIcon size={20} />
+                      <CalendarIcon size={20} className="flex-shrink-0" />
                       Pendiente
                     </Paragraph>
                   ) : (
@@ -101,13 +101,13 @@ const ReservationsTable = ({
                       variant="secondary"
                       className="!text-blue-500 flex items-center gap-x-2"
                     >
-                      <CalendarClockIcon size={20} />
+                      <CalendarClockIcon size={20} className="flex-shrink-0" />
                       En curso
                     </Paragraph>
                   )}
                 </div>
               </td>
-              <td className="p-6">
+              <td className="py-6 px-8">
                 <div className="flex flex-col gap-1">
                   <Paragraph variant="primary" className="flex gap-x-2">
                     <UserIcon size={20} className="text-primary" />
@@ -115,7 +115,7 @@ const ReservationsTable = ({
                   </Paragraph>
                 </div>
               </td>
-              <td className="p-6">
+              <td className="py-6 px-8">
                 <EditReservationsModal reservation={reservation} />
               </td>
             </tr>

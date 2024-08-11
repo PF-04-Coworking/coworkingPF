@@ -15,8 +15,8 @@ const Account = () => {
 
   return (
     <DashboardLayout headerTitle="Mi cuenta" navLinks={ADMIN_LINKS}>
-      <div className="flex flex-col items-center">
-        <div className="flex flex-col text-center sm:text-left sm:flex-row items-center gap-8 pt-8">
+      <div className="flex flex-col items-center bg-background/80 rounded-lg p-8">
+        <div className="flex flex-col text-center sm:text-left sm:flex-row items-center gap-8">
           <Image
             src={faceImage}
             alt="Imagen de perfil"

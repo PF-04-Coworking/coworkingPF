@@ -16,4 +16,7 @@ export default {
       },
     ],
   },
+  icons: {
+    icon: "/images/favicon.ico",
+  },
 };

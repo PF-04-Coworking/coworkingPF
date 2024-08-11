@@ -36,7 +36,7 @@ const USER_LINKS = [
     icon: <CircleUserRoundIcon size={20} />,
   },
   {
-    name: "Gestionar reservas",
+    name: "Mis reservas",
     href: "/dashboard/user/reservations",
     icon: <CalendarCheck2Icon size={20} />,
   },

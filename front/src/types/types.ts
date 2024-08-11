@@ -10,7 +10,7 @@ export interface ILocation {
   lng: number;
 }
 
-export interface IReservation {
+export interface IFullReservation {
   id: string;
   guests_number: number;
   start_day: Date;
@@ -36,13 +36,14 @@ export interface IOffice {
   reservations: IReservation[];
 }
 
-interface IReservation {
+export interface IReservation {
   id: string;
+  guests_number: number;
   start_day: string;
   end_day: string;
-  guests_number: number;
   paid_amount: number;
 }
+
 export interface IOfficeStripe {
   id: string;
   imgUrl: string;

@@ -9,10 +9,10 @@ export const selectedDates = (selectedRange: DateRange | undefined): string => {
   }
   const { from, to } = selectedRange;
   if (from && !to) {
-    return `Fecha: ${from.toLocaleDateString()}`;
+    return `Reservar ${from.toLocaleDateString()}`;
   }
   if (from && to) {
-    return `Fechas: ${from.toLocaleDateString()} - ${to.toLocaleDateString()}`;
+    return `Reservar ${from.toLocaleDateString()} - ${to.toLocaleDateString()}`;
   }
   return "Por favor, selecciona un día.";
 };

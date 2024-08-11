@@ -35,20 +35,23 @@ const DashboardOffices = () => {
 
   return (
     <DashboardLayout headerTitle="Gestionar oficinas" navLinks={ADMIN_LINKS}>
-      <div className="flex justify-between mb-8">
+      <div className="flex justify-between">
         <div className="relative w-full">
           <TextInput
             type="search"
             placeholder="Buscar oficinas..."
             value={searchTerm}
             onChange={handleSearch}
-            className="w-full border-gradient py-2 focus:outline-none text-white"
+            className="w-full py-2 focus:outline-none text-white"
           />
-          <SearchIcon size={20} className="text-white absolute right-4 top-3" />
+          <SearchIcon
+            size={20}
+            className="text-white absolute right-4 top-3.5"
+          />
         </div>
         <CardAdd />
       </div>
-      <div className="w-full lg:grid-cols-2 grid gap-10 md:grid-cols-2 grid-cols-1">
+      <div className="w-full 2xl:grid-cols-3 grid gap-10 md:grid-cols-2 grid-cols-1">
         {searchedOffices.map((office, index) => (
           <CardOffice
             key={index}

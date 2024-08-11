@@ -13,10 +13,13 @@ import { Paragraph } from "@/components/common/Paragraph";
 interface ISortProps {
   onSort: (option: string) => void;
   sortOptions: Record<string, string>;
+  defaultSortOption?: string;
 }
 
-const Sort = ({ onSort, sortOptions }: ISortProps) => {
-  const [selectedSortOption, setSelectedSortOption] = useState("");
+const Sort = ({ onSort, sortOptions, defaultSortOption }: ISortProps) => {
+  const [selectedSortOption, setSelectedSortOption] = useState(
+    defaultSortOption || ""
+  );
 
   const handleSort = (option: string) => {
     setSelectedSortOption(option);

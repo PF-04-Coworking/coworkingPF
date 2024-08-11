@@ -1,5 +1,5 @@
 "use client";
-import { LocateIcon } from "lucide-react";
+
 import { Header } from "@/app/_page/_components/HeaderSection";
 import LeafletMapComponent from "./_components/MapsLeaflet";
 import { Highlight } from "@/components/common/Highlight";
@@ -7,57 +7,30 @@ import ModalCalendar from "./_components/ModalCalendar";
 import Image from "next/image";
 import { useFetchOfficeById } from "../hooks/useFetchOfficeById";
 import { servicesIcons } from "@/lib/constants/servicesIcons";
+import { Heading } from "@/components/common/Heading";
+import { Paragraph } from "@/components/common/Paragraph";
+import { FooterSection } from "@/components/FooterSection";
 
 const OfficeById = ({ params }: { params: { id: string } }) => {
   const { office } = useFetchOfficeById({ params });
 
   return (
-    <>
+    <div
+      className="h-full min-h-screen bg-no-repeat bg-top bg-cover bg-fixed"
+      style={{ backgroundImage: "url(/images/fondo-1.png)" }}
+    >
       <Header />
       {office ? (
-        <div className="text-white h-screen pt-[10vh] font-sans">
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
-            <div className="grid gap-4 md:gap-10 items-start">
-              <div>
-                <h1 className="font-bold text-3xl text-primary ">
+        <div className="layout text-white h-screen pt-32 pb-8">
+          <div className="flex flex-col gap-12">
+            <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
+              <div className="space-y-2">
+                <Heading level="2" className="text-primary">
                   {office.name}
-                </h1>
-                <div className="flex items-center text-sm gap-3">
-                  <LocateIcon className="w-4 h-4" />
-                  <span className="italic">{office.description}</span>
-                </div>
-              </div>
-              <div className="grid gap-4 text-sm leading-loose">
-                <div className="">
-                  <h3 className=" text-primary font-semibold text-lg mb-2">
-                    Estos son los servicios adicionales que ofrece esta oficina:
-                  </h3>
-                  {office.services.map((service, index) => (
-                    <div key={index} className="flex">
-                      <div className="">{servicesIcons[service].icon}</div>
-                      <p className="ml-2 italic text-[1rem]">{service}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 p-4 border border-primary rounded-b-[2rem]">
-                  <h2 className="font-bold text-xl mb-2 text-center text-primary">
-                    IMPORTANTE{" "}
-                  </h2>
-                  <p>
-                    Al momento de reservar cualquier oficina, tenga en cuenta
-                    que solo podrá rentarla por un día entero. No hay sistemas
-                    de horarios o medios días, solo días completos. El precio
-                    mostrado es por el día entero.
-                  </p>
-                  <p className="mt-2">
-                    Para reservar el día, deberá realizar el pago completo desde
-                    nuestra web. Cualquier inconveniente o duda, por favor
-                    comuníquese a nuestro correo
-                    <Highlight> grupo04henry@gmail.com</Highlight> o llame al
-                    número
-                    <Highlight> +52 4778810196</Highlight>.
-                  </p>
-                </div>
+                </Heading>
+                <Paragraph variant="secondary" size="sm">
+                  {office.description}
+                </Paragraph>
               </div>
               <ModalCalendar
                 officeParams={{
@@ -69,26 +42,69 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
                 }}
               />
             </div>
-            <div className="h-full relative">
-              <img
+            <div className="h-[40rem]">
+              <Image
                 src={office.imgUrl}
                 alt="oficina"
-                className="object-cover h-full rounded-tr-[5rem] rounded-bl-[5rem]"
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="h-full w-full rounded-tl-3xl rounded-br-3xl object-cover"
               />
-              <div className=" border border-primary shadow-md shadow-black rounded-3xl p-4 top-2 left-2 absolute flex justify-center items-center bg-primary">
-                <p className="font-bold">USD: ${office.price}</p>
+            </div>
+            <div className="border-2 border-primary rounded-md p-4 space-y-4">
+              <Paragraph variant="primary">Nota</Paragraph>
+              <Paragraph variant="secondary">
+                Las recepción de los clientes en las oficinas será a partir de
+                las <span className="text-white">09:00 a.m.</span> Por favor,
+                asistir a partir de esa hora para la entrega de la oficina.
+              </Paragraph>
+            </div>
+            <div className="flex flex-col lg:flex-row gap-12 justify-between">
+              <div className="space-y-4">
+                <Paragraph variant="primary">Acerca de la oficina</Paragraph>
+                <Paragraph variant="secondary">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Repudiandae asperiores mollitia at ut laborum eius adipisci,
+                  voluptatem, ducimus pariatur saepe officia eum! Inventore
+                  natus minus accusantium. Rerum a vel aliquam.
+                </Paragraph>
+                <div className="!mt-6">
+                  <ModalCalendar
+                    officeParams={{
+                      id: office.id,
+                      price: office.price,
+                      imgUrl: office.imgUrl,
+                      reservations: office.reservations,
+                      capacity: office.capacity,
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="space-y-4 min-w-52">
+                <Paragraph variant="primary">Servicios / comodidades</Paragraph>
+                <div className="space-y-4">
+                  {office.services.map((service, index) => (
+                    <div key={index} className="flex">
+                      {servicesIcons[service].icon}
+                      <Paragraph variant="primary" className="ml-2">
+                        {service}
+                      </Paragraph>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
+            <div className="w-full h-[40rem] block">
+              <LeafletMapComponent location={office.description} />
+            </div>
           </div>
-
-          <div className="w-full flex items-center h-[40%] justify-center px-4">
-            <LeafletMapComponent location={office.description} />
-          </div>
+          <FooterSection />
         </div>
       ) : (
         <div className="text-red-500">No se encontró la oficina</div>
       )}
-    </>
+    </div>
   );
 };
 

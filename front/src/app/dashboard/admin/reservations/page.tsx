@@ -12,10 +12,8 @@ import { sortOptions } from "@/lib/constants/sortReservationsOptions";
 
 const ReservationsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortOption, setSortOption] = useState("");
+  const [sortOption, setSortOption] = useState("dateDesc");
   const { reservations } = useReservations({ searchTerm });
-
-  console.log(reservations);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -49,11 +47,15 @@ const ReservationsPage = () => {
             placeholder="Buscar reservas..."
             value={searchTerm}
             onChange={handleSearch}
-            className="w-full border-gradient py-2 focus:outline-none text-white"
+            className="w-full py-2 focus:outline-none text-white"
           />
           <SearchIcon size={20} className="text-white absolute right-4 top-3" />
         </div>
-        <Sort onSort={handleSort} sortOptions={sortOptions} />
+        <Sort
+          onSort={handleSort}
+          sortOptions={sortOptions}
+          defaultSortOption="dateDesc"
+        />
       </div>
       <ReservationsTable reservations={sortedReservations} />
     </DashboardLayout>

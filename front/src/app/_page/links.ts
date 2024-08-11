@@ -1,8 +1,8 @@
 const links = [
   { name: "Inicio", href: "/" },
   { name: "Oficinas", href: "/rooms" },
-  { name: "Sobre nosotros", href: "#" },
-  { name: "Contacto", href: "#" },
+  { name: "Sobre nosotros", href: "/about" },
+  { name: "Contacto", href: "/contact" },
 ];
 
 const authLinks = [

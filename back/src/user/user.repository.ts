@@ -35,7 +35,7 @@ export class UserRepository {
   async getuserById(id: string) {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['reservations'],
+      relations: ['reservations', 'reservations.office'],
     });
 
     if (!user) {
@@ -182,18 +182,18 @@ export class UserRepository {
         `Email ${googleUserData.data.email} is already a registered account`,
       );
 
-      try {
-        await transporter.sendMail({
-          from: '"Redux team"', // sender address
-          to: foundUser.email, // list of receivers
-          subject: 'Confirmacion de cuenta', // Subject line
-          html: `<b>Hola, bienvenid@ ${foundUser.name} a Relux!</b>`, // html body
-        });
-      } catch (error) {
-        throw new BadRequestException(
-          'Something went wrong. No emails were sent ',
-        );
-      }
+    try {
+      await transporter.sendMail({
+        from: '"Redux team"', // sender address
+        to: foundUser.email, // list of receivers
+        subject: 'Confirmacion de cuenta', // Subject line
+        html: `<b>Hola, bienvenid@ ${foundUser.name} a Relux!</b>`, // html body
+      });
+    } catch (error) {
+      throw new BadRequestException(
+        'Something went wrong. No emails were sent ',
+      );
+    }
 
     const newUser = await this.userRepository.save({
       name: googleUserData.data.given_name,
@@ -250,3 +250,4 @@ export class UserRepository {
     };
   }
 }
+

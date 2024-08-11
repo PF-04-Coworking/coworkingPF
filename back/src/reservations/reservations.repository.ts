@@ -24,7 +24,8 @@ export class ReservationsRepository {
 
   // Rutas GET
   async getReservations(search?: string) {
-    const query = this.reservationRepository.createQueryBuilder('reservation')
+    const query = this.reservationRepository
+      .createQueryBuilder('reservation')
       .leftJoinAndSelect('reservation.office', 'office')
       .leftJoinAndSelect('reservation.user', 'user')
       .select([
@@ -32,39 +33,53 @@ export class ReservationsRepository {
         'office',
         'user.id',
         'user.name',
+        'user.imgUrl',
+        'user.phone',
         'user.lastname',
-        'user.email'
+        'user.email',
       ]);
-  
+
     if (search) {
       const searchTerms = search.split(' ');
-  
+
       const lowerSearch = search.toLowerCase();
-  
-      query.where('LOWER(office.name) LIKE :search', { search: `%${lowerSearch}%` })
-           .orWhere('LOWER(office.location) LIKE :search', { search: `%${lowerSearch}%` })
-           .orWhere('LOWER(user.email) LIKE :search', { search: `%${lowerSearch}%` });
-  
+
+      query
+        .where('LOWER(office.name) LIKE :search', {
+          search: `%${lowerSearch}%`,
+        })
+        .orWhere('LOWER(office.location) LIKE :search', {
+          search: `%${lowerSearch}%`,
+        })
+        .orWhere('LOWER(user.email) LIKE :search', {
+          search: `%${lowerSearch}%`,
+        });
+
       if (searchTerms.length > 1) {
         query.orWhere(
-          new Brackets(qb => {
-            qb.where('LOWER(user.name) LIKE :name', { name: `%${searchTerms[0].toLowerCase()}%` })
-              .andWhere('LOWER(user.lastname) LIKE :lastname', { lastname: `%${searchTerms[1].toLowerCase()}%` });
-          })
+          new Brackets((qb) => {
+            qb.where('LOWER(user.name) LIKE :name', {
+              name: `%${searchTerms[0].toLowerCase()}%`,
+            }).andWhere('LOWER(user.lastname) LIKE :lastname', {
+              lastname: `%${searchTerms[1].toLowerCase()}%`,
+            });
+          }),
         );
       } else {
         query.orWhere(
-          new Brackets(qb => {
-            qb.where('LOWER(user.name) LIKE :name', { name: `%${searchTerms[0].toLowerCase()}%` })
-              .orWhere('LOWER(user.lastname) LIKE :lastname', { lastname: `%${searchTerms[0].toLowerCase()}%` });
-          })
+          new Brackets((qb) => {
+            qb.where('LOWER(user.name) LIKE :name', {
+              name: `%${searchTerms[0].toLowerCase()}%`,
+            }).orWhere('LOWER(user.lastname) LIKE :lastname', {
+              lastname: `%${searchTerms[0].toLowerCase()}%`,
+            });
+          }),
         );
       }
     }
-  
+
     return query.getMany();
   }
-  
 
   async getReservationsByUserId(id: string) {
     const reservationsByUserId = await this.reservationRepository.find({
@@ -199,3 +214,4 @@ export class ReservationsRepository {
     };
   }
 }
+

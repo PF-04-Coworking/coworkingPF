@@ -14,6 +14,8 @@ import { DateRange } from "react-day-picker";
 import { IOfficeStripe } from "@/types/types";
 import CheckoutForm from "./FormStripe";
 import useStripeLogic from "../../hooks/useStripeLogic";
+import { Heading } from "@/components/common/Heading";
+import { Paragraph } from "@/components/common/Paragraph";
 
 const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC;
 
@@ -26,9 +28,11 @@ const stripePromise = loadStripe(stripePublicKey);
 const Stripe = ({
   selectedRange,
   officeParams,
+  children,
 }: {
   selectedRange: DateRange | undefined;
   officeParams: IOfficeStripe;
+  children: React.ReactNode;
 }) => {
   const { Price, selectedText, handleToken } = useStripeLogic(
     selectedRange,
@@ -45,34 +49,37 @@ const Stripe = ({
             onClick={handleToken}
             disabled={!selectedRange}
           >
-            Confirmar reserva
+            {children}
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[525px] bg-background border border-primary text-white">
+        <DialogContent className="bg-background border-secondaryDark text-white space-y-8">
           <DialogHeader>
-            <DialogTitle className="text-primary text-xl text-center">
-              Confirma tu reserva
+            <DialogTitle className="text-primary text-xl">
+              <Heading level="3">Confirma tu reserva</Heading>
             </DialogTitle>
-            <DialogDescription className="text-white text-center">
-              Llena y confirma cuantas personas asistirán, completa el
-              formulario de pago para poder confirmar tu reserva.
+            <DialogDescription className="text-white">
+              <Paragraph variant="secondary">
+                Llena y confirma cuantas personas asistirán, completa el
+                formulario de pago para poder confirmar tu reserva.
+              </Paragraph>
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="flex justify-between">
-              <p>{selectedText}</p>
-              <p className="text-primary font-semibold">
-                Precio total: USD ${Price}
-              </p>
-            </div>
-            <Elements stripe={stripePromise}>
-              <CheckoutForm
-                price={Price}
-                officeParams={officeParams}
-                selectedRange={selectedRange}
-              />
-            </Elements>
+          <div className="flex justify-between">
+            <Paragraph variant="primary">{selectedText}</Paragraph>
+            <Paragraph
+              variant="primary"
+              className="!text-primary font-semibold"
+            >
+              Precio total: USD ${Price}
+            </Paragraph>
           </div>
+          <Elements stripe={stripePromise}>
+            <CheckoutForm
+              price={Price}
+              officeParams={officeParams}
+              selectedRange={selectedRange}
+            />
+          </Elements>
         </DialogContent>
       </Dialog>
     </>

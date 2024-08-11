@@ -101,12 +101,11 @@ const EditProfileForm = () => {
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-16">
             <Button
               variant="primary"
               type="submit"
               disabled={isSubmitting || !dirty}
-              className="mt-12"
             >
               Guardar cambios
             </Button>

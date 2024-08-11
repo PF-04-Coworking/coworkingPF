@@ -26,26 +26,26 @@ const UsersPage = () => {
             placeholder="Buscar reservas..."
             value={searchTerm}
             onChange={handleSearch}
-            className="w-full border-gradient py-2 focus:outline-none text-white"
+            className="w-full py-2 focus:outline-none text-white"
           />
           <SearchIcon size={20} className="text-white absolute right-4 top-3" />
         </div>
       </div>
-      <div className="rounded-md border-2 border-primary/25">
+      <div className="rounded-md border-2 border-primary">
         <table className="w-full text-sm bg-background/50 backdrop-blur-md rounded-md table-fixed">
           <thead className="text-left">
             <tr>
-              <th className="px-6 py-3 w-4/12">Nombre</th>
-              <th className="px-6 py-3 w-5/12">Contacto</th>
-              <th className="px-6 py-3 w-2/12">Ubicación</th>
-              <th className="px-6 py-3 w-2/12">Edad</th>
+              <th className="px-8 py-3 w-4/12">Nombre</th>
+              <th className="px-8 py-3 w-5/12">Contacto</th>
+              <th className="px-8 py-3 w-2/12">Ubicación</th>
+              <th className="px-8 py-3 w-2/12">Edad</th>
             </tr>
           </thead>
           <tbody>
             {users &&
               users.map((user) => (
-                <tr key={user.id} className="border-t-2 border-primary/50">
-                  <td className="p-6">
+                <tr key={user.id} className="border-t-2 border-primary">
+                  <td className="p-8">
                     <div className="flex items-center gap-4">
                       <Image
                         src={user.imgUrl}
@@ -60,13 +60,13 @@ const UsersPage = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="p-6">
+                  <td className="p-8">
                     <Paragraph variant="secondary">{user.email}</Paragraph>
                     <Paragraph variant="secondary">
                       {user.phone || "-"}
                     </Paragraph>
                   </td>
-                  <td className="p-6">
+                  <td className="p-8">
                     <Paragraph variant="secondary">
                       {user.country || "-"}
                     </Paragraph>
@@ -74,7 +74,7 @@ const UsersPage = () => {
                       {user.city || "-"}
                     </Paragraph>
                   </td>
-                  <td className="p-6">
+                  <td className="p-8">
                     <Paragraph variant="secondary">{user.age || "-"}</Paragraph>
                   </td>
                 </tr>
