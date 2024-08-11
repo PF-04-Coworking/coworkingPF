@@ -5,7 +5,6 @@ import {
   Delete,
   Get,
   Param,
-  Post,
   Put,
   Query,
   UseGuards,
@@ -17,7 +16,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ReservationsService } from './reservations.service';
-import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
+import { UpdateReservationDto } from './reservations.dto';
 import { Roles } from 'src/auth/guards/roles.decorator';
 import { UserRole } from 'src/user/user-role.enum';
 import { AuthGuard } from 'src/auth/guards/auth.guard';

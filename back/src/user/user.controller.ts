@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  Query,
   Req,
   UnauthorizedException,
   UseGuards,
@@ -54,8 +55,8 @@ export class UserController {
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  getUsers() {
-    return this.userService.getUsers();
+  getUsers(@Query('search') search?:string) {
+    return this.userService.getUsers(search);
   }
 
   @Get(':id')
