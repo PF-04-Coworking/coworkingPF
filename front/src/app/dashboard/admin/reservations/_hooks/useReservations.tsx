@@ -1,10 +1,10 @@
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { apiReservations } from "@/lib/api/reservations/apiReservations";
-import { IReservation } from "@/types/types";
+import { IFullReservation } from "@/types/types";
 import { useEffect, useState } from "react";
 
 const useReservations = ({ searchTerm }: { searchTerm: string }) => {
-  const [reservations, setReservations] = useState<IReservation[]>([]);
+  const [reservations, setReservations] = useState<IFullReservation[]>([]);
   const { authToken } = useAuthStore();
 
   useEffect(() => {

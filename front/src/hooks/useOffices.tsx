@@ -29,7 +29,7 @@ const useOffices = ({
     };
 
     fetchData();
-  }, [page, limit, services, location]);
+  }, [page, limit, services, location, setStoredOffices]);
 
   return { offices };
 };

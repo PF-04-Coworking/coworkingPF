@@ -1,4 +1,4 @@
-import { IReservation } from "@/types/types";
+import { IFullReservation } from "@/types/types";
 import { axiosClient } from "../apiConfig";
 
 const apiReservations = {
@@ -16,7 +16,7 @@ const apiReservations = {
   updateReservation: async (
     authToken: string,
     id: string,
-    data: Partial<IReservation>
+    data: Partial<IFullReservation>
   ) => {
     return await axiosClient.put(`/reservations/${id}`, data, {
       headers: {

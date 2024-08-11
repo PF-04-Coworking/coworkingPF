@@ -9,14 +9,14 @@ import {
   DialogTitle,
 } from "@/components/common/Dialog";
 import EditReservationForm from "../EditReservationForm";
-import { IReservation } from "@/types/types";
+import { IFullReservation, IReservation } from "@/types/types";
 import { SettingsIcon } from "lucide-react";
 import { Tooltip } from "@/components/common/Tooltip";
 
 const EditReservationsModal = ({
   reservation,
 }: {
-  reservation: IReservation;
+  reservation: IFullReservation;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

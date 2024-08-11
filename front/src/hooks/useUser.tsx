@@ -29,7 +29,7 @@ const useUser = () => {
     };
 
     fetchUserData();
-  }, [authToken]);
+  }, [authToken, setUserData]);
 
   return { userData };
 };

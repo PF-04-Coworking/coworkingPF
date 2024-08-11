@@ -4,8 +4,7 @@ import { DialogFooter } from "@/components/common/Dialog";
 import { FieldValidate } from "@/components/common/FieldValidate";
 import { InputLabel } from "@/components/common/InputLabel";
 import { apiReservations } from "@/lib/api/reservations/apiReservations";
-import { utcDateFormatter } from "@/lib/utils/dateUtils";
-import { IReservation } from "@/types/types";
+import { IFullReservation } from "@/types/types";
 import { Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -13,7 +12,7 @@ import * as Yup from "yup";
 const EditReservationForm = ({
   reservation,
 }: {
-  reservation: IReservation;
+  reservation: IFullReservation;
 }) => {
   const { authToken } = useAuthStore();
 
@@ -26,8 +25,8 @@ const EditReservationForm = ({
   });
 
   const handleSubmit = async (
-    values: Partial<IReservation>,
-    { resetForm }: FormikHelpers<Partial<IReservation>>
+    values: Partial<IFullReservation>,
+    { resetForm }: FormikHelpers<Partial<IFullReservation>>
   ) => {
     if (!authToken) return;
     const formattedValues = {
@@ -35,7 +34,6 @@ const EditReservationForm = ({
       start_day: values.start_day,
       end_day: values.end_day,
     };
-    console.log(formattedValues);
     const promise = apiReservations.updateReservation(
       authToken,
       reservation.id,

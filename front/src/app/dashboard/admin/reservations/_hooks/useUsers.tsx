@@ -15,7 +15,7 @@ const useUsers = ({ searchTerm }: { searchTerm: string }) => {
     };
 
     getUsers();
-  }, [authToken]);
+  }, [authToken, searchTerm]);
 
   return { users };
 };
