@@ -28,7 +28,21 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
-  console.log('Server listening on http://localhost:3000');
+  const port = process.env.PORT || 3000;
+
+  app.listen(port)
+    .then(() => {
+      console.log(`Server listening on http://localhost:${port}`);
+    })
+    .catch(async (error) => {
+      if (error.code === 'EADDRINUSE') {
+        console.log(`Port ${port} is in use, trying port 3002...`);
+        await app.listen(3002);
+        console.log('Server listening on http://localhost:3002');
+      } else {
+        console.error('Error starting server:', error);
+      }
+    });
 }
+
 bootstrap();
