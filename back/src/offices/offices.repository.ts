@@ -80,6 +80,7 @@ export class OfficeRepository {
           office.name = element.name;
           office.location = element.location;
           office.description = element.description;
+          office.details= element.details,
           office.capacity = element.capacity;
           office.stock = element.stock;
           office.price = element.price;

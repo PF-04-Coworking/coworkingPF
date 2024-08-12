@@ -20,6 +20,10 @@ export class Office {
   @Column({ type: 'text', nullable: true })
   description: string;
 
+  @ApiProperty({ description: 'Office details' })
+  @Column({type:'text', nullable: true})
+  details: string;
+
   @ApiProperty({ description: 'Office capacity' })
   @Column()
   capacity: number;
