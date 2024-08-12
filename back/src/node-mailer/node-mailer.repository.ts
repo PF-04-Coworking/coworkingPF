@@ -12,7 +12,7 @@ export class NodeMailerRepository {
       await transporter.sendMail({
         from: '"Redux team"', // sender address
         to: contactInfo.email, // list of receivers
-        subject: 'Confirmacion de cuenta', // Subject line
+        subject: 'Contacto Relux', // Subject line
         html: `<b>Hola, bienvenid@ ${contactInfo.name} a Relux!</b>
         <p> Pronto un miembro de nuestro equipo se pondrá en contacto con usted. </p>
         <p> ¡Muchas Gracias por elegir Relux! </p> `, // html body
