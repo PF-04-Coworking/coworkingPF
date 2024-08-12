@@ -8,7 +8,7 @@
       "stock": 250,
       "price": 300,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925726/ddxux8ugqqxtce5vkxvv.jpg",
-      "services": ["Internet", "Estacionamiento", "Cafetería"]
+      "services": ["Internet", "Estacionamiento", "Cafe"]
     },
     {
       "name": "Torre Real 2",
@@ -19,7 +19,7 @@
       "stock": 180,
       "price": 250,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722926017/n9qhwpltevnqjxbscwxc.jpg",
-      "services": ["Internet", "Cafetería", "Gimnasio"]
+      "services": ["Internet", "Cafe", "Gimnasio"]
     },
     {
       "name": "Edificio Cronos",
@@ -30,7 +30,7 @@
       "stock": 170,
       "price": 230,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925824/awtes1pzyamofyot992g.jpg",
-      "services": ["Internet", "Sala de reuniones", "Cafetería"]
+      "services": ["Internet", "Sala de conferencias", "Cafe"]
     },
     {
       "name": "Torre IBM",
@@ -41,7 +41,7 @@
       "stock": 180,
       "price": 280,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925679/cfreqhyzo582bqzv6wvq.jpg",
-      "services": ["Zona de descanso", "Gimnasio", "Cafetería"]
+      "services": ["Zona de descanso", "Gimnasio", "Cafe"]
     },
     {
       "name": "Torre Colpatria",
@@ -63,7 +63,7 @@
       "stock": 200,
       "price": 300,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722926002/edichct9ivgxjdztlroi.jpg",
-      "services": ["Internet", "Zona de descanso", "Cafetería"]
+      "services": ["Internet", "Zona de descanso", "Cafe"]
     },
     {
       "name": "Torre Mayor",
@@ -74,7 +74,7 @@
       "stock": 280,
       "price": 350,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925923/rnvfhjop7ovx99vci1bd.jpg",
-      "services": ["Internet", "Cafetería", "Estacionamiento"]
+      "services": ["Internet", "Cafe", "Estacionamiento"]
     },
     {
       "name": "Espacio Ejecutivo Cowork",
@@ -96,7 +96,7 @@
       "stock": 160,
       "price": 230,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925709/tgnqjft0cfxjtcehfatt.jpg",
-      "services": ["Cafetería", "Sala de conferencias", "Zona de descanso"]
+      "services": ["Cafe", "Sala de conferencias", "Zona de descanso"]
     },
     {
       "name": "Torre Principal Cowork ",
@@ -129,7 +129,7 @@
       "stock": 200,
       "price": 310,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722927013/gmw1os82xf3oudgukrnf.jpg",
-      "services": ["Estacionamiento", "Internet", "Cafetería"]
+      "services": ["Estacionamiento", "Internet", "Cafe"]
     },
     {
       "name": "Oficinas Jorge Basadre",
@@ -140,7 +140,7 @@
       "stock": 220,
       "price": 340,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925503/dtgosfau0bfqffo4aelo.jpg",
-      "services": ["Cafetería", "Sala de conferencias", "Zona de descanso"]
+      "services": ["Cafe", "Sala de conferencias", "Zona de descanso"]
     }
   ]
   
