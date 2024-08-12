@@ -12,7 +12,9 @@ export class NodeMailerRepository {
         from: '"Redux team"', // sender address
         to: contactInfo.email, // list of receivers
         subject: 'Confirmacion de cuenta', // Subject line
-        html: `<b>Hola, bienvenid@ ${contactInfo.name} a Relux!</b>`, // html body
+        html: `<b>Hola, bienvenid@ ${contactInfo.name} a Relux!</b>
+        <p> Pronto un miembro de nuestro equipo se pondrá en contacto con usted. </p>
+        <p> ¡Muchas Gracias por elegir Relux! </p> `, // html body
       });
     } catch (error) {
       throw new BadRequestException(
