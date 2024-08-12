@@ -6,6 +6,7 @@ import { Reservation } from 'src/entities/Reservations.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { contactInfoDto } from 'src/user/user.dto';
 
 @Injectable()
 export class NodeMailerService {
@@ -14,16 +15,16 @@ export class NodeMailerService {
         private readonly reservationRepository: Repository<Reservation>,
     ){}
 
-    registerEmail(contactInfo: any) {
-        return this.nodeMailerRepository.registerEmail(contactInfo);
+    registerEmail(userNoPassword: Partial<User>) {
+        return this.nodeMailerRepository.registerEmail(userNoPassword);
     }
 
     successEmail(foundOffice: Office, foundUser: User, data: any) {
         return this.nodeMailerRepository.successEmail(foundOffice, foundUser, data);
     }
 
-    contactEmail(userNoPassword: Partial<User>) {
-        return this.nodeMailerRepository.contactEmail(userNoPassword);
+    contactEmail(contactInfo: contactInfoDto) {
+        return this.nodeMailerRepository.contactEmail(contactInfo);
     }
 
     @Cron('0 8 * * *') // expresión manual ('0 8 * * *'), o para dos minutos para poder testear: ('*/2 * * * *')
