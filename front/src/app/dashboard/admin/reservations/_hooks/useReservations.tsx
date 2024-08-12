@@ -2,9 +2,10 @@ import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { apiReservations } from "@/lib/api/reservations/apiReservations";
 import { IFullReservation } from "@/types/types";
 import { useEffect, useState } from "react";
+import { useReservationsStore } from "../_stores/useReservationsStore";
 
 const useReservations = ({ searchTerm }: { searchTerm: string }) => {
-  const [reservations, setReservations] = useState<IFullReservation[]>([]);
+  const { reservations, setReservations } = useReservationsStore();
   const { authToken } = useAuthStore();
 
   useEffect(() => {
@@ -15,7 +16,6 @@ const useReservations = ({ searchTerm }: { searchTerm: string }) => {
           authToken,
           searchTerm
         );
-        console.log(response);
         setReservations(response.data);
       } catch (error) {
         console.log(error);

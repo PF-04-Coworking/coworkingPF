@@ -42,7 +42,12 @@ const CardOffice = ({
           </div>
           <div className="flex items-center gap-4">
             <MapPinIcon className="text-primary flex-shrink-0" size={20} />
-            <Paragraph variant="secondary">{description}</Paragraph>
+            <Paragraph
+              variant="secondary"
+              className={`${description.length > 100 ? "truncate" : ""}`}
+            >
+              {description}
+            </Paragraph>
           </div>
           <div className="flex items-center gap-4">
             <DollarSignIcon className="text-primary flex-shrink-0" size={20} />
@@ -52,8 +57,8 @@ const CardOffice = ({
         <div className="flex gap-4">
           {services.map((service, index) => (
             <div key={index} className="flex">
-              <Tooltip text={servicesIcons[service].name}>
-                {servicesIcons[service].icon}
+              <Tooltip text={servicesIcons[service]?.name}>
+                {servicesIcons[service]?.icon}
               </Tooltip>
             </div>
           ))}

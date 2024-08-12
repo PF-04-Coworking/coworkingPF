@@ -4,23 +4,24 @@ import { DialogFooter } from "@/components/common/Dialog";
 import { FieldValidate } from "@/components/common/FieldValidate";
 import { InputLabel } from "@/components/common/InputLabel";
 import { apiReservations } from "@/lib/api/reservations/apiReservations";
+import { stringToDate, utcDateFormatter } from "@/lib/utils/dateUtils";
 import { IFullReservation } from "@/types/types";
 import { Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import { useReservationsStore } from "../_stores/useReservationsStore";
 
 const EditReservationForm = ({
   reservation,
 }: {
   reservation: IFullReservation;
 }) => {
+  const { updateReservation } = useReservationsStore();
   const { authToken } = useAuthStore();
 
-  console.log(reservation);
-
   const validationSchema = Yup.object({
-    start_day: Yup.date().required("Debes ingresar una fecha"),
-    end_day: Yup.date().required("Debes ingresar una fecha"),
+    start_day: Yup.string().required("Debes ingresar una fecha"),
+    end_day: Yup.string().required("Debes ingresar una fecha"),
     guests_number: Yup.number().required("Debes ingresar un número"),
   });
 
@@ -28,11 +29,11 @@ const EditReservationForm = ({
     values: Partial<IFullReservation>,
     { resetForm }: FormikHelpers<Partial<IFullReservation>>
   ) => {
-    if (!authToken) return;
+    if (!authToken || !values.start_day || !values.end_day) return;
     const formattedValues = {
       ...values,
-      start_day: values.start_day,
-      end_day: values.end_day,
+      start_day: stringToDate(values.start_day),
+      end_day: stringToDate(values.end_day),
     };
     const promise = apiReservations.updateReservation(
       authToken,
@@ -45,13 +46,16 @@ const EditReservationForm = ({
       error: "Error",
     });
     resetForm({ values });
+    const _reservation = await promise;
+    console.log(_reservation);
+    updateReservation(reservation.id, formattedValues);
   };
 
   return (
     <Formik
       initialValues={{
-        start_day: reservation.start_day,
-        end_day: reservation.end_day,
+        start_day: utcDateFormatter(reservation.start_day),
+        end_day: utcDateFormatter(reservation.end_day),
         guests_number: reservation.guests_number,
       }}
       validationSchema={validationSchema}

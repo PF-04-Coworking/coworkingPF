@@ -34,7 +34,7 @@ export const getDisabledDays = (
   }));
 };
 
-const utcDateFormatter = (utcDate: Date): string => {
+const utcDateFormatter = (utcDate: string | Date): string => {
   const date = new Date(utcDate);
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -42,4 +42,13 @@ const utcDateFormatter = (utcDate: Date): string => {
   return `${day}/${month}/${year}`;
 };
 
-export { utcDateFormatter };
+const stringToDate = (date: string | Date): Date => {
+  if (typeof date === "string") {
+    const [day, month, year] = date.split("/").map(Number);
+    return new Date(year, month - 1, day);
+  } else {
+    return date;
+  }
+};
+
+export { utcDateFormatter, stringToDate };

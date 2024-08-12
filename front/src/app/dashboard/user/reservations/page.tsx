@@ -11,11 +11,11 @@ import { InfoIcon } from "lucide-react";
 const Reservations = () => {
   const { userData } = useUser();
 
-  const pendingReservations = userData?.reservations.filter(
+  const pendingReservations = userData?.reservations?.filter(
     (reservation) => new Date(reservation.start_day) >= new Date()
   );
 
-  const pastReservations = userData?.reservations.filter(
+  const pastReservations = userData?.reservations?.filter(
     (reservation) =>
       new Date(reservation.start_day).getDate() < new Date().getDate()
   );
