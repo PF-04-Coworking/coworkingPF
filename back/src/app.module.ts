@@ -19,6 +19,7 @@ import { NodeMailerModule } from './node-mailer/node-mailer.module';
 import { NodeMailerController } from './node-mailer/node-mailer.controller';
 import { NodeMailerService } from './node-mailer/node-mailer.service';
 import { NodeMailerRepository } from './node-mailer/node-mailer.repository';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { NodeMailerRepository } from './node-mailer/node-mailer.repository';
       },
     }),
     TypeOrmModule.forFeature([User, Office, Reservation]),
+    ScheduleModule.forRoot(),
     OfficeModule,
     FileUploadModule,
     ReservationsModule,
@@ -52,8 +54,8 @@ import { NodeMailerRepository } from './node-mailer/node-mailer.repository';
     ChatbotModule,
     NodeMailerModule,
   ],
-  controllers: [AppController, NodeMailerController],
-  providers: [AppService, NodeMailerService, NodeMailerRepository],
+  controllers: [AppController],
+  providers: [AppService]
 })
 export class AppModule {
   constructor(private readonly appService: AppService) {}

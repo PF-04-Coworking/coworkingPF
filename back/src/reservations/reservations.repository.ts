@@ -9,7 +9,7 @@ import { Reservation } from 'src/entities/Reservations.entity';
 import { Brackets, Repository } from 'typeorm';
 import { User } from 'src/entities/Users.entity';
 import { Office } from 'src/entities/Offices.entity';
-import { transporter } from 'src/Config/mailer';
+import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
 
 @Injectable()
 export class ReservationsRepository {
@@ -20,6 +20,7 @@ export class ReservationsRepository {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Office) // Inyectar el repositorio de Office
     private readonly officeRepository: Repository<Office>,
+    private readonly nodeMailerRepository: NodeMailerRepository,
   ) {}
 
   // Rutas GET
@@ -141,23 +142,7 @@ export class ReservationsRepository {
       },
     };
 
-    try {
-      await transporter.sendMail({
-        from: '"Redux team"', // sender address
-        to: foundUser.email, // list of receivers
-        subject: 'Reserva Exitosa', // Subject line
-        html: `<b>Reserva exitosa! Gracias por elegir Redux</b>
-        <p>Ubiación de su oficina: ${foundOffice.location}, ${foundOffice.description}</p>
-        <p>Capacidad máxima: ${foundOffice.capacity}</p>
-        <p>Fechas de reserva: desde ${data.start_day} hasta ${data.end_day} inclusive</p>
-        <p>Monto total de la reserva: ${foundOffice.price}</p>
-        <p>En caso de tener dudas sobre alguna reserva, no dude en ponerse en contacto a través de nuestra página de contacto.</p>`, // html body
-      });
-    } catch (error) {
-      throw new BadRequestException(
-        'Something went wrong. No emails were sent ',
-      );
-    }
+    await this.nodeMailerRepository.successEmail(foundOffice, foundUser, data);
 
     return response;
   }

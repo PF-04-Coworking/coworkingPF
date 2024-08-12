@@ -112,18 +112,17 @@
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="left" class="esd-block-text">
-                                                                                        <p style="color: #fef2f2;"><b>OFFICE NAME</b></p>
+                                                                                        <p style="color: #fef2f2;"><b>{{OFFICE_NAME}}</b></p>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td align="left" class="esd-block-text es-p5t">
-                                                                                        <p style="color: #f4f2f2;">Invitados:</p>
-                                                                                        <p style="color: #f4f2f2;">Inicio de reserva:</p>
-                                                                                        <p style="color: #f4f2f2;">Fin de reserva:</p>
-                                                                                        <p style="color: #f4f2f2;">Amenities disponibles:</p>
+                                                                                        <p style="color: #f4f2f2;">Invitados: {{GUESTS}}</p>
+                                                                                        <p style="color: #f4f2f2;">Inicio de reserva: {{START_DATE}}</p>
+                                                                                        <p style="color: #f4f2f2;">Fin de reserva: {{END_DATE}}</p>
                                                                                         <p style="color: #f4f2f2;"><br></p>
                                                                                         <p style="color: #f4f2f2;"><strong>TOTAL</strong></p>
-                                                                                        <p style="color: #f4f2f2;">paid_amount</p>
+                                                                                        <p style="color: #f4f2f2;">{{TOTAL_AMOUNT}}</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -145,9 +144,8 @@
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="left" class="esd-block-text">
-                                                                                        <p style="color: #ffffff;">Customer: <strong>user.email</strong></p>
-                                                                                        <p style="color: #ffffff;">Order number:&nbsp;<strong>reservation.id</strong></p>
-                                                                                        <p style="color: #ffffff;">Invoice date:&nbsp;<strong>new DATE()</strong></p>
+                                                                                        <p style="color: #ffffff;">Customer: <strong>{{USER_EMAIL}}</strong></p>
+                                                                                        <p style="color: #ffffff;">Invoice date:&nbsp;<strong>{{DATE}}</strong></p>
                                                                                         <p style="color: #ffffff;">Payment method:&nbsp;<strong>Stripe</strong></p>
                                                                                         <p style="color: #ffffff;">Currency:&nbsp;<strong>USD</strong></p>
                                                                                     </td>
@@ -168,7 +166,7 @@
                                                                                 <tr>
                                                                                     <td align="left" class="esd-block-text es-m-txt-l">
                                                                                         <p style="color: #ffffff;">Direccion de su oficina:</p>
-                                                                                        <p style="color: #ffffff;"><strong>Office.description</strong></p>
+                                                                                        <p style="color: #ffffff;"><strong>{{OFFICE_DESCRIPTION}}</strong></p>
                                                                                         <p style="color: #ffffff;"><br></p>
                                                                                     </td>
                                                                                 </tr>
