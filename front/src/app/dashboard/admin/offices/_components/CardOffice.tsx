@@ -96,8 +96,8 @@ const CardOffice = ({
           <div className="flex gap-4">
             {services.map((service, index) => (
               <div key={index} className="flex">
-                <Tooltip text={servicesIcons[service].name}>
-                  {servicesIcons[service].icon}
+                <Tooltip text={servicesIcons[service]?.name}>
+                  {servicesIcons[service]?.icon}
                 </Tooltip>
               </div>
             ))}

@@ -86,7 +86,7 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
                 <div className="space-y-4">
                   {office.services.map((service, index) => (
                     <div key={index} className="flex">
-                      {servicesIcons[service].icon}
+                      {servicesIcons[service]?.icon}
                       <Paragraph variant="primary" className="ml-2">
                         {service}
                       </Paragraph>

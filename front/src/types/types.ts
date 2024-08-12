@@ -10,16 +10,6 @@ export interface ILocation {
   lng: number;
 }
 
-export interface IFullReservation {
-  id: string;
-  guests_number: number;
-  start_day: Date;
-  end_day: Date;
-  paid_amount: number;
-  office: IOffice;
-  user: IUserData;
-}
-
 export interface ILeafletMapComponentProps {
   location: string;
 }
@@ -42,6 +32,16 @@ export interface IReservation {
   start_day: string;
   end_day: string;
   paid_amount: number;
+}
+
+export interface IFullReservation {
+  id: string;
+  guests_number: number;
+  start_day: string | Date;
+  end_day: string | Date;
+  paid_amount: number;
+  office: IOffice;
+  user: IUserData;
 }
 
 export interface IOfficeStripe {
