@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IOffice } from "../types";
+import { IOffice } from "../app/dashboard/admin/types";
 
 interface IOfficesStore {
   offices: IOffice[];

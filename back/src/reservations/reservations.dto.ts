@@ -6,7 +6,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsString
+  IsString,
 } from 'class-validator';
 
 export class AddNewReservationDto {
@@ -15,7 +15,7 @@ export class AddNewReservationDto {
     example: '05/08/2024',
   })
   @IsNotEmpty()
-  @Type(()=> Date)
+  @Type(() => Date)
   start_day: Date;
 
   @ApiProperty({
@@ -23,7 +23,7 @@ export class AddNewReservationDto {
     example: '07/08/2024',
   })
   @IsNotEmpty()
-  @Type(()=> Date)
+  @Type(() => Date)
   end_day: Date;
 
   @ApiProperty({
@@ -41,7 +41,7 @@ export class AddNewReservationDto {
   @IsNotEmpty()
   guests_number: number;
 
-  @ApiProperty({ description: 'Paid amount'})
+  @ApiProperty({ description: 'Paid amount' })
   @IsNumber()
   @IsOptional()
   paid_amount?: number;
@@ -58,6 +58,7 @@ export class UpdateReservationDto {
     example: '06/08/2024',
   })
   @IsOptional()
+  @Type(() => Date)
   @IsDate()
   @IsNotEmpty()
   start_day: string;
@@ -68,6 +69,7 @@ export class UpdateReservationDto {
     example: '08/08/2024',
   })
   @IsOptional()
+  @Type(() => Date)
   @IsDate()
   @IsNotEmpty()
   end_day: string;
@@ -82,3 +84,4 @@ export class UpdateReservationDto {
   @IsNotEmpty()
   guests_number: number;
 }
+

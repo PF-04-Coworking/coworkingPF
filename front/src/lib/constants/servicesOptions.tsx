@@ -8,6 +8,4 @@ const servicesOptions: string[] = [
   "Acceso a transporte publico",
 ];
 
-const locationOptions: string[] = ["México", "Perú", "Colombia", "Argentina"];
-
-export { servicesOptions, locationOptions };
+export { servicesOptions };

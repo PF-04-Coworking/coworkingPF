@@ -22,6 +22,8 @@ import {
   convertToYMD,
   getDisabledDays,
 } from "@/lib/utils/dateUtils";
+import { Heading } from "@/components/common/Heading";
+import { Paragraph } from "@/components/common/Paragraph";
 
 const ModalCalendar = ({ officeParams }: { officeParams: IOfficeStripe }) => {
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(
@@ -47,16 +49,21 @@ const ModalCalendar = ({ officeParams }: { officeParams: IOfficeStripe }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="primary">Reservar ahora</Button>
+        <Button variant="primary" className="w-full lg:w-auto">
+          Reservar oficina | US$ {officeParams.price} por día
+        </Button>
       </SheetTrigger>
-      <SheetContent className="bg-background border-primary text-white pt-20">
+      <SheetContent className="bg-background border-background text-white px-8 pt-16 w-min">
         <SheetHeader>
-          <SheetTitle className="text-primary text-xl text-center">
-            Selecciona los días de tu reserva
+          <SheetTitle>
+            <Heading level="3">Selecciona los días de tu reserva</Heading>
           </SheetTitle>
-          <SheetDescription className="text-white pb-10 text-center">
-            Ten en cuenta que solo podrás reservar 2 días seguidos como maximo.
-            Si deseas reservar más días debarás hacerlo en otra reserva.
+          <SheetDescription className="text-white pb-10">
+            <Paragraph variant="secondary">
+              Ten en cuenta que solo podrás reservar 2 días seguidos como
+              maximo. Si deseas reservar más días debarás hacerlo en otra
+              reserva.
+            </Paragraph>
           </SheetDescription>
         </SheetHeader>
 
@@ -68,26 +75,22 @@ const ModalCalendar = ({ officeParams }: { officeParams: IOfficeStripe }) => {
           selected={selectedRange}
           onSelect={setSelectedRange}
           disabled={disabledDaysConfig}
-          footer={
-            <p className="text-center mt-10 border-primary border p-1 rounded-md">
-              {selectedText}
-            </p>
-          }
           classNames={{
             today: `border-amber-500`,
-            selected: `bg-primary text-white rounded-3xl`,
+            selected: `bg-primary text-white rounded-full`,
             chevron: `${defaultClassNames.chevron} !fill-amber-500`,
-            disabled: `bg-secondaryDark text-secondary`,
-            month_caption: `text-center mb-5`,
+            disabled: `bg-secondaryDark/30 text-secondary`,
             range_start: `rounded-tr-none rounded-br-none`,
             range_end: `rounded-tl-none rounded-bl-none`,
             range_middle: ` rounded-none`,
           }}
         />
 
-        <SheetFooter className="mt-20">
+        <SheetFooter className="mt-12">
           <SheetClose asChild>
-            <Stripe selectedRange={selectedRange} officeParams={officeParams} />
+            <Stripe selectedRange={selectedRange} officeParams={officeParams}>
+              {selectedText}
+            </Stripe>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

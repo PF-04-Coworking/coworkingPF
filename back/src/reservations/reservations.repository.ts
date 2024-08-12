@@ -34,6 +34,8 @@ export class ReservationsRepository {
         'office',
         'user.id',
         'user.name',
+        'user.imgUrl',
+        'user.phone',
         'user.lastname',
         'user.email',
       ]);
@@ -197,3 +199,4 @@ export class ReservationsRepository {
     };
   }
 }
+

@@ -1,29 +1,11 @@
 import Link from "next/link";
 import { Button } from "../common/Button";
-import {
-  CircleParking,
-  UserIcon,
-  WifiIcon,
-  CoffeeIcon,
-  Dumbbell,
-  Armchair,
-  Mic2,
-  Bus,
-} from "lucide-react";
+import { UserIcon, MapPinIcon, DollarSignIcon } from "lucide-react";
 import { IOffice } from "@/app/dashboard/admin/types";
 import Image from "next/image";
-
-type Amenity = Record<string, React.ReactNode>;
-
-export const amenityIcons: Amenity = {
-  Internet: <WifiIcon />,
-  Estacionamiento: <CircleParking />,
-  Cafe: <CoffeeIcon />,
-  Gimnasio: <Dumbbell />,
-  "Zona de descanso": <Armchair />,
-  "Sala de conferencias": <Mic2 />,
-  "Acceso a transporte publico": <Bus />,
-};
+import { Paragraph } from "../common/Paragraph";
+import { servicesIcons } from "@/lib/constants/servicesIcons";
+import { Tooltip } from "../common/Tooltip";
 
 const CardOffice = ({
   id,
@@ -36,50 +18,54 @@ const CardOffice = ({
   location,
 }: IOffice) => {
   return (
-    <>
-      <div className=" bg-secondaryDark rounded-md p-4 shadow-md text-white">
-        <Image
-          src={
-            imgUrl
-              ? imgUrl
-              : "https://res.cloudinary.com/danpp1ys8/image/upload/v1722819564/arcbukd8qxep3aqfni71.webp"
-          }
-          alt="Office Image"
-          className="object-cover rounded-md w-full h-auto 2xl:h-[60%]"
-          width={0}
-          height={0}
-          sizes="100vw"
-        />
-
-        <div className="p-4 space-y-2">
-          <div className="flex justify-between">
-            <h3 className="text-lg font-medium">{name}</h3>
-
-            <div className="flex items-center space-x-2">
-              <p>{capacity}</p>
-              <UserIcon className="text-primary" size={20} />
-            </div>
+    <div className="bg-secondaryDark/35 hover:bg-secondaryDark/70 backdrop-blur-lg transition-colors shadow-md text-white flex flex-col lg:flex-row rounded-tl-3xl rounded-br-3xl lg:h-96">
+      <Image
+        src={
+          imgUrl
+            ? imgUrl
+            : "https://res.cloudinary.com/danpp1ys8/image/upload/v1722819564/arcbukd8qxep3aqfni71.webp"
+        }
+        alt="Office Image"
+        className="rounded-tl-3xl w-full lg:w-7/12 object-cover"
+        width={0}
+        height={0}
+        sizes="100vw"
+      />
+      <div className="p-6 lg:p-8 flex flex-col gap-6 justify-between w-full lg:w-5/12 h-full min-h-80 lg:min-h-full">
+        <Paragraph variant="primary" className="font-medium">
+          {name}
+        </Paragraph>
+        <div className="space-y-2">
+          <div className="flex items-center gap-4">
+            <UserIcon className="text-primary flex-shrink-0" size={20} />
+            <Paragraph variant="secondary">{capacity} personas máx.</Paragraph>
           </div>
-          <p className="italic">{description}</p>
-          <p className="font-semibold">
-            Costo por dia: <span className="text-primary">${price}</span>
-          </p>
-          <div className="flex gap-2">
-            {services.map((service, index) => (
-              <div key={index} className="flex">
-                {amenityIcons[service] || service}
-              </div>
-            ))}
+          <div className="flex items-center gap-4">
+            <MapPinIcon className="text-primary flex-shrink-0" size={20} />
+            <Paragraph variant="secondary">{description}</Paragraph>
           </div>
-          <Button className="w-full" variant="primary">
-            <Link href={`/rooms/${id}`} className="w-full">
-              <span className="text-black">Ver Detalles</span>
-            </Link>
-          </Button>
+          <div className="flex items-center gap-4">
+            <DollarSignIcon className="text-primary flex-shrink-0" size={20} />
+            <Paragraph variant="secondary">{price} / día</Paragraph>
+          </div>
         </div>
+        <div className="flex gap-4">
+          {services.map((service, index) => (
+            <div key={index} className="flex">
+              <Tooltip text={servicesIcons[service].name}>
+                {servicesIcons[service].icon}
+              </Tooltip>
+            </div>
+          ))}
+        </div>
+        <Link href={`/rooms/${id}`} className="w-full">
+          <Button className="w-full" variant="primary">
+            Ver Detalles
+          </Button>
+        </Link>
       </div>
-    </>
+    </div>
   );
 };
 
-export default CardOffice;
+export { CardOffice };

@@ -10,10 +10,10 @@ export interface IButtonProps
 const Button = React.forwardRef<HTMLButtonElement, IButtonProps>(
   ({ children, className, variant, ...props }, ref) => {
     const baseClassName =
-      "inline-flex items-center justify-center font-medium rounded-md focus:outline-none px-4 py-2 transition transition-colors text-sm";
+      "inline-flex items-center justify-center font-medium rounded-md focus:outline-none px-4 py-3 transition transition-colors text-sm border-2 border-primary";
     const variantClassName = {
       primary:
-        "border border-primary hover:border-primaryDark bg-primary text-white hover:bg-primaryDark disabled:bg-opacity-30 border-opacity-30 disabled:cursor-not-allowed",
+        "border border-primary hover:border-primaryDark bg-primary text-white hover:bg-primaryDark disabled:bg-opacity-30  disabled:cursor-not-allowed disabled:border-opacity-0",
       outline:
         "border border-primary bg-transparent hover:text-primary text-white",
       destructive:

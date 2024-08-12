@@ -11,9 +11,12 @@ export default {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "res.cloudinary.com",
+        hostname: "**",
         pathname: "/**",
       },
     ],
+  },
+  icons: {
+    icon: "/images/favicon.ico",
   },
 };

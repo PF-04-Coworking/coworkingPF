@@ -74,7 +74,7 @@ export class UserRepository {
   async getuserById(id: string) {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['reservations'],
+      relations: ['reservations', 'reservations.office'],
     });
 
     if (!user) {
@@ -211,7 +211,6 @@ export class UserRepository {
         `Email ${googleUserData.data.email} is already a registered account`,
       );
 
-  
     const newUser = await this.userRepository.save({
       name: googleUserData.data.given_name,
       lastname: googleUserData.data.family_name,
@@ -270,3 +269,4 @@ export class UserRepository {
     };
   }
 }
+

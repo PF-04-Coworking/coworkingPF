@@ -13,7 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/common/alert-dialog";
+} from "@/components/common/Alert-dialog";
 import { Button, IButtonProps } from "@/components/common/Button";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 

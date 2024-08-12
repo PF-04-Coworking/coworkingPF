@@ -1,3 +1,5 @@
+import { IUserData } from "@/app/dashboard/types";
+
 export interface IPaginationObject {
   page: number;
   limit: number;
@@ -6,6 +8,16 @@ export interface IPaginationObject {
 export interface ILocation {
   lat: number;
   lng: number;
+}
+
+export interface IFullReservation {
+  id: string;
+  guests_number: number;
+  start_day: Date;
+  end_day: Date;
+  paid_amount: number;
+  office: IOffice;
+  user: IUserData;
 }
 
 export interface ILeafletMapComponentProps {
@@ -24,22 +36,21 @@ export interface IOffice {
   reservations: IReservation[];
 }
 
-
-interface IReservation {
+export interface IReservation {
   id: string;
+  guests_number: number;
   start_day: string;
   end_day: string;
-  guests_number: number;
   paid_amount: number;
 }
-export interface IOfficeStripe {
-    id: string;
-    imgUrl: string;
-    price: number;
-    reservations: IReservation[];
-    capacity: number;
-}
 
+export interface IOfficeStripe {
+  id: string;
+  imgUrl: string;
+  price: number;
+  reservations: IReservation[];
+  capacity: number;
+}
 
 export interface FormValues {
   guests: number;

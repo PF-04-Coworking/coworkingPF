@@ -3,10 +3,10 @@ import * as Yup from "yup";
 export const cardElementOptions = {
   style: {
     base: {
-      fontSize: "16px",
+      fontSize: "1rem",
       color: "#ffffff",
       "::placeholder": {
-        color: "#aab7c4",
+        color: "#8E8E8E",
       },
     },
     invalid: {
