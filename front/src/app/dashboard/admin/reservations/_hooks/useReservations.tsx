@@ -23,7 +23,7 @@ const useReservations = ({ searchTerm }: { searchTerm: string }) => {
     };
 
     fetchReservations();
-  }, [authToken, searchTerm]);
+  }, [authToken, searchTerm, setReservations]);
 
   return { reservations };
 };
