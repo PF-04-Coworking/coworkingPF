@@ -3,17 +3,32 @@ import { transporter } from 'src/Config/mailer';
 import { Office } from 'src/entities/Offices.entity';
 import { Reservation } from 'src/entities/Reservations.entity';
 import { User } from 'src/entities/Users.entity';
+import { contactInfoDto } from 'src/user/user.dto';
 
 @Injectable()
 export class NodeMailerRepository {
-  async contactEmail(contactInfo: any) {
+  async contactEmail(contactInfo: contactInfoDto) {
     try {
       await transporter.sendMail({
         from: '"Redux team"', // sender address
         to: contactInfo.email, // list of receivers
-        subject: 'Confirmacion de cuenta', // Subject line
-        html: `<b>Hola, bienvenid@ ${contactInfo.name} a Relux!</b>`, // html body
+        subject: 'Contacto Relux', // Subject line
+        html: `<b>Hola, bienvenid@ ${contactInfo.name} a Relux!</b>
+        <p> Pronto un miembro de nuestro equipo se pondrá en contacto con usted. </p>
+        <p> ¡Muchas Gracias por elegir Relux! </p> `, // html body
       });
+
+      await transporter.sendMail({
+        from: '"Contact Form"', // sender address
+        to: process.env.NODEMAILER_EMAIL, // list of receivers
+        subject: `Formulario de Contacto - ${contactInfo.name} ${contactInfo.lastname}`, // Subject line
+        html: `<b>El usuario ${contactInfo.name} ${contactInfo.lastname} ha solicitado ponerse en contacto./b>
+        <p> Motivo: ${contactInfo.description} </p>
+        <p> Correo de contacto: ${contactInfo.email} </p>
+        <p> Teléfono de contacto: ${contactInfo.phone} </p>`, // html body
+      });
+
+
     } catch (error) {
       throw new BadRequestException(
         'Something went wrong. No emails were sent ',

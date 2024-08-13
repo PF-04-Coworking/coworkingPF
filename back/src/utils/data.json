@@ -1,135 +1,149 @@
 [
-  {
-      "name": "Oficinas Corporativas del Banco Central",
+    {
+      "name": "Torre BBVA Bancomer",
       "location": "México",
-      "description": "Paseo de la Reforma 3456, Juárez, Cuauhtémoc, Ciudad de México, CDMX, México",
-      "capacity": 200,
-      "stock": 150,
-      "price": 200,
+      "description": "Paseo de la Reforma 510, Cuauhtémoc, Ciudad de México, México",
+      "details":"Espacios modernos con vistas impresionantes a la Ciudad de México, ideales para empresas que buscan un entorno inspirador y productivo. Los servicios incluyen conexión a internet de alta velocidad, estacionamiento amplio y una cafetería de calidad.",
+      "capacity": 300,
+      "stock": 250,
+      "price": 300,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925726/ddxux8ugqqxtce5vkxvv.jpg",
-      "services": ["Internet","Estacionamiento","Cafe"]
-  },
-  {
-      "name": "Centro Financiero Lima",
+      "services": ["Internet", "Estacionamiento", "Cafe"]
+    },
+    {
+      "name": "Torre Real 2",
       "location": "Perú",
-      "description": "Av. Javier Prado Este 1234, San Isidro, Lima, Perú",
-      "capacity": 180,
-      "stock": 140,
-      "price": 220,
-      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722926017/n9qhwpltevnqjxbscwxc.jpg",
-      "services": ["Internet","Cafe","Gimnasio"]
-  },
-  {
-      "name": "Oficinas del Pacífico",
-      "location": "Perú",
-      "description": "Av. República de Panamá 3531, San Isidro 15047, Perú",
-      "capacity": 160,
-      "stock": 120,
-      "price": 195,
-      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925824/awtes1pzyamofyot992g.jpg",
-      "services": ["Internet","Cafe","Sala de conferencias"]
-  },
-  {
-      "name": "Oficinas Prime Buenos Aires",
-      "location": "Argentina",
-      "description": "Av. 9 de Julio 4321, San Nicolás, Buenos Aires, Argentina",
-      "capacity": 190,
-      "stock": 160,
-      "price": 230,
-      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925679/cfreqhyzo582bqzv6wvq.jpg",
-      "services": ["Zona de descanso","Cafe","Gimnasio"]
-  },
-  {
-      "name": "Oficinas Premium Santiago",
-      "location": "Colombia",
-      "description": "Cra. 30 #30-23, Bucaramanga, Santander, Colombia",
-      "capacity": 200,
-      "stock": 150,
-      "price": 210,
-      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925789/huvttspke5fthwwsfmzm.jpg",
-      "services": ["Internet","Gimnasio","Estacionamiento"]
-  },
-  {
-      "name": "Edificio Central Argentina",
-      "location": "Argentina",
-      "description": "Av. del Libertador 7208, Buenos Aires, Argentina",
+      "description": "Real Siete 177, Centro Empresarial Real, San Isidro, Lima, Perú",
+      "details":"Ubicada en el corazón de San Isidro, esta torre ofrece un ambiente corporativo de primer nivel, con acceso a servicios como gimnasio y cafetería, perfectos para mejorar el bienestar de los empleados.",
       "capacity": 220,
       "stock": 180,
-      "price": 240,
-      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722926002/edichct9ivgxjdztlroi.jpg",
-      "services": ["Internet","Cafe","Zona de descanso"]
-  },
-  {
-      "name": "Edificio Empresarial Los Leones",
-      "location": "México",
-      "description": "Av. Insurgentes Sur 7890, Colonia del Valle, Benito Juárez, Ciudad de México, CDMX, México",
+      "price": 250,
+      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722926017/n9qhwpltevnqjxbscwxc.jpg",
+      "services": ["Internet", "Cafe", "Gimnasio"]
+    },
+    {
+      "name": "Edificio Cronos",
+      "location": "Perú",
+      "description": "Avenida El Derby 055, Monterrico, Santiago de Surco, Lima, Perú ",
+      "details":"Un espacio de trabajo elegante en Monterrico, diseñado para maximizar la productividad con acceso a salas de reuniones equipadas y una cafetería para momentos de relax.",
+      "capacity": 200,
+      "stock": 170,
+      "price": 230,
+      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925824/awtes1pzyamofyot992g.jpg",
+      "services": ["Internet", "Sala de conferencias", "Cafe"]
+    },
+    {
+      "name": "Torre IBM",
+      "location": "Argentina",
+      "description": "Ingeniero Enrique Butty 275, Retiro, Ciudad Autónoma de Buenos Aires, Buenos Aires, Argentina ",
+      "details":"Oficinas de alta gama en Retiro, Buenos Aires, con espacios dedicados para el descanso, un gimnasio completamente equipado, y una cafetería que ofrece opciones saludables.",
+      "capacity": 210,
+      "stock": 180,
+      "price": 280,
+      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925679/cfreqhyzo582bqzv6wvq.jpg",
+      "services": ["Zona de descanso", "Gimnasio", "Cafe"]
+    },
+    {
+      "name": "Torre Colpatria",
+      "location": "Colombia",
+      "description": "Torre Colpatria, Carrera 9, Bogotá, Colombia",
+      "details":"Una ubicación emblemática en Bogotá, ofreciendo un entorno de trabajo dinámico con servicios como internet de alta velocidad, gimnasio y estacionamiento seguro.",
+      "capacity": 280,
+      "stock": 240,
+      "price": 320,
+      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925789/huvttspke5fthwwsfmzm.jpg",
+      "services": ["Internet", "Gimnasio", "Estacionamiento"]
+    },
+    {
+      "name": "Torre Banco Macro",
+      "location": "Argentina",
+      "description": "Torre Banco Macro, Avenida Eduardo Madero, Retiro, Buenos Aires, Argentina",
+      "details":"Oficinas ubicadas en un prestigioso edificio de Buenos Aires, con zonas de descanso, internet de alta velocidad, y una cafetería con opciones gourmet.",
       "capacity": 250,
       "stock": 200,
-      "price": 70,
+      "price": 300,
+      "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722926002/edichct9ivgxjdztlroi.jpg",
+      "services": ["Internet", "Zona de descanso", "Cafe"]
+    },
+    {
+      "name": "Torre Mayor",
+      "location": "México",
+      "description": "Paseo de la Reforma 505, Cuauhtémoc, Ciudad de México, México",
+      "details":"Una de las torres más altas de la Ciudad de México, con oficinas que ofrecen una experiencia premium, incluyendo estacionamiento, internet rápido y una cafetería.",
+      "capacity": 320,
+      "stock": 280,
+      "price": 350,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925923/rnvfhjop7ovx99vci1bd.jpg",
-      "services": ["Internet","Gimnasio","Cafe"]
-  },
-  {
-      "name": "Oficinas Ejecutivas Medellín",
+      "services": ["Internet", "Cafe", "Estacionamiento"]
+    },
+    {
+      "name": "Espacio Ejecutivo Cowork",
       "location": "Colombia",
-      "description": "Cra. 43B #14-48, El Poblado, Medellín, El Poblado, Medellín, Antioquia, Colombia",
-      "capacity": 190,
-      "stock": 160,
-      "price": 215,
+      "description": "11-08, Calle 81, Localidad Chapinero, Bogotá, Colombia",
+      "details":"Espacios de trabajo flexibles en Chapinero, Bogotá, equipados con estacionamiento, gimnasio, y conexión a internet estable, ideal para profesionales en movimiento.",
+      "capacity": 220,
+      "stock": 190,
+      "price": 260,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925939/rr7lscaqdwsqosl8ougo.jpg",
-      "services": ["Estacionamiento","Gimnasio","Internet"]
-  },
-  {
-      "name": "Centro Ejecutivo Caracas",
+      "services": ["Estacionamiento", "Gimnasio", "Internet"]
+    },
+    {
+      "name": "Centro de Officinas Cowork",
       "location": "Colombia",
-      "description": "Av. Libertador 9876, Caracas, Colombia",
-      "capacity": 170,
-      "stock": 130,
-      "price": 200,
+      "description": "Edificio Colpatria, 53A-45, Calle 127A, Localidad Suba, Bogotá, Colombia",
+      "details":"Un centro de oficinas en Suba, Bogotá, que ofrece un ambiente colaborativo con una sala de conferencias equipada, una cafetería acogedora, y zonas de descanso.",
+      "capacity": 180,
+      "stock": 160,
+      "price": 230,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925709/tgnqjft0cfxjtcehfatt.jpg",
-      "services": ["Cafe","Sala de conferencias","Zona de descanso"]
-  },
-  {
-      "name": "Torre Ejecutiva Bogotá",
+      "services": ["Cafe", "Sala de conferencias", "Zona de descanso"]
+    },
+    {
+      "name": "Torre Principal Cowork ",
       "location": "Colombia",
-      "description": "Carrera 7 , Chapinero, Bogotá, Colombia",
-      "capacity": 210,
-      "stock": 170,
-      "price": 210,
+      "description": "Carrera 91, Localidad Engativá, Bogotá, Colombia",
+      "details":"Oficinas en Engativá, Bogotá, diseñadas para reuniones importantes con una sala de conferencias moderna, estacionamiento amplio, y conexión a internet confiable.",
+      "capacity": 260,
+      "stock": 220,
+      "price": 290,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925805/tw6kklgjrnqhavz2yuno.jpg",
-      "services": ["Internet","Sala de conferencias","Estacionamiento"]
-  },
-  {
-      "name": "Centro Empresarial Polanco",
+      "services": ["Internet", "Sala de conferencias", "Estacionamiento"]
+    },
+    {
+      "name": "Torre Park Plaza",
       "location": "México",
-      "description": "Av. Presidente Masaryk 1234, Polanco, Miguel Hidalgo, Ciudad de México, CDMX, México",
-      "capacity": 150,
-      "stock": 120,
-      "price": 250,
+      "description": "Calle Antonio Dovalí Jaime, Centro Comercial Lomas de Santa Fe, Álvaro Obregón, Ciudad de México, México ",
+      "details":"Oficinas modernas en Lomas de Santa Fe, Ciudad de México, con acceso directo a transporte público, internet rápido, y una ubicación privilegiada para negocios.",
+      "capacity": 280,
+      "stock": 240,
+      "price": 330,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925958/p5tqjsy7zaaug1es6kpp.jpg",
-      "services": ["Internet","Acceso a transporte publico"]
-  },
-  {
-      "name": "Torre Universitaria",
+      "services": ["Internet", "Acceso a transporte público"]
+    },
+    {
+      "name": "Torre Ejecutiva Santa Fe",
       "location": "México",
-      "description": "Av. San Jerónimo 111, Loreto y Campamento, Álvaro Obregón, 01090 Ciudad de México, CDMX, México",
-      "capacity": 100,
-      "stock": 100,
-      "price": 130,
+      "description": "Avenida Santa Fe 505, Cuajimalpa de Morelos, Ciudad de México, México",
+      "details":"Espacios ejecutivos en Santa Fe, Ciudad de México, con estacionamiento, internet rápido, y una cafetería que brinda comodidad en un entorno corporativo.",
+      "capacity": 240,
+      "stock": 200,
+      "price": 310,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722927013/gmw1os82xf3oudgukrnf.jpg",
-      "services": ["Estacionamiento","Internet,Cafe"]
-  },
-  {
-      "name": "Centro Empresarial Lima Sur",
+      "services": ["Estacionamiento", "Internet", "Cafe"]
+    },
+    {
+      "name": "Oficinas Jorge Basadre",
       "location": "Perú",
-      "description": "Av. Benavides 5678, Miraflores, Lima, Perú",
-      "capacity": 210,
-      "stock": 170,
-      "price": 225,
+      "description": "Avenida Jorge Basadre 347, San Isidro, Lima, Perú",
+      "details":"Un centro de oficinas en San Isidro, Lima, con una sala de conferencias completamente equipada, cafetería, y zonas de descanso, ideal para reuniones de alto nivel.",
+      "capacity": 250,
+      "stock": 220,
+      "price": 340,
       "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925503/dtgosfau0bfqffo4aelo.jpg",
-      "services": ["Cafe","Zona de descanso","Sala de conferencias"]
-  }
-]
+      "services": ["Cafe", "Sala de conferencias", "Zona de descanso"]
+    }
+  ]
+  
 
 
 
