@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../../../components/common/Dialogx";
+} from "../../../../components/common/Dialog";
 import { Button } from "@/components/common/Button";
 import { DateRange } from "react-day-picker";
 import { IOfficeStripe } from "@/types/types";

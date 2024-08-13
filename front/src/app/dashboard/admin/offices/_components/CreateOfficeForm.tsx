@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/common/Button";
-import { DialogFooter } from "@/components/common/Dialogx";
+import { DialogFooter } from "@/components/common/Dialog";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";

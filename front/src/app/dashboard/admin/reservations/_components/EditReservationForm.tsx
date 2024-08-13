@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { Button } from "@/components/common/Button";
-import { DialogFooter } from "@/components/common/Dialogx";
+import { DialogFooter } from "@/components/common/Dialog";
 import { FieldValidate } from "@/components/common/FieldValidate";
 import { InputLabel } from "@/components/common/InputLabel";
 import { apiReservations } from "@/lib/api/reservations/apiReservations";

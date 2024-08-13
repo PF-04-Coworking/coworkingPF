@@ -7,7 +7,7 @@ import {
 } from "@/components/common/popover";
 import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
-import { Command } from "@/components/common/Command";
+import { Command } from "@/components/common/Commandx";
 import { Paragraph } from "@/components/common/Paragraph";
 
 interface ISortProps {
