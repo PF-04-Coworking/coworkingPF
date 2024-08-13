@@ -13,7 +13,7 @@ import {
 } from "../../../components/common/Sheet";
 import { FilterIcon } from "lucide-react";
 import { Formik, Form } from "formik";
-import { Checkbox } from "@/components/common/Checkbox";
+import { Checkbox } from "@/components/common/Checkboxx";
 import { servicesOptions } from "@/lib/constants/servicesOptions";
 import { locationOptions } from "@/lib/constants/locationOptions";
 import { useFilterStore } from "../_store/useFilterStore";

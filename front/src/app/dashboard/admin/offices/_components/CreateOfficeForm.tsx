@@ -11,7 +11,7 @@ import { IEditOfficeData } from "../../types";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { servicesOptions } from "@/lib/constants/servicesOptions";
 import { FieldValidate } from "@/components/common/FieldValidate";
-import { Checkbox } from "@/components/common/Checkbox";
+import { Checkbox } from "@/components/common/Checkboxx";
 
 const CreateOfficeForm = () => {
   const { addStoredOffice } = useOfficesStore();
