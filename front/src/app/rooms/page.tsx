@@ -11,7 +11,7 @@ import { Heading } from "@/components/common/Heading";
 import { useOffices } from "@/hooks/useOffices";
 import { FooterSection } from "@/components/FooterSection";
 import { sortOptions } from "@/lib/constants/sortOfficesOptions";
-import { CardOffice } from "@/components/dashboard/CardOffice";
+import { CardOffice } from "@/components/dashboard/CardOfficex";
 
 const Rooms = () => {
   const [sortOption, setSortOption] = useState("");
