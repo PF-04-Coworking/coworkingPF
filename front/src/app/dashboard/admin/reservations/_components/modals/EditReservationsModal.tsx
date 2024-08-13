@@ -7,7 +7,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/common/Dialog";
+} from "@/components/common/Dialogx";
 import EditReservationForm from "../EditReservationForm";
 import { IFullReservation, IReservation } from "@/types/types";
 import { SettingsIcon } from "lucide-react";

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/common/Button";
-import { DialogFooter } from "@/components/common/Dialog";
+import { DialogFooter } from "@/components/common/Dialogx";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -11,7 +11,7 @@ import { IEditOfficeData } from "../../types";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { servicesOptions } from "@/lib/constants/servicesOptions";
 import { FieldValidate } from "@/components/common/FieldValidate";
-import { Checkbox } from "@/components/common/Checkboxx";
+import { Checkbox } from "@/components/common/Checkbox";
 
 const CreateOfficeForm = () => {
   const { addStoredOffice } = useOfficesStore();

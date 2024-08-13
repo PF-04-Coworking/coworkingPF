@@ -7,8 +7,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/common/Dialog";
-import { Checkbox } from "@/components/common/Checkboxx";
+} from "@/components/common/Dialogx";
+import { Checkbox } from "@/components/common/Checkbox";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { servicesOptions } from "@/lib/constants/servicesOptions";
