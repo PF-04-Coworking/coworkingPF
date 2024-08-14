@@ -16,12 +16,14 @@ export const registerEmail = `
     <![endif]-->
     <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
     <!--[if gte mso 9]>
-<xml>
-    <o:OfficeDocumentSettings>
-    <o:AllowPNG></o:AllowPNG>
-    <o:PixelsPerInch>96</o:PixelsPerInch>
-    </o:OfficeDocumentSettings>
-</xml>
+<noscript>
+         <xml>
+           <o:OfficeDocumentSettings>
+           <o:AllowPNG></o:AllowPNG>
+           <o:PixelsPerInch>96</o:PixelsPerInch>
+           </o:OfficeDocumentSettings>
+         </xml>
+      </noscript>
 <![endif]-->
     <!--[if !mso]><!-- -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i" rel="stylesheet">
@@ -930,18 +932,18 @@ button.es-button {
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
-                                                                                        <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif;">Ha recibido este mensaje porque su dirección de correo electrónico ha sido registrada en nuestro sitio. Por favor, haga clic en el botón a continuación para verificar su dirección de correo electrónico y confirmar que es el propietario de esta cuenta.</p>
+                                                                                    <td class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
+                                                                                        <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif; line-height: 150%; text-align: justify;">¡Gracias por registrarte en Relux! Estamos emocionados de que te unas a nuestra comunidad de coworking.</p>
+                                                                                        <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif; line-height: 150%; text-align: justify;"><br></p>
+                                                                                        <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif; line-height: 150%; text-align: justify;">Para comenzar, te invitamos a explorar nuestras opciones de espacios de trabajo y hacer tu primera reserva. ¡Si tienes cualquier duda o consulta no dudes en ponerte en contacto a través de nuestra página de contacto!</p>
+                                                                                        <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif; line-height: 150%; text-align: justify;"><br></p>
+                                                                                        <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif; line-height: 150%; text-align: justify;">¡Nos vemos pronto en Relux!</p>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-text es-p10t es-p5b">
-                                                                                        <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif;">Si usted no se ha registrado en Relux, por favor ignore este correo.</p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
                                                                                     <td align="center" class="esd-block-text es-p5t es-p5b es-p40r es-p40l es-m-p0r es-m-p0l">
-                                                                                        <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif; font-size: 12px;">Una vez que confirme su registro, este correo será asociado con su cuenta.</p>
+                                                                                        <p style="font-size: 11px; color: #ffffff;">Ha recibido este mensaje porque su dirección de correo electrónico ha sido registrada en nuestro sitio.</p>
+                                                                                        <p style="font-size: 11px; color: #ffffff;">Si usted no se ha registrado en Relux, por favor ignore este correo.</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>

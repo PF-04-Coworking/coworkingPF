@@ -25,6 +25,10 @@ export class Reservation {
   @Column('decimal', { precision: 10, scale: 2, nullable: true })
   paid_amount: number;
 
+  @ApiProperty({ description: 'Reservation status' })
+  @Column({default: true})
+  is_active: boolean;
+
   @ApiProperty({ description: 'ID of the reserved office' })
   @ManyToOne(() => Office, (office) => office.reservations)
   office: Office;
