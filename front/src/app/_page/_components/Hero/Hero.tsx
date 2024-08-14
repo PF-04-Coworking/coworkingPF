@@ -24,7 +24,7 @@ const Hero = () => {
   return (
     <div className="layout flex items-center pt-32 md:pt-36 pb-12 space-x-10">
       <div className="space-y-6">
-        <Heading level="3" className="uppercase">
+        <Heading level="2" className="uppercase">
           Coworking
         </Heading>
         <Heading level="1" className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem]">
@@ -51,11 +51,14 @@ const Hero = () => {
             </Paragraph>
           ))}
         </div>
-        <div className="space-y-8">
+        <div className="space-y-2">
           <Paragraph variant="primary">
             ¡Comienza a buscar tu oficina ideal!
           </Paragraph>
           <Searchbar />
+          <Paragraph variant="secondary" size="xs">
+            Nosotros cuidamos de tus datos en nuestra <span className="text-white">politica de privacidad</span>
+          </Paragraph>
         </div>
       </div>
       <div className="shrink-0 relative hidden lg:block">
