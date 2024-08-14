@@ -18,6 +18,7 @@ import { useOfficesStore } from "../../../../../../stores/useOfficesStore";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
 import { toast } from "react-toastify";
 import { FieldValidate } from "@/components/common/FieldValidate";
+import { DeleteOffice } from "../DeleteOffice";
 
 interface IProps {
   selectedOffice: IOffice;
@@ -222,22 +223,16 @@ const EditOfficeModal = ({
                 <DialogFooter className="flex gap-2 mt-8">
                   <Button
                     variant="primary"
-                    className="w-full"
+                    className="w-1/2"
                     type="submit"
                     disabled={isSubmitting || !dirty}
                   >
                     Confirmar
                   </Button>
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    className="w-full"
-                    onClick={() =>
-                      handleDeleteOffice({ id: selectedOffice.id })
-                    }
-                  >
-                    Eliminar
-                  </Button>
+                  <DeleteOffice
+                    officeId={selectedOffice.id}
+                    setIsModalOpen={setIsModalOpen}
+                  />
                 </DialogFooter>
               </Form>
             )}

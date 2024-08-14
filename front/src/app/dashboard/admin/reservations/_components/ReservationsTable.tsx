@@ -16,6 +16,8 @@ const ReservationsTable = ({
 }: {
   reservations: IFullReservation[];
 }) => {
+  console.log(reservations);
+
   return (
     <div className="rounded-md border-2 border-primary overflow-auto">
       <table className="w-full text-sm bg-background/50 backdrop-blur-md rounded-md">
@@ -79,7 +81,7 @@ const ReservationsTable = ({
                   <Paragraph variant="secondary">
                     Fin: {utcDateFormatter(reservation.end_day)}
                   </Paragraph>
-                  {reservation.is_active ? (
+                  {!reservation.is_active ? (
                     <Paragraph
                       variant="secondary"
                       className="flex items-center gap-x-2 !text-red-500"

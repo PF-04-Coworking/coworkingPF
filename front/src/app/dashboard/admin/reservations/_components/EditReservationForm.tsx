@@ -100,7 +100,7 @@ const EditReservationForm = ({
             >
               Confirmar
             </Button>
-            <CancelReservation />
+            <CancelReservation reservationId={reservation.id} />
           </DialogFooter>
         </Form>
       )}

@@ -19,13 +19,14 @@ const CreateOfficeForm = () => {
 
   const handleAddOffice = async (
     values: IEditOfficeData,
-    { setSubmitting, resetForm }: FormikHelpers<IEditOfficeData>
+    { setSubmitting }: FormikHelpers<IEditOfficeData>
   ) => {
     if (!authToken) return;
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("location", values.location);
     formData.append("description", values.description);
+    formData.append("details", values.details);
     formData.append("capacity", values.capacity);
     formData.append("price", values.price);
     values.services.forEach((service) => formData.append("services", service));
@@ -39,7 +40,6 @@ const CreateOfficeForm = () => {
         error: "Error",
       });
       const officeData = await promise;
-      officeData.services = officeData.services.split(",");
       addStoredOffice(officeData);
     } catch (error) {
       console.log(error);
@@ -56,6 +56,10 @@ const CreateOfficeForm = () => {
     description: Yup.string()
       .required("Debes ingresar una descripción")
       .min(2, "Debes ingresar al menos 2 caracteres"),
+    details: Yup.string()
+      .required("Debes ingresar detalles")
+      .min(10, "Debes ingresar al menos 10 caracteres")
+      .max(150, "Debes ingresar al menos 150 caracteres"),
     capacity: Yup.number()
       .required("Debes ingresar un número máximo de invitados")
       .min(1, "Debes ingresar al menos 1 espacio"),
@@ -71,6 +75,7 @@ const CreateOfficeForm = () => {
         name: "",
         location: "",
         description: "",
+        details: "",
         capacity: "",
         price: "",
         file: undefined,
@@ -104,6 +109,14 @@ const CreateOfficeForm = () => {
               <FieldValidate
                 type="text"
                 name="description"
+                className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
+              />
+            </div>
+            <div className="space-y-2">
+              <InputLabel htmlFor="details">Detalles</InputLabel>
+              <FieldValidate
+                type="text"
+                name="details"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
               />
             </div>
