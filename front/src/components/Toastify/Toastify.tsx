@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 function Alert() {
   return (
     <ToastContainer
-      position="bottom-right"
+      position="top-right"
       autoClose={5000}
       newestOnTop={false}
       closeOnClick
