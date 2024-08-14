@@ -14,7 +14,6 @@ import { ReservationsModule } from './reservations/reservations.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { PaymentsModule } from './payments/payments.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ChatbotModule } from './chatbot/wit.module';
 import { NodeMailerModule } from './node-mailer/node-mailer.module';
 import { NodeMailerController } from './node-mailer/node-mailer.controller';
 import { NodeMailerService } from './node-mailer/node-mailer.service';
@@ -51,11 +50,10 @@ import { ScheduleModule } from '@nestjs/schedule';
     FileUploadModule,
     // StripeModule, //!Pendiente aquí
     PaymentsModule,
-    ChatbotModule,
     NodeMailerModule,
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService],
 })
 export class AppModule {
   constructor(private readonly appService: AppService) {}

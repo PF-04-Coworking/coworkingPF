@@ -150,6 +150,9 @@ export class UserController {
     status: 201,
     description: 'User successfully created',
   })
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
   createUser(@Body() user: CreateUserDto) {
     return this.userService.createUser(user);
   }
