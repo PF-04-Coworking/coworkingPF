@@ -12,6 +12,7 @@ import { useOffices } from "@/hooks/useOffices";
 import { FooterSection } from "@/components/FooterSection";
 import { sortOptions } from "@/lib/constants/sortOfficesOptions";
 import { CardOffice } from "@/components/dashboard/CardOfficex";
+import { useEffect } from "react";
 
 const Rooms = () => {
   const [sortOption, setSortOption] = useState("");
@@ -20,11 +21,22 @@ const Rooms = () => {
     services: [],
     location: [],
   });
+  const [isLoading, setIsLoading] = useState(true);
   const { offices } = useOffices({
     page: 1,
     limit: 100,
     ...filters,
   });
+
+  useEffect(() => {
+    // Simula la carga de datos
+    setIsLoading(true);
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); // Asumiendo que la carga toma 1 segundo, ajusta según sea necesario
+
+    return () => clearTimeout(timeoutId);
+  }, [offices]);
 
   const handleSort = (option: string) => {
     setSortOption(option);
@@ -64,7 +76,7 @@ const Rooms = () => {
 
   return (
     <div
-      className="h-full min-h-screen bg-no-repeat bg-top bg-contain"
+      className="bg-no-repeat bg-cover h-[210vh]" 
       style={{ backgroundImage: "url(/images/fondo-1.png)" }}
     >
       <Header />
@@ -92,19 +104,27 @@ const Rooms = () => {
           </div>
         </div>
         <div className="w-full flex flex-col gap-8">
-          {sortedOffices.map((office, index) => (
-            <CardOffice
-              key={index}
-              id={office.id}
-              imgUrl={office.imgUrl}
-              name={office.name}
-              description={office.description}
-              capacity={office.capacity}
-              price={office.price}
-              services={office.services}
-              location={office.location}
-            />
-          ))}
+          {isLoading ? (
+            <div className="flex-col gap-4 w-full flex items-center justify-center h-[50vh]">
+              <div className="w-20 h-20 border-4 border-transparent text-primary text-4xl animate-spin flex items-center justify-center border-t-primary rounded-full">
+                <div className="w-16 h-16 border-4 border-transparent text-primary text-2xl animate-spin flex items-center justify-center border-t-primary rounded-full"></div>
+              </div>
+            </div>
+          ) : (
+            sortedOffices.map((office, index) => (
+              <CardOffice
+                key={index}
+                id={office.id}
+                imgUrl={office.imgUrl}
+                name={office.name}
+                description={office.description}
+                capacity={office.capacity}
+                price={office.price}
+                services={office.services}
+                location={office.location}
+              />
+            ))
+          )}
         </div>
       </div>
       <FooterSection />
