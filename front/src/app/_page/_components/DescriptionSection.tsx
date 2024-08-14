@@ -7,44 +7,44 @@ import officeImage from "@/../public/images/office-2.png";
 import { Button } from "../../../components/common/Button";
 import { Badge } from "../../../components/common/Badge";
 import { UsersRound } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+const Description = () => {
+const t = useTranslations('DescriptionSection');
 
 const badges = [
   {
-    description: "Para equipos pequeños",
-    capacity: "2-8 personas",
+    description: t("badges.description1"),
+    capacity: t("badges.capacity1"),
   },
   {
-    description: "Para equipos medianos",
-    capacity: "20-80 personas",
+    description: t("badges.description2"),
+    capacity: t("badges.capacity2"),
   },
   {
-    description: "Para equipos grandes",
-    capacity: "100-200 personas",
+    description: t("badges.description3"),
+    capacity: t("badges.capacity3"),
   },
 ];
 
-const Description = () => {
   return (
     <div className="layout py-12">
       <div className="bg-white rounded-3xl p-12">
         <div className="flex items-center gap-x-4">
           <Logo />
           <Paragraph variant="secondary">
-            Cualquier tamaño, <Highlight>en cualquier lugar.</Highlight>
+            {t('logo_text')} <Highlight>{t('logo_text1')}</Highlight>
           </Paragraph>
         </div>
         <div className="flex items-center flex-col lg:flex-row gap-x-36 gap-y-36 mt-12">
           <div className="space-y-8">
             <Heading level="2" className="font-medium !text-black">
-              Tenemos oficinas para <Highlight>cualquier tamaño</Highlight> de
-              equipo.
+              {t('heading')} <Highlight>{t('heading2')}</Highlight> {t('heading3')}
             </Heading>
             <Paragraph variant="secondary">
-              No importa cuantas personas ocupes acomodar, nosotros tenemos esas
-              oficinas que son perfectas para cualquier tamaño de equipo, que
-              van desde 2 hasta 200 personas, o más.
+              {t('paragraph')}
             </Paragraph>
-            <Button variant="primary">Explora oficinas</Button>
+            <Button variant="primary">{t('button_text')}</Button>
           </div>
           <div className="shrink-0 relative">
             <Image

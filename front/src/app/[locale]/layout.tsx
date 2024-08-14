@@ -1,6 +1,7 @@
+import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Alert from "@/components/Toastify/Toastify";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -13,11 +14,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params: { locale },
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
+  params: { locale: string };
 }>) {
   return (
-    <html lang="es">
+    <html lang={locale}>
       <body className={inter.className}>
         {children}
         <Alert />

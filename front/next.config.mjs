@@ -1,7 +1,10 @@
 import { hostname } from "os";
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin()
 
 // next.config.mjs
-export default {
+const nextConfig = {
   pageExtensions: ["tsx", "ts", "jsx", "js"],
   webpack(config, options) {
     config.resolve.modules.push("./src");
@@ -17,3 +20,5 @@ export default {
     ],
   },
 };
+
+export default withNextIntl(nextConfig)
