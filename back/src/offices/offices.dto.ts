@@ -52,6 +52,17 @@ export class CreateOfficesDto {
   @ApiProperty({ description: 'Office capacity' })
   capacity: number;
 
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(10)
+  @MaxLength(150)
+  @ApiProperty({
+    description: 'Office details',
+    minLength: 10,
+    maxLength: 150,
+  })
+  details: string;
+
   @IsNotEmpty()
   @Type(() => Number)
   @IsNumber()
@@ -99,6 +110,13 @@ export class UpdateOfficeDto {
     maxLength: 150,
   })
   description: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    description: 'Office details',
+  })
+  details: string;
 
   @IsOptional()
   @Type(() => Number)

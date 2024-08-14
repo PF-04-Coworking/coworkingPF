@@ -43,7 +43,7 @@ export class ReservationsController {
   getReservations(@Query('search') search?: string) {
     return this.reservationsService.getReservations(search);
   }
-  
+
   //* Rutas PUT
 
   //TODO agregar AUTH
@@ -75,7 +75,7 @@ export class ReservationsController {
   @ApiOperation({ summary: 'Delete a reservation by ID / Admin only' })
   @ApiResponse({
     status: 200,
-    description: 'Success message ',
+    description: 'Success message',
     type: Office,
   })
   @ApiBearerAuth()
@@ -88,14 +88,16 @@ export class ReservationsController {
   // Actualiza estado 'is_active' a false y la reserva queda cancelada
 
   @Put('cancel/:id')
-  @ApiOperation({summary:'Cancel a reservation with reservation id /Admin only'})
+  @ApiOperation({
+    summary: 'Cancel a reservation with reservation id /Admin only',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Success message and reservation data with cancelled status'
+    description: 'Success message and reservation data with cancelled status',
   })
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  cancelReservation(@Param('id') id : string){
+  cancelReservation(@Param('id') id: string) {
     return this.reservationsService.cancelReservation(id);
   }
 }

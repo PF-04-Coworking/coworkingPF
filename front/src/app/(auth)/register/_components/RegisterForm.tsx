@@ -9,6 +9,7 @@ import { apiAuth } from "@/lib/api/auth/apiAuth";
 import { IRegisterData } from "@/lib/api/types";
 import { GoogleRegisterButton } from "./GoogleRegisterButton";
 import { useAuthStore } from "../../stores/useAuthStore";
+import * as Yup from "yup";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -36,6 +37,21 @@ const RegisterForm = () => {
     setSubmitting(false);
   };
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Requerido"),
+    email: Yup.string().email("Ingresa un email valido").required("Requerido"),
+    password: Yup.string()
+      .required("Requerido")
+      .min(8, "La contraseña debe tener al menos 8 caracteres")
+      .max(15, "La contraseña no debe exceder los 15 caracteres")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "La contraseña debe tener al menos 1 letra mayúscula, 1 letra minúscula, 1 número y 1 carácter especial"
+      ),
+    phone: Yup.string().required("Requerido"),
+    lastname: Yup.string().required("Requerido"),
+  });
+
   return (
     <Formik
       initialValues={{
@@ -45,7 +61,7 @@ const RegisterForm = () => {
         phone: "",
         lastname: "",
       }}
-      validate={validateRegister}
+      validationSchema={validationSchema}
       onSubmit={handleSubmitRegister}
     >
       {({ isSubmitting }: any) => (

@@ -12,6 +12,8 @@ const useOffices = ({
 }: IPaginationObject & IFilters) => {
   const { offices, setStoredOffices } = useOfficesStore();
 
+  console.log("OFFICES", offices);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

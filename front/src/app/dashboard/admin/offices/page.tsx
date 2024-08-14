@@ -6,10 +6,9 @@ import { TextInput } from "@/components/common/TextInput";
 import { SearchIcon } from "lucide-react";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { ADMIN_LINKS } from "../../user/links";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useOffices } from "@/hooks/useOffices";
 import { IFilters } from "@/app/rooms/types";
-import { EditReservationsModal } from "../reservations/_components/modals/EditReservationsModal";
 
 const DashboardOffices = () => {
   const [filters] = useState<IFilters>({
@@ -51,7 +50,7 @@ const DashboardOffices = () => {
         </div>
         <CardAdd />
       </div>
-      <div className="w-full 2xl:grid-cols-3 grid gap-10 md:grid-cols-2 grid-cols-1">
+      <div className="w-full 2xl:grid-cols-3 grid gap-10 md:grid-cols-2 grid-cols-1 pb-8">
         {searchedOffices.map((office, index) => (
           <CardOffice
             key={index}
@@ -61,6 +60,7 @@ const DashboardOffices = () => {
             capacity={office.capacity}
             price={office.price}
             description={office.description}
+            details={office.details}
             imgUrl={office.imgUrl}
             services={office.services}
           />
