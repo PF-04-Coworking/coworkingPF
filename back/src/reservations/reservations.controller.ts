@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -76,7 +75,7 @@ export class ReservationsController {
   @ApiOperation({ summary: 'Delete a reservation by ID / Admin only' })
   @ApiResponse({
     status: 200,
-    description: 'Succes message ',
+    description: 'Success message ',
     type: Office,
   })
   @ApiBearerAuth()
@@ -84,6 +83,20 @@ export class ReservationsController {
   @UseGuards(AuthGuard, RolesGuard)
   deleteReservation(@Param('id') id: string) {
     return this.reservationsService.deleteReservation(id);
+  }
+
+  // Actualiza estado 'is_active' a false y la reserva queda cancelada
+
+  @Put('cancel/:id')
+  @ApiOperation({summary:'Cancel a reservation with reservation id /Admin only'})
+  @ApiResponse({
+    status: 200,
+    description: 'Success message and reservation data with cancelled status'
+  })
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
+  cancelReservation(@Param('id') id : string){
+    return this.reservationsService.cancelReservation(id);
   }
 }
 
