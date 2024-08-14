@@ -12,6 +12,7 @@ import {
 import {
   ApiBearerAuth,
   ApiOperation,
+  ApiParam,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -44,17 +45,20 @@ export class ReservationsController {
   getReservations(@Query('search') search?: string) {
     return this.reservationsService.getReservations(search);
   }
-  
+
   //* Rutas PUT
 
-  //TODO agregar AUTH
-  //! con rol de admin
   @Put('/:id')
   @ApiOperation({ summary: 'Update an existing reservation / Admin only' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'ID of the reservation to update',
+  })
   @ApiResponse({
     status: 200,
-    description: 'The reservation updated',
-    type: [Office],
+    description: 'The updated reservation',
+    type: Office,
   })
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
@@ -74,9 +78,14 @@ export class ReservationsController {
   //* Rutas DELETE
   @Delete('/:id')
   @ApiOperation({ summary: 'Delete a reservation by ID / Admin only' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'ID of the reservation to delete',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Succes message ',
+    description: 'Success message',
     type: Office,
   })
   @ApiBearerAuth()
@@ -86,4 +95,3 @@ export class ReservationsController {
     return this.reservationsService.deleteReservation(id);
   }
 }
-

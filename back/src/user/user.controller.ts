@@ -55,13 +55,13 @@ export class UserController {
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  getUsers(@Query('search') search?:string) {
+  getUsers(@Query('search') search?: string) {
     return this.userService.getUsers(search);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get user by ID  / Admin only' })
-  @ApiResponse({ status: 200, description: 'User data' })
+  @ApiResponse({ status: 200, description: 'User data', type: User })
   @ApiBearerAuth()
   @Roles(UserRole.USER, UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
@@ -74,23 +74,23 @@ export class UserController {
   @ApiOperation({ summary: 'Get reservations by user ID (User only)' })
   @ApiResponse({
     status: 200,
-    description: 'List users reservations',
+    description: 'List of user reservations',
+    type: [Reservation], // Asegúrate de que esta entidad está correctamente importada
   })
   @ApiBearerAuth()
   @Roles(UserRole.USER, UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  getReservationsByUserId(@Param('id') id: string) {
+  getReservationsByUserId(@Param('id', ParseUUIDPipe) id: string) {
     return this.reservationsService.getReservationsByUserId(id);
   }
 
   //* ruta para que un user loggeado cree una nueva reservación
   @Post(':id/reservations/new')
-  @Roles(UserRole.USER, UserRole.ADMIN)
-  @UseGuards(AuthGuard, RolesGuard)
   @ApiOperation({ summary: 'Add a new reservation (User only)' })
   @ApiResponse({
     status: 201,
     description: 'The reservation has been successfully created.',
+    type: Reservation, // Asegúrate de que esta entidad está correctamente importada
   })
   @ApiResponse({
     status: 400,
@@ -98,23 +98,25 @@ export class UserController {
   })
   @ApiResponse({
     status: 401,
-    description: 'Unauthorized. User can only add reservations for their own ID.',
+    description:
+      'Unauthorized. User can only add reservations for their own ID.',
   })
   @ApiResponse({
     status: 500,
     description: 'Internal Server Error.',
   })
+  @ApiBearerAuth()
+  @Roles(UserRole.USER, UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
   async addNewReservation(
     @Param('id', ParseUUIDPipe) paramId: string,
     @Body() data: AddNewReservationDto,
   ) {
     try {
-      // console.log('Amount:', data.amount); // Añade este log para verificar el valor del amount
-
       // Process the payment with Stripe
       const paymentIntent = await this.stripeService.createPaymentIntent(
         data.amount,
-        'usd'
+        'usd',
       );
 
       // Add the reservation
@@ -122,7 +124,6 @@ export class UserController {
         paramId,
         data,
       );
-      
 
       return {
         statusCode: 201,
@@ -133,7 +134,7 @@ export class UserController {
     } catch (error) {
       console.error('Error in addNewReservation:', error);
 
-      if (  
+      if (
         error instanceof UnauthorizedException ||
         error instanceof BadRequestException
       ) {
@@ -141,13 +142,17 @@ export class UserController {
       } else {
         throw new InternalServerErrorException('Internal Server Error');
       }
-
     }
   }
-  
+
   //*POST
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
+  @ApiResponse({
+    status: 201,
+    description: 'User successfully created',
+    type: User,
+  })
   createUser(@Body() user: CreateUserDto) {
     return this.userService.createUser(user);
   }
@@ -169,32 +174,53 @@ export class UserController {
   //*LOGIN Y REGISTER
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
+  @ApiResponse({
+    status: 201,
+    description: 'User registered successfully',
+    type: User,
+  })
   register(@Body() user: CreateUserDto) {
     return this.userService.register(user);
   }
 
   @Post('login')
   @ApiOperation({ summary: 'Login a user' })
+  @ApiResponse({
+    status: 200,
+    description: 'User logged in successfully',
+  })
   login(@Body() credentials: LoginUserDto) {
-    //{ email: 'prueba2@mail.com', password: '123' }
     return this.userService.login(credentials);
   }
 
   @Post('google/register')
-  @ApiOperation({ summary: 'Register a user desde auth de google' })
+  @ApiOperation({ summary: 'Register a user with Google authentication' })
+  @ApiResponse({
+    status: 201,
+    description: 'User registered with Google successfully',
+    type: User,
+  })
   registerGoogle(@Body() credentials: GoogleAccessTokenDto) {
     return this.userService.registerGoogle(credentials);
   }
 
   @Post('google/login')
-  @ApiOperation({ summary: 'Login a user desde auth de google' })
+  @ApiOperation({ summary: 'Login a user with Google authentication' })
+  @ApiResponse({
+    status: 200,
+    description: 'User logged in with Google successfully',
+  })
   loginGoogle(@Body() credentials: GoogleAccessTokenDto) {
     return this.userService.loginGoogle(credentials);
   }
 
   @Post('contact/form')
-  @ApiOperation({ summary: 'Submit de información de contacto' })
-  contactInfo(@Body() contactInfo: contactInfoDto){
-    return this.userService.contactInfo(contactInfo)
+  @ApiOperation({ summary: 'Submit contact information' })
+  @ApiResponse({
+    status: 200,
+    description: 'Contact information submitted successfully',
+  })
+  contactInfo(@Body() contactInfo: contactInfoDto) {
+    return this.userService.contactInfo(contactInfo);
   }
 }
