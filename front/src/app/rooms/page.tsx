@@ -76,7 +76,7 @@ const Rooms = () => {
 
   return (
     <div
-      className="bg-no-repeat bg-cover h-[210vh]" 
+      className="bg-no-repeat bg-cover h-[210vh]"
       style={{ backgroundImage: "url(/images/fondo-1.png)" }}
     >
       <Header />
@@ -118,6 +118,7 @@ const Rooms = () => {
                 imgUrl={office.imgUrl}
                 name={office.name}
                 description={office.description}
+                details={office.details}
                 capacity={office.capacity}
                 price={office.price}
                 services={office.services}
