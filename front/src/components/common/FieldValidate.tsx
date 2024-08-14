@@ -2,10 +2,12 @@ import React from "react";
 import { ErrorMessage, Field, useFormikContext, FieldProps } from "formik";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  as?: keyof JSX.IntrinsicElements;
   name: string;
 }
 
 const FieldValidate: React.FC<IProps> = ({
+  as = "input",
   name,
   type,
   placeholder,
@@ -15,7 +17,7 @@ const FieldValidate: React.FC<IProps> = ({
 
   const borderColor =
     errors[name] && touched[name]
-      ? "border-red-500"
+      ? "border-red-400"
       : touched[name]
       ? "border-primary"
       : "border-primary";
@@ -23,6 +25,7 @@ const FieldValidate: React.FC<IProps> = ({
   return (
     <>
       <Field
+        as={as}
         className={`rounded-md py-3 px-3 mb-1 text-sm w-full bg-inherit text-white border focus:outline-none disabled:bg-secondaryDark disabled:text-secondary ${borderColor}`}
         type={type}
         name={name}
@@ -32,7 +35,7 @@ const FieldValidate: React.FC<IProps> = ({
       <ErrorMessage
         name={name}
         component="div"
-        className="text-red-500 text-sm"
+        className="text-red-400 text-sm"
       />
     </>
   );

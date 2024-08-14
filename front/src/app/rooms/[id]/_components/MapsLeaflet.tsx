@@ -32,7 +32,6 @@ const LeafletMapComponent = ({ location }: ILeafletMapComponentProps) => {
     fetchCoordinates();
   }, [location]);
 
-  console.log("coord nuevas:", coordinates);
   return (
     <>
       {coordinates.lat && coordinates.lng ? (

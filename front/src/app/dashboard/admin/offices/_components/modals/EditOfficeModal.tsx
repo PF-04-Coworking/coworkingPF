@@ -59,6 +59,7 @@ const EditOfficeModal = ({
       formData.append("name", values.name);
       formData.append("location", values.location);
       formData.append("description", values.description);
+      formData.append("details", values.details);
       formData.append("capacity", values.capacity);
       formData.append("price", values.price);
       values.services.forEach((service) =>
@@ -115,13 +116,14 @@ const EditOfficeModal = ({
         <div>
           <Formik
             initialValues={{
-              name: selectedOffice.name,
-              description: selectedOffice.description,
-              location: selectedOffice.location,
-              capacity: selectedOffice.capacity,
-              price: selectedOffice.price,
+              name: selectedOffice.name || "",
+              description: selectedOffice.description || "",
+              details: selectedOffice.details || "",
+              location: selectedOffice.location || "",
+              capacity: selectedOffice.capacity || "",
+              price: selectedOffice.price || "",
               file: undefined,
-              services: selectedOffice.services,
+              services: selectedOffice.services || [],
             }}
             validationSchema={validationSchema}
             // @ts-ignore
@@ -151,6 +153,14 @@ const EditOfficeModal = ({
                     <FieldValidate
                       type="text"
                       name="description"
+                      className="rounded-md py-3 mt-1 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <InputLabel htmlFor="details">Detalles</InputLabel>
+                    <FieldValidate
+                      type="text"
+                      name="details"
                       className="rounded-md py-3 mt-1 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
                     />
                   </div>

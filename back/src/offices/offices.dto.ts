@@ -101,6 +101,13 @@ export class UpdateOfficeDto {
   description: string;
 
   @IsOptional()
+  @IsString()
+  @ApiProperty({
+    description: 'Office details',
+  })
+  details: string;
+
+  @IsOptional()
   @Type(() => Number)
   @IsNumber()
   @ApiProperty({ description: 'Office capacity' })

@@ -5,6 +5,7 @@ import {
   CalendarCheckIcon,
   CalendarClockIcon,
   CalendarIcon,
+  CalendarX,
   UserIcon,
 } from "lucide-react";
 import Image from "next/image";
@@ -78,11 +79,19 @@ const ReservationsTable = ({
                   <Paragraph variant="secondary">
                     Fin: {utcDateFormatter(reservation.end_day)}
                   </Paragraph>
-                  {new Date(reservation.end_day).getDate() <
-                  new Date().getDate() ? (
+                  {reservation.is_active ? (
                     <Paragraph
                       variant="secondary"
-                      className=" flex items-center gap-x-2"
+                      className="flex items-center gap-x-2 !text-red-500"
+                    >
+                      <CalendarX size={20} className="flex-shrink-0" />
+                      Cancelada
+                    </Paragraph>
+                  ) : new Date(reservation.end_day).getDate() <
+                    new Date().getDate() ? (
+                    <Paragraph
+                      variant="secondary"
+                      className="flex items-center gap-x-2"
                     >
                       <CalendarCheckIcon size={20} className="flex-shrink-0" />
                       Terminada

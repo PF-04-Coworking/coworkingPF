@@ -34,8 +34,6 @@ SheetTriggerButton.displayName = "SheetTriggerButton";
 const MobileMenu = () => {
   const { userData } = useAuthStore();
 
-  console.log("userData", userData);
-
   return (
     <Sheet>
       <SheetTrigger asChild>
