@@ -10,6 +10,7 @@ import { Brackets, Repository } from 'typeorm';
 import { User } from 'src/entities/Users.entity';
 import { Office } from 'src/entities/Offices.entity';
 import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
+import { isAsyncFunction } from 'util/types';
 
 @Injectable()
 export class ReservationsRepository {
@@ -197,6 +198,26 @@ export class ReservationsRepository {
       message: 'Reservación eliminada con éxito',
       deletedReservation: deleteReservation,
     };
+  }
+  
+  async cancelReservation(id: string){
+
+    const foundReservation = await this.reservationRepository.findOneBy({id});
+    if(!foundReservation){
+      throw new NotFoundException(`Reservation with id ${id} was not found`)
+    }
+    if(foundReservation.is_active === false){
+      return `Reservation with id ${id} is already cancelled`
+    }
+
+    await this.reservationRepository.update(id, {is_active: false});
+
+    const dbReservation = await this.reservationRepository.findOneBy({id})
+
+    return {
+      message: `La reserva con id ${id} ha sido cancelada con éxito`,
+      dbReservation
+    }
   }
 }
 

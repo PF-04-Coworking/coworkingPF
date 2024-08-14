@@ -42,4 +42,8 @@ export class ReservationsService {
   deleteReservation(id: string) {
     return this.reservationsRepository.deleteReservation(id);
   }
+
+  cancelReservation(id: string){
+    return this.reservationsRepository.cancelReservation(id);
+  }
 }
