@@ -75,7 +75,6 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'List of user reservations',
-    type: [Reservation], // Asegúrate de que esta entidad está correctamente importada
   })
   @ApiBearerAuth()
   @Roles(UserRole.USER, UserRole.ADMIN)
@@ -90,7 +89,6 @@ export class UserController {
   @ApiResponse({
     status: 201,
     description: 'The reservation has been successfully created.',
-    type: Reservation, // Asegúrate de que esta entidad está correctamente importada
   })
   @ApiResponse({
     status: 400,
@@ -151,7 +149,6 @@ export class UserController {
   @ApiResponse({
     status: 201,
     description: 'User successfully created',
-    type: User,
   })
   createUser(@Body() user: CreateUserDto) {
     return this.userService.createUser(user);
@@ -177,7 +174,6 @@ export class UserController {
   @ApiResponse({
     status: 201,
     description: 'User registered successfully',
-    type: User,
   })
   register(@Body() user: CreateUserDto) {
     return this.userService.register(user);
@@ -198,7 +194,6 @@ export class UserController {
   @ApiResponse({
     status: 201,
     description: 'User registered with Google successfully',
-    type: User,
   })
   registerGoogle(@Body() credentials: GoogleAccessTokenDto) {
     return this.userService.registerGoogle(credentials);

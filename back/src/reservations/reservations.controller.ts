@@ -57,7 +57,6 @@ export class ReservationsController {
   @ApiResponse({
     status: 200,
     description: 'The updated reservation',
-    type: Office,
   })
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
