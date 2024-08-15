@@ -8,7 +8,7 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLHeadingElement> {
 const Heading = ({ children, className, level, ...props }: IProps) => {
   const baseClassName = "text-white leading-tighter";
   const levelClassName = {
-    1: "text-8xl",
+    1: "text-6xl md:text-8xl",
     2: "text-4xl",
     3: "text-xl",
   };
