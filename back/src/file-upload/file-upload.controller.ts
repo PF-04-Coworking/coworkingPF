@@ -76,8 +76,6 @@ export class FileUploadController {
     )
     file: Express.Multer.File,
   ) {
-    console.log('user id: ', userId);
-    console.log('File: ', file);
     return this.fileUploadRepository.uploadUserImage(file, userId);
   }
 
@@ -130,3 +128,4 @@ export class FileUploadController {
     return this.fileUploadRepository.uploadOfficeImage(file, officeId);
   }
 }
+

@@ -213,9 +213,6 @@ export class UserRepository {
       throw new Error('Error fetching user info');
     }
 
-    console.log('googleUserData.data');
-    console.log(googleUserData.data);
-
     const foundUser = await this.userRepository.findOne({
       where: { email: googleUserData.data.email },
     });

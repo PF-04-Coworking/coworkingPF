@@ -50,7 +50,6 @@ const apiUsers = {
   },
 
   activateUser: async (userId: string, accessToken: string) => {
-    console.log("activateUser", userId, accessToken);
     return await axiosClient.put(
       `/user/activate/${userId}`,
       {},
