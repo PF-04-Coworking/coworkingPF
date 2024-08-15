@@ -53,7 +53,7 @@ export class User {
   @Column({
     type: 'text',
     nullable: true,
-    default: 'https://i.postimg.cc/yxJm8gJT/default-User.png',
+    default: 'https://i.postimg.cc/cLbq5TZH/usuario.png',
   })
   imgUrl: string;
 
@@ -61,3 +61,4 @@ export class User {
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }
+

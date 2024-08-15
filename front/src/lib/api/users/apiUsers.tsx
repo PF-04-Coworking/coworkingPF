@@ -1,5 +1,6 @@
 import { IUserData } from "@/app/dashboard/types";
 import { axiosClient } from "../apiConfig";
+import { IContactData } from "@/types/types";
 
 const apiUsers = {
   getUsers: async (accessToken: string, searchTerm: string) => {
@@ -34,6 +35,10 @@ const apiUsers = {
       },
     });
     return response.data;
+  },
+
+  contactMessage: async (formData: IContactData) => {
+    return await axiosClient.post(`/user/contact/form`, formData);
   },
 };
 

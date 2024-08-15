@@ -18,6 +18,7 @@ import { useOfficesStore } from "../../../../../../stores/useOfficesStore";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
 import { toast } from "react-toastify";
 import { FieldValidate } from "@/components/common/FieldValidate";
+import { DeleteOffice } from "../DeleteOffice";
 
 interface IProps {
   selectedOffice: IOffice;
@@ -59,6 +60,7 @@ const EditOfficeModal = ({
       formData.append("name", values.name);
       formData.append("location", values.location);
       formData.append("description", values.description);
+      formData.append("details", values.details);
       formData.append("capacity", values.capacity);
       formData.append("price", values.price);
       values.services.forEach((service) =>
@@ -115,13 +117,14 @@ const EditOfficeModal = ({
         <div>
           <Formik
             initialValues={{
-              name: selectedOffice.name,
-              description: selectedOffice.description,
-              location: selectedOffice.location,
-              capacity: selectedOffice.capacity,
-              price: selectedOffice.price,
+              name: selectedOffice.name || "",
+              description: selectedOffice.description || "",
+              details: selectedOffice.details || "",
+              location: selectedOffice.location || "",
+              capacity: selectedOffice.capacity || "",
+              price: selectedOffice.price || "",
               file: undefined,
-              services: selectedOffice.services,
+              services: selectedOffice.services || [],
             }}
             validationSchema={validationSchema}
             // @ts-ignore
@@ -151,6 +154,14 @@ const EditOfficeModal = ({
                     <FieldValidate
                       type="text"
                       name="description"
+                      className="rounded-md py-3 mt-1 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <InputLabel htmlFor="details">Detalles</InputLabel>
+                    <FieldValidate
+                      type="text"
+                      name="details"
                       className="rounded-md py-3 mt-1 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
                     />
                   </div>
@@ -212,22 +223,16 @@ const EditOfficeModal = ({
                 <DialogFooter className="flex gap-2 mt-8">
                   <Button
                     variant="primary"
-                    className="w-full"
+                    className="w-1/2"
                     type="submit"
                     disabled={isSubmitting || !dirty}
                   >
                     Confirmar
                   </Button>
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    className="w-full"
-                    onClick={() =>
-                      handleDeleteOffice({ id: selectedOffice.id })
-                    }
-                  >
-                    Eliminar
-                  </Button>
+                  <DeleteOffice
+                    officeId={selectedOffice.id}
+                    setIsModalOpen={setIsModalOpen}
+                  />
                 </DialogFooter>
               </Form>
             )}

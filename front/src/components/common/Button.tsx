@@ -15,7 +15,7 @@ const Button = React.forwardRef<HTMLButtonElement, IButtonProps>(
       primary:
         "border border-primary hover:border-primaryDark bg-primary text-white hover:bg-primaryDark disabled:bg-opacity-30  disabled:cursor-not-allowed disabled:border-opacity-0",
       outline:
-        "border border-primary bg-transparent hover:text-primary text-white",
+        "border border-primary bg-transparent hover:text-primary text-white disabled:text-opacity-30 disabled:bg-opacity-30 disabled:cursor-not-allowed disabled:border-opacity-30",
       destructive:
         "border border-red-500 bg-red-500 hover:bg-red-600 hover:border-red-600 text-white",
     };

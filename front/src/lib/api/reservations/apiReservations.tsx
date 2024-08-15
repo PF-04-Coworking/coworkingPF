@@ -24,6 +24,18 @@ const apiReservations = {
       },
     });
   },
+
+  cancelReservation: async (authToken: string, id: string) => {
+    return await axiosClient.put(
+      `/reservations/cancel/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+  },
 };
 
 export { apiReservations };

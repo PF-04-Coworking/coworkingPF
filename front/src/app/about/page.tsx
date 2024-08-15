@@ -7,6 +7,7 @@ import { Paragraph } from "@/components/common/Paragraph";
 import { TextCard } from "./_components/TextCard";
 import Link from "next/link";
 import { Button } from "@/components/common/Button";
+import { TerminalIcon } from "lucide-react";
 
 const About = () => {
   return (
@@ -62,16 +63,39 @@ const About = () => {
           </div>
         </div>
         <div className="text-center space-y-12 !mt-24">
-          <Heading level="2">Sigue con tus proyectos</Heading>
+          <Heading level="2">Nuestro equipo de desarrollo</Heading>
           <Paragraph variant="secondary" className="max-w-xl mx-auto">
             Sé parte de muchos equipos que realizan sus proyectos de manera
             colaborativa y productiva. ¡Con Relux, podrás encontrar espacios de
             trabajo que se ajusten a tus necesidades y que te permitan trabajar
             de manera eficiente y productiva!
           </Paragraph>
-          <Link href="/rooms" className="block">
-            <Button variant="primary">Buscar oficinas</Button>
-          </Link>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4 text-white">
+              <TerminalIcon size={20} />
+              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
+            </div>
+            <div className="flex items-center space-x-4 text-white">
+              <TerminalIcon size={20} />
+              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
+            </div>
+            <div className="flex items-center space-x-4 text-white">
+              <TerminalIcon size={20} />
+              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
+            </div>
+            <div className="flex items-center space-x-4 text-white">
+              <TerminalIcon size={20} />
+              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
+            </div>
+            <div className="flex items-center space-x-4 text-white">
+              <TerminalIcon size={20} />
+              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
+            </div>
+            <div className="flex items-center space-x-4 text-white">
+              <TerminalIcon size={20} />
+              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
+            </div>
+          </div>
         </div>
       </div>
       <FooterSection />
