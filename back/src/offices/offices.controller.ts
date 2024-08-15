@@ -127,8 +127,6 @@ export class OfficeController {
     )
     file: Express.Multer.File,
   ) {
-    console.log('office', office);
-    console.log('file', file);
     return this.officeService.createOffice(office, file);
   }
 

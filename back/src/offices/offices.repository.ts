@@ -69,7 +69,6 @@ export class OfficeRepository {
 
   async addOffices() {
     try {
-      console.log('Starting seeding...');
       for (const element of data) {
         const existingOffice = await this.officeRepository.findOne({
           where: { name: element.name, location: element.location },
@@ -80,14 +79,13 @@ export class OfficeRepository {
           office.name = element.name;
           office.location = element.location;
           office.description = element.description;
-          office.details= element.details,
-          office.capacity = element.capacity;
+          (office.details = element.details),
+            (office.capacity = element.capacity);
           office.price = element.price;
           office.imgUrl = element.imgUrl;
           office.services = element.services;
 
           await this.officeRepository.save(office);
-          console.log('Office added successfully');
         } else {
           console.log(
             `Office ${element.name} at ${element.location} already exists.`,
@@ -162,39 +160,40 @@ export class OfficeRepository {
     return 'Office deleted successfully';
   }
 
-  async activateOffice(id: string){
-    const foundOffice = await this.officeRepository.findOneBy({id});
+  async activateOffice(id: string) {
+    const foundOffice = await this.officeRepository.findOneBy({ id });
 
-    if(!foundOffice) throw new NotFoundException(`Office with id '${id}' was not found`);
+    if (!foundOffice)
+      throw new NotFoundException(`Office with id '${id}' was not found`);
 
-    if(foundOffice.is_active === true) return `Office is already active`;
+    if (foundOffice.is_active === true) return `Office is already active`;
 
-    await this.officeRepository.update(id, {is_active: true});
+    await this.officeRepository.update(id, { is_active: true });
 
-    const dbOffice = await this.officeRepository.findOneBy({id});
+    const dbOffice = await this.officeRepository.findOneBy({ id });
 
     return {
       message: 'Office set active',
-      dbOffice
-    }
+      dbOffice,
+    };
   }
 
-  async deactivateOffice(id: string){
-    const foundOffice = await this.officeRepository.findOneBy({id});
+  async deactivateOffice(id: string) {
+    const foundOffice = await this.officeRepository.findOneBy({ id });
 
-    if(!foundOffice) throw new NotFoundException(`Office with id '${id}' was not found`);
+    if (!foundOffice)
+      throw new NotFoundException(`Office with id '${id}' was not found`);
 
-    if(foundOffice.is_active === false) return `Office is already inactive`;
+    if (foundOffice.is_active === false) return `Office is already inactive`;
 
-    await this.officeRepository.update(id, {is_active: false});
+    await this.officeRepository.update(id, { is_active: false });
 
-    const dbOffice = await this.officeRepository.findOneBy({id});
+    const dbOffice = await this.officeRepository.findOneBy({ id });
 
     return {
       message: 'Office set inactive',
-      dbOffice
-    }
+      dbOffice,
+    };
   }
-
 }
 

@@ -48,7 +48,6 @@ const EditReservationForm = ({
     });
     resetForm({ values });
     const _reservation = await promise;
-    console.log(_reservation);
     updateReservation(reservation.id, formattedValues);
   };
 

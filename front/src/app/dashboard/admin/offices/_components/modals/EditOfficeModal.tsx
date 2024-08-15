@@ -52,7 +52,6 @@ const EditOfficeModal = ({
       );
       // @ts-ignore
       formData.append("file", values.file);
-      console.log("authToken", authToken);
       const promise = apiOffices.updateOffice(
         selectedOffice.id,
         formData,

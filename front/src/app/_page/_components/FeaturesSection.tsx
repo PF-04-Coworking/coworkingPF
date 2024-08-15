@@ -87,20 +87,6 @@ const Features = () => {
             >
               {feature.description}
             </Paragraph>
-            <CustomLink
-              href="#"
-              className={`flex items-center gap-x-3 ${
-                index % 2 !== 0 ? "text-white" : "!text-black"
-              }`}
-            >
-              <Paragraph
-                variant="primary"
-                className={index % 2 !== 0 ? "text-white" : "!text-black"}
-              >
-                Descubrir más
-              </Paragraph>
-              <MoveRight size={20} />
-            </CustomLink>
           </Card>
         ))}
       </div>

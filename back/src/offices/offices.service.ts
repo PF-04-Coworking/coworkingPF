@@ -50,8 +50,6 @@ export class OfficeService {
       throw new NotFoundException(`No office was found to update`);
     }
 
-    console.log('FILE:', file);
-
     if (file) {
       const response = await this.fileUploadRepository.uploadImage(file);
       const imgUrl = response.secure_url;
@@ -72,11 +70,11 @@ export class OfficeService {
     return this.officeRepository.deleteOffice(id);
   }
 
-  activateOffice(id: string){
+  activateOffice(id: string) {
     return this.officeRepository.activateOffice(id);
   }
-  
-  deactivateOffice(id: string){
+
+  deactivateOffice(id: string) {
     return this.officeRepository.deactivateOffice(id);
   }
 }
