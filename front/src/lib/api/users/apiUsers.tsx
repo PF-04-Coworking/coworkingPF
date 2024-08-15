@@ -37,6 +37,31 @@ const apiUsers = {
     return response.data;
   },
 
+  deactivateUser: async (userId: string, accessToken: string) => {
+    return await axiosClient.put(
+      `/user/deactivate/${userId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  },
+
+  activateUser: async (userId: string, accessToken: string) => {
+    console.log("activateUser", userId, accessToken);
+    return await axiosClient.put(
+      `/user/activate/${userId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  },
+
   contactMessage: async (formData: IContactData) => {
     return await axiosClient.post(`/user/contact/form`, formData);
   },

@@ -9,6 +9,7 @@ import { ADMIN_LINKS } from "../../user/links";
 import { useState } from "react";
 import { useOffices } from "@/hooks/useOffices";
 import { IFilters } from "@/app/rooms/types";
+import { useRedirectHook } from "../../_hooks/useRedirectHook";
 
 const DashboardOffices = () => {
   const [filters] = useState<IFilters>({
@@ -31,6 +32,8 @@ const DashboardOffices = () => {
       office.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       office.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  useRedirectHook();
 
   return (
     <DashboardLayout headerTitle="Gestionar oficinas" navLinks={ADMIN_LINKS}>
@@ -63,6 +66,7 @@ const DashboardOffices = () => {
             details={office.details}
             imgUrl={office.imgUrl}
             services={office.services}
+            is_active={office.is_active}
           />
         ))}
       </div>

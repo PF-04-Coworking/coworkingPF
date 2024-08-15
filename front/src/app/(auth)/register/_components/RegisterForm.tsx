@@ -48,7 +48,11 @@ const RegisterForm = () => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "La contraseña debe tener al menos 1 letra mayúscula, 1 letra minúscula, 1 número y 1 carácter especial"
       ),
-    phone: Yup.string().required("Requerido"),
+    phone: Yup.string()
+      .required("Debes ingresar un número de teléfono")
+      .matches(/^(\+?\d{1,3}-?)\s*\d{6,14}\s*$/, {
+        message: "Número de telefono debe ser de formato: +51 943944312",
+      }),
     lastname: Yup.string().required("Requerido"),
   });
 

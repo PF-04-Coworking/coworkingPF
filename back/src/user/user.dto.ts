@@ -14,6 +14,7 @@ import {
 } from 'class-validator';
 
 import { UserRole } from './user-role.enum';
+import { Type } from 'class-transformer';
 
 export class CreateUserDto {
   @IsOptional()
@@ -143,9 +144,9 @@ export class UpdateUserDto {
   password: string;
 
   @IsOptional()
-  @Matches(
-    '^+?(d{1,3})?[-.s]?((?d{1,4})?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}$',
-  )
+  @Matches(/^(\+?\d{1,3}-?)\s*\d{6,14}\s*$/, {
+    message: 'Número de telefono debe ser de formato: +11 111111111',
+  })
   phone: string;
 
   @IsOptional()
@@ -161,17 +162,18 @@ export class UpdateUserDto {
 
   @IsOptional()
   @IsString()
-  @MinLength(5)
+  @MinLength(4)
   @MaxLength(20)
   @ApiProperty({
     description: 'User city',
-    minLength: 5,
+    minLength: 4,
     maxLength: 20,
     required: false,
   })
   city: string;
 
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
   @ApiProperty({ description: 'User age', required: false })
   age: number;

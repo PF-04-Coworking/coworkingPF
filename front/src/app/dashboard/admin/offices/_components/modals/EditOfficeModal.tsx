@@ -18,7 +18,7 @@ import { useOfficesStore } from "../../../../../../stores/useOfficesStore";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
 import { toast } from "react-toastify";
 import { FieldValidate } from "@/components/common/FieldValidate";
-import { DeleteOffice } from "../DeleteOffice";
+import { DeactivateOffice } from "../DeactivateOffice";
 
 interface IProps {
   selectedOffice: IOffice;
@@ -31,24 +31,8 @@ const EditOfficeModal = ({
   isModalOpen,
   setIsModalOpen,
 }: IProps) => {
-  const { updateStoredOffice, removeStoredOffice } = useOfficesStore();
+  const { updateStoredOffice } = useOfficesStore();
   const { authToken } = useAuthStore();
-
-  const handleDeleteOffice = async ({ id }: { id: string }) => {
-    try {
-      if (!authToken) return;
-      const promise = apiOffices.deleteOffice(id, authToken);
-      toast.promise(promise, {
-        pending: "Eliminando...",
-        success: "Oficina eliminada exitosamente",
-        error: "Error",
-      });
-      await promise;
-      removeStoredOffice(id);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleEditOffice = async (
     values: IEditOfficeData,
@@ -177,7 +161,7 @@ const EditOfficeModal = ({
                   </div>
                   <div className="grid gap-2">
                     <InputLabel htmlFor="price">
-                      Precio de alquiler por día
+                      Precio de alquiler por día (US$)
                     </InputLabel>
                     <FieldValidate
                       type="number"
@@ -229,8 +213,9 @@ const EditOfficeModal = ({
                   >
                     Confirmar
                   </Button>
-                  <DeleteOffice
+                  <DeactivateOffice
                     officeId={selectedOffice.id}
+                    is_active={selectedOffice.is_active}
                     setIsModalOpen={setIsModalOpen}
                   />
                 </DialogFooter>

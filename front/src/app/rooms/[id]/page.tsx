@@ -16,7 +16,7 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
 
   return (
     <div
-      className="h-full min-h-screen bg-no-repeat bg-top bg-cover bg-fixed"
+      className="bg-no-repeat bg-cover h-[210vh]"
       style={{ backgroundImage: "url(/images/fondo-1.png)" }}
     >
       <Header />

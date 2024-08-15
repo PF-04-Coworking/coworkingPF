@@ -9,6 +9,7 @@ import { useReservations } from "./_hooks/useReservations";
 import ReservationsTable from "./_components/ReservationsTable";
 import { Sort } from "@/app/rooms/_components/Sort";
 import { sortOptions } from "@/lib/constants/sortReservationsOptions";
+import { useRedirectHook } from "../../_hooks/useRedirectHook";
 
 const ReservationsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,9 +39,11 @@ const ReservationsPage = () => {
     }
   });
 
+  useRedirectHook();
+
   return (
     <DashboardLayout headerTitle="Gestionar reservas" navLinks={ADMIN_LINKS}>
-      <div className="flex justify-between gap-x-4">
+      <div className="flex justify-between gap-4 flex-col sm:flex-row">
         <div className="relative w-full">
           <TextInput
             type="search"
