@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -6,12 +8,13 @@ import geocodeAddress from "./GeoCoder";
 import L from "leaflet";
 import image from "../../../../../public/images/png-transparent-orange-and-white-location-icon-map-computer-icons-location-logo-text-orange-pin.png";
 import { ILeafletMapComponentProps, ILocation } from "@/types/types";
+import { Paragraph } from "@/components/common/Paragraph";
 
 const img = image.src;
 
 const MarkerLeaflet = L.icon({
   iconUrl: img,
-  iconSize: [55, 58],
+  iconSize: [50, 50],
 });
 
 const LeafletMapComponent = ({ location }: ILeafletMapComponentProps) => {
@@ -21,7 +24,6 @@ const LeafletMapComponent = ({ location }: ILeafletMapComponentProps) => {
     const fetchCoordinates = async () => {
       try {
         const response = await geocodeAddress(location);
-
         setCoordinates(response);
       } catch (error) {
         console.error("Error en la geocodificación:", error);
@@ -30,31 +32,36 @@ const LeafletMapComponent = ({ location }: ILeafletMapComponentProps) => {
     fetchCoordinates();
   }, [location]);
 
-  console.log("coord nuevas:", coordinates);
   return (
     <>
       {coordinates.lat && coordinates.lng ? (
-        <div className="h-full bg-secondaryDark p-5 rounded-2xl w-[72rem]">
+        <div className="h-full bg-secondaryDark rounded-2xl">
           <MapContainer
             center={[coordinates.lat, coordinates.lng]}
             zoom={17}
-            style={{ height: "100%", borderRadius: "1rem", width: "100%" }}
+            style={{
+              height: "100%",
+              borderRadius: "1rem",
+              width: "100%",
+              zIndex: 0,
+              display: "block",
+            }}
           >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <TileLayer
+              attribution="Google Maps"
+              url="https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}"
+            />
             <Marker
               position={[coordinates.lat, coordinates.lng]}
               icon={MarkerLeaflet}
             />
             <Popup position={[coordinates.lat + 0.0001, coordinates.lng]}>
-              <div>
-                <h1 className="text-primary font-bold text-center">
-                  ¡Esta es la ubicación de tu oficina!
-                </h1>
-                <p className="text-center font-semibold">
-                  Puedes reservarla ahora o ir a visitarla en cualquier momento,
-                  estaremos encantados de recibirte.
-                </p>
-              </div>
+              <Paragraph
+                variant="primary"
+                className="!text-primary text-center font-medium"
+              >
+                ¡Esta es la ubicación de tu oficina!
+              </Paragraph>
             </Popup>
           </MapContainer>
         </div>

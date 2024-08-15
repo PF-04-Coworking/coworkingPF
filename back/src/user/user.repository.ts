@@ -1,11 +1,13 @@
 import {
   BadRequestException,
+  HttpException,
+  HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/entities/Users.entity';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -14,28 +16,76 @@ import {
   LoginUserDto,
   UpdateUserDto,
 } from './user.dto';
-import { transporter } from '../Config/mailer';
-import { AuthService } from 'src/auth/auth.service';
 import axios from 'axios';
+import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
+import { Reservation } from 'src/entities/Reservations.entity';
+import { domainToUnicode } from 'url';
 
 @Injectable()
 export class UserRepository {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly authService: AuthService,
+    private readonly nodeMailerRepository: NodeMailerRepository,
     private readonly jwtService: JwtService,
   ) {}
 
-  async getUsers() {
-    const users = await this.userRepository.find();
-    return users;
+  async getUsers(search?: string) {
+    const query = this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.reservations', 'reservations')
+      .select([
+        'user.id',
+        'user.name',
+        'user.lastname',
+        'user.email',
+        'user.phone',
+        'user.country',
+        'user.city',
+        'user.age',
+        'user.role',
+        'user.imgUrl',
+        'user.is_active',
+        'reservations',
+      ]);
+
+    if (search) {
+      const searchTerms = search.split(' ').map((term) => term.toLowerCase());
+
+      query.where('LOWER(user.email) LIKE :email', {
+        email: `%${searchTerms.join(' ')}%`,
+      });
+
+      if (searchTerms.length > 1) {
+        query.orWhere(
+          new Brackets((qb) => {
+            qb.where('LOWER(user.name) LIKE :name', {
+              name: `%${searchTerms[0]}%`,
+            }).andWhere('LOWER(user.lastname) LIKE :lastname', {
+              lastname: `%${searchTerms[1]}%`,
+            });
+          }),
+        );
+      } else {
+        query.orWhere(
+          new Brackets((qb) => {
+            qb.where('LOWER(user.name) LIKE :name', {
+              name: `%${searchTerms[0]}%`,
+            }).orWhere('LOWER(user.lastname) LIKE :lastname', {
+              lastname: `%${searchTerms[0]}%`,
+            });
+          }),
+        );
+      }
+    }
+
+    return await query.getMany();
   }
 
   async getuserById(id: string) {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['reservations'],
+      relations: ['reservations', 'reservations.office'],
     });
 
     if (!user) {
@@ -103,18 +153,8 @@ export class UserRepository {
 
     const { password: _, ...userNoPassword } = user;
 
-    try {
-      await transporter.sendMail({
-        from: '"Redux team"', // sender address
-        to: userNoPassword.email, // list of receivers
-        subject: 'Confirmacion de cuenta', // Subject line
-        html: '<b>Hola, bienvenido a Relux!</b>', // html body
-      });
-    } catch (error) {
-      throw new BadRequestException(
-        'Something went wrong. No emails were sent ',
-      );
-    }
+    //nodeMailer envía mail de registro
+    await this.nodeMailerRepository.registerEmail(userNoPassword);
 
     return userNoPassword;
   }
@@ -126,6 +166,9 @@ export class UserRepository {
     if (!user) {
       throw new BadRequestException('Wrong credentials');
     }
+
+    if (user.is_active === false)
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
@@ -190,6 +233,9 @@ export class UserRepository {
 
     const { password: _, ...userNoPassword } = newUser;
 
+    //nodeMailer envía email de registro
+    await this.nodeMailerRepository.registerEmail(userNoPassword);
+
     return userNoPassword;
   }
 
@@ -219,6 +265,9 @@ export class UserRepository {
 
     if (!user) throw new BadRequestException('Wrong credentials');
 
+    if (user.is_active === false)
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+
     const tokenPayload = {
       id: user.id,
       email: user.email,
@@ -234,6 +283,46 @@ export class UserRepository {
       message: `Successfully signed in. Welcome ${user.name}`,
       token,
       user: userNoPassword,
+    };
+  }
+
+  async deactivateUser(id: string) {
+    const foundUser = await this.userRepository.findOneBy({ id });
+
+    if (!foundUser)
+      throw new NotFoundException(`User with id '${id}' was not found`);
+
+    if (foundUser.is_active === false) return `User is already deactivated`;
+
+    await this.userRepository.update(id, { is_active: false });
+
+    const dbUser = await this.userRepository.findOneBy({ id });
+
+    const { password: _, ...user } = dbUser;
+
+    return {
+      message: 'User was successfully deactivated',
+      user,
+    };
+  }
+
+  async activateUser(id: string) {
+    const foundUser = await this.userRepository.findOneBy({ id });
+
+    if (!foundUser)
+      throw new NotFoundException(`User with id '${id}' was not found`);
+
+    if (foundUser.is_active === true) return `User is already active`;
+
+    await this.userRepository.update(id, { is_active: true });
+
+    const dbUser = await this.userRepository.findOneBy({ id });
+
+    const { password: _, ...user } = dbUser;
+
+    return {
+      message: 'User was successfully activated',
+      user,
     };
   }
 }

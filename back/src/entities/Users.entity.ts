@@ -26,8 +26,8 @@ export class User {
   password: string;
 
   @ApiProperty({ description: 'User phone' })
-  @Column({ type: 'int', nullable: true })
-  phone: number;
+  @Column({ type: 'varchar', nullable: true })
+  phone: string;
 
   @ApiProperty({ description: 'User country' })
   @Column({ type: 'varchar', length: 50, nullable: true })
@@ -53,11 +53,15 @@ export class User {
   @Column({
     type: 'text',
     nullable: true,
-    default: 'https://i.postimg.cc/yxJm8gJT/default-User.png',
+    default: 'https://i.postimg.cc/cLbq5TZH/usuario.png',
   })
   imgUrl: string;
+
+  @Column({default: true})
+  is_active: boolean;
 
   @ApiProperty({ description: 'User reservations' })
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }
+

@@ -1,14 +1,17 @@
 "use client";
 import { Button } from "@/components/common/Button";
-import { DialogFooter } from "@/components/common/dialog";
+import { DialogFooter } from "@/components/common/Dialog";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 import { InputLabel } from "@/components/common/InputLabel";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
-import { useOfficesStore } from "../../_stores/useOfficesStore";
+import { useOfficesStore } from "../../../../../stores/useOfficesStore";
 import { IEditOfficeData } from "../../types";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
-import { servicesOptions } from "@/lib/constants/offices-constants";
+import { servicesOptions } from "@/lib/constants/servicesOptions";
+import { FieldValidate } from "@/components/common/FieldValidate";
+import { Checkbox } from "@/components/common/Checkbox";
 
 const CreateOfficeForm = () => {
   const { addStoredOffice } = useOfficesStore();
@@ -16,16 +19,17 @@ const CreateOfficeForm = () => {
 
   const handleAddOffice = async (
     values: IEditOfficeData,
-    { setSubmitting, resetForm }: FormikHelpers<IEditOfficeData>
+    { setSubmitting }: FormikHelpers<IEditOfficeData>
   ) => {
     if (!authToken) return;
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("location", values.location);
     formData.append("description", values.description);
+    formData.append("details", values.details);
     formData.append("capacity", values.capacity);
     formData.append("price", values.price);
-    formData.append("services", values.services.join(","));
+    values.services.forEach((service) => formData.append("services", service));
     // @ts-ignore
     formData.append("file", values.file);
     try {
@@ -36,7 +40,6 @@ const CreateOfficeForm = () => {
         error: "Error",
       });
       const officeData = await promise;
-      officeData.services = officeData.services.split(",");
       addStoredOffice(officeData);
     } catch (error) {
       console.log(error);
@@ -45,17 +48,40 @@ const CreateOfficeForm = () => {
     }
   };
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Debes ingresar un nombre"),
+    location: Yup.string()
+      .required("Debes ingresar una ciudad")
+      .min(2, "Debes ingresar al menos 2 caracteres"),
+    description: Yup.string()
+      .required("Debes ingresar una descripción")
+      .min(2, "Debes ingresar al menos 2 caracteres"),
+    details: Yup.string()
+      .required("Debes ingresar detalles")
+      .min(10, "Debes ingresar al menos 10 caracteres")
+      .max(150, "Debes ingresar al menos 150 caracteres"),
+    capacity: Yup.number()
+      .required("Debes ingresar un número máximo de invitados")
+      .min(1, "Debes ingresar al menos 1 espacio"),
+    price: Yup.number()
+      .required("Debes ingresar un precio")
+      .min(1, "Debes ingresar al menos 1 euro"),
+    file: Yup.mixed().required("Debes subir una imagen"),
+  });
+
   return (
     <Formik
       initialValues={{
         name: "",
         location: "",
         description: "",
+        details: "",
         capacity: "",
         price: "",
         file: undefined,
         services: [],
       }}
+      validationSchema={validationSchema}
       // @ts-ignore
       onSubmit={handleAddOffice}
     >
@@ -64,47 +90,57 @@ const CreateOfficeForm = () => {
           <div className="space-y-8">
             <div className="space-y-2">
               <InputLabel htmlFor="name">Nombre</InputLabel>
-              <Field
+              <FieldValidate
+                type="text"
                 name="name"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
               />
             </div>
             <div className="space-y-2">
               <InputLabel htmlFor="direccion">País</InputLabel>
-              <Field
+              <FieldValidate
+                type="text"
                 name="location"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary pr-2"
               />
             </div>
             <div className="space-y-2">
               <InputLabel htmlFor="description">Dirección</InputLabel>
-              <Field
+              <FieldValidate
+                type="text"
                 name="description"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
               />
             </div>
             <div className="space-y-2">
+              <InputLabel htmlFor="details">Detalles</InputLabel>
+              <FieldValidate
+                type="text"
+                name="details"
+                className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
+              />
+            </div>
+            <div className="space-y-2">
               <InputLabel htmlFor="description">Capacidad</InputLabel>
-              <Field
-                type="number"
+              <FieldValidate
+                type="text"
                 name="capacity"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
               />
             </div>
             <div className="space-y-2">
               <InputLabel htmlFor="description">Precio</InputLabel>
-              <Field
+              <FieldValidate
                 type="number"
                 name="price"
                 className="rounded-md py-2 px-2 mt-1 mb-5 text-md w-full bg-inherit text-white border focus:outline-none border-primary"
               />
             </div>
             {servicesOptions.length > 0 && (
-              <div className="grid gap-2">
+              <div className="grid gap-4">
                 {servicesOptions.map((service) => (
-                  <label key={service} className="flex gap-2 items-center mb-3">
-                    <Field
-                      type="checkbox"
+                  <label key={service} className="flex gap-4 items-center">
+                    <Checkbox
                       name="services"
                       value={service}
                       className="border-primary"
@@ -118,7 +154,7 @@ const CreateOfficeForm = () => {
               <InputLabel htmlFor="file">
                 Sube una foto de la oficina:
               </InputLabel>
-              <Field
+              <FieldValidate
                 id="file"
                 name="file"
                 type="file"

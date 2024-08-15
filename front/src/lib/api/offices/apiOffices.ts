@@ -1,19 +1,23 @@
 import { IFilters } from "@/app/rooms/types";
 import { axiosClient } from "../apiConfig";
+import { IPaginationObject } from "@/types/types";
 
 const apiOffices = {
-  getOffices: async (filters?: IFilters) => {
+  getOffices: async ({
+    page = 1,
+    limit = 100,
+    services,
+    location,
+  }: IPaginationObject & IFilters) => {
     const response = await axiosClient.get("/offices", {
       params: {
-        page: 1,
-        limit: 100,
-        ...(filters && {
-          services: filters.services.join(","),
-          location: filters.location.join(","),
-        }),
+        page,
+        limit,
+        ...(services && { services: services.join(",") }),
+        ...(location && { location: location.join(",") }),
       },
     });
-    return response.data;
+    return response;
   },
 
   getOfficeById: async (officeId: string) => {
@@ -41,12 +45,28 @@ const apiOffices = {
     return response.data;
   },
 
-  deleteOffice: async (officeId: string, authToken: string) => {
-    const response = await axiosClient.delete(`/offices/${officeId}`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
+  deactivateOffice: async (officeId: string, authToken: string) => {
+    await axiosClient.put(
+      `/offices/deactivate/${officeId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+  },
+
+  activateOffice: async (officeId: string, authToken: string) => {
+    await axiosClient.put(
+      `/offices/activate/${officeId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
   },
 };
 

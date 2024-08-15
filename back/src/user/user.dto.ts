@@ -1,5 +1,6 @@
 import { PickType, ApiProperty } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
   IsNumber,
@@ -7,11 +8,13 @@ import {
   IsString,
   IsStrongPassword,
   IsUUID,
+  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
 import { UserRole } from './user-role.enum';
+import { Type } from 'class-transformer';
 
 export class CreateUserDto {
   @IsOptional()
@@ -55,11 +58,14 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  @MinLength(6)
-  @MaxLength(20)
-  @ApiProperty({ description: 'User phone number' })
-  phone: number;
+  @ApiProperty({
+    description: 'User phone number',
+    example: '+55 55555555',
+  })
+  @Matches(/^(\+?\d{1,3}-?)\s*\d{6,14}\s*$/, {
+    message: 'Número de telefono debe ser de formato: +11 111111111',
+  })
+  phone: string;
 
   @IsOptional()
   @IsString()
@@ -93,6 +99,10 @@ export class CreateUserDto {
   @IsOptional()
   @ApiProperty({ description: 'User role', enum: UserRole, required: false })
   role: UserRole;
+
+  @IsOptional()
+  @IsBoolean()
+  is_active: boolean;
 }
 
 export class UpdateUserDto {
@@ -134,9 +144,10 @@ export class UpdateUserDto {
   password: string;
 
   @IsOptional()
-  @IsNumber()
-  @ApiProperty({ description: 'User phone number', required: false })
-  phone: number;
+  @Matches(/^(\+?\d{1,3}-?)\s*\d{6,14}\s*$/, {
+    message: 'Número de telefono debe ser de formato: +11 111111111',
+  })
+  phone: string;
 
   @IsOptional()
   @MinLength(4)
@@ -151,17 +162,18 @@ export class UpdateUserDto {
 
   @IsOptional()
   @IsString()
-  @MinLength(5)
+  @MinLength(4)
   @MaxLength(20)
   @ApiProperty({
     description: 'User city',
-    minLength: 5,
+    minLength: 4,
     maxLength: 20,
     required: false,
   })
   city: string;
 
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
   @ApiProperty({ description: 'User age', required: false })
   age: number;
@@ -186,13 +198,28 @@ export class LoginUserDto extends PickType(CreateUserDto, [
 export class GoogleAccessTokenDto {
   @IsString()
   @IsNotEmpty()
-  @MinLength(3)
-  @MaxLength(50)
   @ApiProperty({
     description: 'Google access token',
     minLength: 3,
     maxLength: 50,
   })
   accessToken: string;
+}
+
+export class contactInfoDto extends PickType(CreateUserDto, [
+  'name',
+  'lastname',
+  'email',
+  'phone',
+]) {
+  @IsNotEmpty()
+  @MaxLength(60)
+  @MinLength(10)
+  @ApiProperty({
+    description: 'Description of contact purpose',
+    maxLength: 60,
+    minLength: 10,
+  })
+  description: string;
 }
 

@@ -20,13 +20,13 @@ export class Office {
   @Column({ type: 'text', nullable: true })
   description: string;
 
+  @ApiProperty({ description: 'Office details' })
+  @Column({type:'text', nullable: true})
+  details: string;
+
   @ApiProperty({ description: 'Office capacity' })
   @Column()
   capacity: number;
-
-  @ApiProperty({ description: 'Office stock' })
-  @Column()
-  stock: number;
 
   @ApiProperty({ description: 'Office price' })
   @Column({ nullable: true })
@@ -38,6 +38,9 @@ export class Office {
 
   @Column('simple-array', { nullable: true })
   services: string[];
+
+  @Column({default: true})
+  is_active: boolean;
 
   @ApiProperty({ description: 'Office reservations' })
   @OneToMany(() => Reservation, (reservation) => reservation.office)

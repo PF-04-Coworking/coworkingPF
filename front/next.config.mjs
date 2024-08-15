@@ -1,3 +1,5 @@
+import { hostname } from "os";
+
 // next.config.mjs
 export default {
   pageExtensions: ["tsx", "ts", "jsx", "js"],
@@ -9,7 +11,7 @@ export default {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "res.cloudinary.com",
+        hostname: "**",
         pathname: "/**",
       },
     ],

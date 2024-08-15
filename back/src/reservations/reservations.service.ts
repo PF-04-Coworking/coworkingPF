@@ -10,8 +10,8 @@ export class ReservationsService {
 
   //* Rutas GET
 
-  async getReservations() {
-    return this.reservationsRepository.getReservations();
+  async getReservations(search?: string) {
+    return this.reservationsRepository.getReservations(search);
   }
 
   async getReservationsByUserId(id: string) {
@@ -42,5 +42,8 @@ export class ReservationsService {
   deleteReservation(id: string) {
     return this.reservationsRepository.deleteReservation(id);
   }
-}
 
+  cancelReservation(id: string){
+    return this.reservationsRepository.cancelReservation(id);
+  }
+}

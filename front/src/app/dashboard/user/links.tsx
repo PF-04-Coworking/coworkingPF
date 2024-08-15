@@ -1,7 +1,9 @@
 import {
   BuildingIcon,
   CalendarCheck2Icon,
+  CalendarCogIcon,
   CircleUserRoundIcon,
+  UserSearchIcon,
 } from "lucide-react";
 
 const ADMIN_LINKS = [
@@ -18,7 +20,12 @@ const ADMIN_LINKS = [
   {
     name: "Gestionar reservas",
     href: "/dashboard/admin/reservations",
-    icon: <CalendarCheck2Icon size={20} />,
+    icon: <CalendarCogIcon size={20} />,
+  },
+  {
+    name: "Gestionar usuarios",
+    href: "/dashboard/admin/users",
+    icon: <UserSearchIcon size={20} />,
   },
 ];
 
@@ -29,7 +36,7 @@ const USER_LINKS = [
     icon: <CircleUserRoundIcon size={20} />,
   },
   {
-    name: "Gestionar reservas",
+    name: "Mis reservas",
     href: "/dashboard/user/reservations",
     icon: <CalendarCheck2Icon size={20} />,
   },

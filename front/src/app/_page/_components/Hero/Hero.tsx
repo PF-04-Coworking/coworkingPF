@@ -24,10 +24,13 @@ const Hero = () => {
   return (
     <div className="layout flex items-center pt-32 md:pt-36 pb-12 space-x-10">
       <div className="space-y-6">
-        <Heading level="3" className="uppercase">
+        <Heading level="2" className="uppercase">
           Coworking
         </Heading>
-        <Heading level="1" className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem]">
+        <Heading
+          level="1"
+          className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem] text-6xl md:text-8xl"
+        >
           Relux
         </Heading>
         <Paragraph variant="primary">
@@ -38,7 +41,7 @@ const Hero = () => {
           individual. Descubre espacios diseñados para inspirarte y facilitar tu
           productividad.
         </Paragraph>
-        <div className="flex gap-x-4">
+        <div className="gap-x-4 hidden sm:flex">
           {features.map((feature) => (
             <Paragraph
               variant="secondary"
@@ -51,10 +54,7 @@ const Hero = () => {
             </Paragraph>
           ))}
         </div>
-        <div className="space-y-8">
-          <Paragraph variant="primary">
-            ¡Comienza a buscar tu oficina ideal!
-          </Paragraph>
+        <div className="space-y-2">
           <Searchbar />
         </div>
       </div>

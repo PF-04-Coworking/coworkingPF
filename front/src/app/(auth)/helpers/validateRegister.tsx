@@ -44,8 +44,8 @@ const validateRegister = (values: FormValues) => {
     errors.phone =
       "Ingresa un número de teléfono válido (solo números y un '+' opcional al inicio)";
   } else if (values.phone.length < 6) {
-    errors.phone = "Ingresa un número valido";
-  } 
+    errors.phone = "El número de teléfono debe tener más de 6 dígitos";
+  }
 
   return errors;
 };

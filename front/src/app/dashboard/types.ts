@@ -1,3 +1,5 @@
+import { IFullReservation } from "@/types/types";
+
 export interface INavLink {
   name: string;
   href: string;
@@ -15,4 +17,6 @@ export interface IUserData {
   age: number;
   role: string;
   imgUrl: string;
+  is_active: boolean;
+  reservations: IFullReservation[];
 }

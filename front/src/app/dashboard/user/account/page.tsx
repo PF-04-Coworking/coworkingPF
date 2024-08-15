@@ -1,21 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import faceImage from "@/../public/images/face-1.png";
+import faceImage from "@/../public/images/usuario.png";
 import { EditProfileForm } from "../../_components/EditProfileForm";
 import { Paragraph } from "@/components/common/Paragraph";
 import { Heading } from "@/components/common/Heading";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { USER_LINKS } from "../links";
-import { useUser } from "../../_hooks/useUser";
+import { useUser } from "../../../../hooks/useUser";
 
 const Account = () => {
   const { userData } = useUser();
   const { name, lastname, email } = userData || {};
 
+  console.log("userData");
+  console.log(userData);
+
   return (
     <DashboardLayout headerTitle="Mi cuenta" navLinks={USER_LINKS}>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center bg-black/50 rounded-lg p-8">
         <div className="flex flex-col text-center sm:text-left sm:flex-row items-center gap-8 pt-8">
           <Image
             src={faceImage}

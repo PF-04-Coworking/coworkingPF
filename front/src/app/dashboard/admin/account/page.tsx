@@ -1,23 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import faceImage from "@/../public/images/face-1.png";
+import faceImage from "@/../public/images/usuario.png";
 import { EditProfileForm } from "../../_components/EditProfileForm";
 import { Paragraph } from "@/components/common/Paragraph";
 import { Heading } from "@/components/common/Heading";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { ADMIN_LINKS } from "../../user/links";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
-import { useUser } from "../../_hooks/useUser";
+import { useRedirectHook } from "../../_hooks/useRedirectHook";
 
 const Account = () => {
-  const { userData } = useUser();
-  const { name, lastname, email, role } = userData || {};
+  const { userData } = useAuthStore();
+  const { name, lastname, email } = userData || {};
+
+  useRedirectHook();
 
   return (
     <DashboardLayout headerTitle="Mi cuenta" navLinks={ADMIN_LINKS}>
-      <div className="flex flex-col items-center">
-        <div className="flex flex-col text-center sm:text-left sm:flex-row items-center gap-8 pt-8">
+      <div className="flex flex-col items-center bg-background/80 rounded-lg p-8">
+        <div className="flex flex-col text-center sm:text-left sm:flex-row items-center gap-8">
           <Image
             src={faceImage}
             alt="Imagen de perfil"
@@ -28,7 +30,7 @@ const Account = () => {
               {name} {lastname}
             </Heading>
             <Paragraph variant="primary">{email}</Paragraph>
-            <Paragraph variant="secondary">{role}</Paragraph>
+            <Paragraph variant="secondary">Administrador</Paragraph>
           </div>
         </div>
       </div>

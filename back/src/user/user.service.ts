@@ -1,18 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import {
+  contactInfoDto,
   CreateUserDto,
   GoogleAccessTokenDto,
   LoginUserDto,
   UpdateUserDto,
 } from './user.dto';
+import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly usersRepository: UserRepository) {}
+  constructor(private readonly usersRepository: UserRepository,
+    private readonly nodeMailerRepository: NodeMailerRepository
+  ) {}
 
-  getUsers() {
-    return this.usersRepository.getUsers();
+  getUsers(search?: string) {
+    return this.usersRepository.getUsers(search);
   }
 
   getUserById(id: string) {
@@ -46,5 +50,19 @@ export class UserService {
   loginGoogle(credentials: GoogleAccessTokenDto) {
     return this.usersRepository.loginGoogle(credentials);
   }
-}
 
+  async contactInfo(contactInfo: contactInfoDto) {
+
+    await this.nodeMailerRepository.contactEmail(contactInfo);
+
+    return 'Contact email sent successfully';
+  }
+
+  deactivateUser(id: string){
+    return this.usersRepository.deactivateUser(id);
+  }
+
+  activateUser(id: string){
+    return this.usersRepository.activateUser(id);
+  }
+}

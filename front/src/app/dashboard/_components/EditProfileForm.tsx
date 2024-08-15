@@ -18,10 +18,9 @@ const EditProfileForm = () => {
     lastname: Yup.string().required("Debes ingresar un apellido"),
     phone: Yup.string()
       .required("Debes ingresar un número de teléfono")
-      .matches(/^[0-9]+$/, "Número de teléfono unválido")
-      .min(6, "Debes ingresar al menos 6 dígitos")
-      .max(20, "No debes ingresar más de 20 dígitos")
-      .required("Debes ingresar un número de teléfono"),
+      .matches(/^(\+?\d{1,3}-?)\s*\d{6,14}\s*$/, {
+        message: "Número de telefono debe ser de formato: +51 943944312",
+      }),
     country: Yup.string()
       .required("Debes ingresar un país")
       .min(2, "Debes ingresar al menos 3 caracteres"),
@@ -87,7 +86,7 @@ const EditProfileForm = () => {
 
             <div className="space-y-2">
               <InputLabel htmlFor="age">Edad</InputLabel>
-              <FieldValidate type="text" name="age" placeholder="" />
+              <FieldValidate type="number" name="age" placeholder="" />
             </div>
 
             <div className="space-y-2">
@@ -101,12 +100,11 @@ const EditProfileForm = () => {
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-16">
             <Button
               variant="primary"
               type="submit"
               disabled={isSubmitting || !dirty}
-              className="mt-12"
             >
               Guardar cambios
             </Button>

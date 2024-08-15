@@ -1,22 +1,22 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
   Param,
-  Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
+  ApiParam,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { ReservationsService } from './reservations.service';
-import { AddNewReservationDto, UpdateReservationDto } from './reservations.dto';
+import { UpdateReservationDto } from './reservations.dto';
 import { Roles } from 'src/auth/guards/roles.decorator';
 import { UserRole } from 'src/user/user-role.enum';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
@@ -41,20 +41,22 @@ export class ReservationsController {
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  getReservations() {
-    return this.reservationsService.getReservations();
+  getReservations(@Query('search') search?: string) {
+    return this.reservationsService.getReservations(search);
   }
 
   //* Rutas PUT
 
-  //TODO agregar AUTH
-  //! con rol de admin
   @Put('/:id')
   @ApiOperation({ summary: 'Update an existing reservation / Admin only' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'ID of the reservation to update',
+  })
   @ApiResponse({
     status: 200,
-    description: 'The reservation updated',
-    type: [Office],
+    description: 'The updated reservation',
   })
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
@@ -74,9 +76,14 @@ export class ReservationsController {
   //* Rutas DELETE
   @Delete('/:id')
   @ApiOperation({ summary: 'Delete a reservation by ID / Admin only' })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'ID of the reservation to delete',
+  })
   @ApiResponse({
     status: 200,
-    description: 'Succes message ',
+    description: 'Success message',
     type: Office,
   })
   @ApiBearerAuth()
@@ -85,5 +92,20 @@ export class ReservationsController {
   deleteReservation(@Param('id') id: string) {
     return this.reservationsService.deleteReservation(id);
   }
-}
 
+  // Actualiza estado 'is_active' a false y la reserva queda cancelada
+
+  @Put('cancel/:id')
+  @ApiOperation({
+    summary: 'Cancel a reservation with reservation id /Admin only',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Success message and reservation data with cancelled status',
+  })
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
+  cancelReservation(@Param('id') id: string) {
+    return this.reservationsService.cancelReservation(id);
+  }
+}

@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/common/dialog";
+} from "@/components/common/Dialog";
 import { useState } from "react";
 import { CreateOfficeForm } from "../CreateOfficeForm";
 

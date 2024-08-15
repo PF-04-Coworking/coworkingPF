@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsDate,
+  IsEmpty,
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsUUID,
+  IsString,
 } from 'class-validator';
 
 export class AddNewReservationDto {
@@ -12,17 +14,24 @@ export class AddNewReservationDto {
     description: 'Start day of the reservation',
     example: '05/08/2024',
   })
-  @IsDate()
   @IsNotEmpty()
-  start_day: string;
+  @Type(() => Date)
+  start_day: Date;
 
   @ApiProperty({
     description: 'End day of the reservation',
     example: '07/08/2024',
   })
-  @IsDate()
   @IsNotEmpty()
-  end_day: string;
+  @Type(() => Date)
+  end_day: Date;
+
+  @ApiProperty({
+    description: 'Amount per day of the reservation',
+    example: 100,
+  })
+  @IsNotEmpty() //añadi esto para que me dejara hacer peticiones a thunder
+  amount: number;
 
   @ApiProperty({
     description: 'Number of guests for the reservation',
@@ -34,11 +43,11 @@ export class AddNewReservationDto {
 
   @ApiProperty({ description: 'Paid amount' })
   @IsNumber()
-  @IsNotEmpty()
-  paid_amount: number;
+  @IsOptional()
+  paid_amount?: number;
 
   @ApiProperty({ description: 'ID of the office reserved' })
-  @IsUUID('4')
+  @IsString()
   office_id: string;
 }
 
@@ -49,6 +58,7 @@ export class UpdateReservationDto {
     example: '06/08/2024',
   })
   @IsOptional()
+  @Type(() => Date)
   @IsDate()
   @IsNotEmpty()
   start_day: string;
@@ -59,6 +69,7 @@ export class UpdateReservationDto {
     example: '08/08/2024',
   })
   @IsOptional()
+  @Type(() => Date)
   @IsDate()
   @IsNotEmpty()
   end_day: string;

@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  Query,
   Req,
   UnauthorizedException,
   UseGuards,
@@ -20,6 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import {
+  contactInfoDto,
   CreateUserDto,
   GoogleAccessTokenDto,
   LoginUserDto,
@@ -33,7 +35,7 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from 'src/entities/Users.entity';
 import { Reservation } from 'src/entities/Reservations.entity';
-import { request } from 'http';
+import { PaymentsService } from 'src/payments/payments.service';
 
 @ApiTags('user')
 @Controller('user')
@@ -41,6 +43,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly reservationsService: ReservationsService,
+    private readonly stripeService: PaymentsService,
   ) {}
 
   //*GET
@@ -52,13 +55,13 @@ export class UserController {
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  getUsers() {
-    return this.userService.getUsers();
+  getUsers(@Query('search') search?: string) {
+    return this.userService.getUsers(search);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get user by ID  / Admin only' })
-  @ApiResponse({ status: 200, description: 'User data' })
+  @ApiResponse({ status: 200, description: 'User data', type: User })
   @ApiBearerAuth()
   @Roles(UserRole.USER, UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
@@ -71,19 +74,17 @@ export class UserController {
   @ApiOperation({ summary: 'Get reservations by user ID (User only)' })
   @ApiResponse({
     status: 200,
-    description: 'List users reservations',
+    description: 'List of user reservations',
   })
   @ApiBearerAuth()
   @Roles(UserRole.USER, UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  getReservationsByUserId(@Param('id') id: string) {
+  getReservationsByUserId(@Param('id', ParseUUIDPipe) id: string) {
     return this.reservationsService.getReservationsByUserId(id);
   }
 
   //* ruta para que un user loggeado cree una nueva reservación
   @Post(':id/reservations/new')
-  @Roles(UserRole.USER, UserRole.ADMIN)
-  @UseGuards(AuthGuard, RolesGuard)
   @ApiOperation({ summary: 'Add a new reservation (User only)' })
   @ApiResponse({
     status: 201,
@@ -102,11 +103,20 @@ export class UserController {
     status: 500,
     description: 'Internal Server Error.',
   })
+  @ApiBearerAuth()
+  @Roles(UserRole.USER, UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
   async addNewReservation(
-    @Param('id') paramId: string,
+    @Param('id', ParseUUIDPipe) paramId: string,
     @Body() data: AddNewReservationDto,
   ) {
     try {
+      // Process the payment with Stripe
+      const paymentIntent = await this.stripeService.createPaymentIntent(
+        data.amount,
+        'usd',
+      );
+
       // Add the reservation
       const newReservation = await this.reservationsService.addNewReservation(
         paramId,
@@ -117,6 +127,7 @@ export class UserController {
         statusCode: 201,
         message: 'The reservation has been successfully created.',
         data: newReservation,
+        clientSecret: paymentIntent.client_secret, // Return client secret to complete the payment on the frontend
       };
     } catch (error) {
       console.error('Error in addNewReservation:', error);
@@ -135,6 +146,13 @@ export class UserController {
   //*POST
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
+  @ApiResponse({
+    status: 201,
+    description: 'User successfully created',
+  })
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
   createUser(@Body() user: CreateUserDto) {
     return this.userService.createUser(user);
   }
@@ -156,27 +174,71 @@ export class UserController {
   //*LOGIN Y REGISTER
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
+  @ApiResponse({
+    status: 201,
+    description: 'User registered successfully',
+  })
   register(@Body() user: CreateUserDto) {
     return this.userService.register(user);
   }
 
   @Post('login')
   @ApiOperation({ summary: 'Login a user' })
+  @ApiResponse({
+    status: 200,
+    description: 'User logged in successfully',
+  })
   login(@Body() credentials: LoginUserDto) {
-    //{ email: 'prueba2@mail.com', password: '123' }
     return this.userService.login(credentials);
   }
 
   @Post('google/register')
-  @ApiOperation({ summary: 'Register a user desde auth de google' })
+  @ApiOperation({ summary: 'Register a user with Google authentication' })
+  @ApiResponse({
+    status: 201,
+    description: 'User registered with Google successfully',
+  })
   registerGoogle(@Body() credentials: GoogleAccessTokenDto) {
     return this.userService.registerGoogle(credentials);
   }
 
   @Post('google/login')
-  @ApiOperation({ summary: 'Login a user desde auth de google' })
+  @ApiOperation({ summary: 'Login a user with Google authentication' })
+  @ApiResponse({
+    status: 200,
+    description: 'User logged in with Google successfully',
+  })
   loginGoogle(@Body() credentials: GoogleAccessTokenDto) {
     return this.userService.loginGoogle(credentials);
   }
-}
 
+  @Post('contact/form')
+  @ApiOperation({ summary: 'Submit contact information' })
+  @ApiResponse({
+    status: 200,
+    description: 'Contact information submitted successfully',
+  })
+  contactInfo(@Body() contactInfo: contactInfoDto) {
+    return this.userService.contactInfo(contactInfo);
+  }
+
+  @Put('activate/:id')
+  @ApiOperation({ summary: 'Deactivate / ADMIN only' })
+  @ApiResponse({ status: 200, description: 'User successfully deactivated'})
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
+  activateUser(@Param('id') id: string){
+    return this.userService.activateUser(id)
+  }
+
+  @Put('deactivate/:id')
+  @ApiOperation({ summary: 'Activate user / ADMIN only' })
+  @ApiResponse({ status: 200, description: 'User successfully activated'})
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
+  deactivateUser(@Param('id') id: string){
+    return this.userService.deactivateUser(id);
+  }
+}

@@ -1,10 +1,17 @@
+"use client";
+
 import React from "react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/common/Sheet";
-import { Menu } from "lucide-react";
+import { CircleUserRound, Menu } from "lucide-react";
 import { CustomLink } from "../../../../components/common/CustomLink";
 import { TextLogo } from "../../../../components/common/TextLogo";
-import { links } from "../../links";
+import { authLinks, links } from "../../links";
 import "./MobileMenu.css";
+import Link from "next/link";
+import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
+import { Logout } from "@/app/dashboard/_components/Logout";
+import { Button } from "@/components/common/Button";
+import { Paragraph } from "@/components/common/Paragraph";
 
 interface ISheetTriggerButtonProps
   extends React.HTMLAttributes<HTMLDivElement> {}
@@ -25,7 +32,14 @@ const SheetTriggerButton = React.forwardRef<
 
 SheetTriggerButton.displayName = "SheetTriggerButton";
 
-const Sidebar = () => {
+const MobileMenu = () => {
+  const { userData } = useAuthStore();
+
+  const dashboardLink =
+    userData?.role === "admin"
+      ? "/dashboard/admin/account"
+      : "/dashboard/user/account";
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -42,6 +56,17 @@ const Sidebar = () => {
         >
           <TextLogo />
         </CustomLink>
+        <div className="items-center gap-x-4 p-2.5 mt-6 flex">
+          <Link href={dashboardLink} className="flex items-center gap-x-2">
+            <CircleUserRound size={35} className="text-primary" />
+            <Paragraph
+              variant="primary"
+              className="!text-primary font-semibold"
+            >
+              {userData?.name}
+            </Paragraph>
+          </Link>
+        </div>
         <nav className="flex flex-col gap-y-4 mt-8">
           {links.map((link) => (
             <CustomLink
@@ -54,9 +79,28 @@ const Sidebar = () => {
             </CustomLink>
           ))}
         </nav>
+        {!userData && (
+          <nav className="flex flex-col gap-y-4 mt-8">
+            <Link href="/login">
+              <Button variant="outline" className="w-full">
+                Iniciar sesión
+              </Button>
+            </Link>
+            <Link href="/register">
+              <Button variant="primary" className="w-full">
+                Registrarse
+              </Button>
+            </Link>
+          </nav>
+        )}
+        {userData && (
+          <div className="p-2 mt-4">
+            <Logout />
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );
 };
 
-export { Sidebar };
+export { MobileMenu };

@@ -83,6 +83,25 @@ export class OfficeController {
   getOfficeById(@Param('id') id: string) {
     return this.officeService.getOfficeById(id);
   }
+  @Put('activate/:id')
+  @ApiOperation({ summary: 'Activate office / ADMIN only' })
+  @ApiResponse({ status: 200, description: 'Office set active' })
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
+  activateOffice(@Param('id') id: string) {
+    return this.officeService.activateOffice(id);
+  }
+
+  @Put('deactivate/:id')
+  @ApiOperation({ summary: 'Deactivate office / ADMIN only' })
+  @ApiResponse({ status: 200, description: 'Office set inactive' })
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
+  deactivaeOffice(@Param('id') id: string) {
+    return this.officeService.deactivateOffice(id);
+  }
 
   @Post()
   @ApiOperation({ summary: 'Create a new office / Admin only' })
@@ -114,7 +133,6 @@ export class OfficeController {
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Update an office' })
   @ApiOperation({ summary: 'Update an office / Admin only' })
   @ApiResponse({ status: 200, description: 'The updated office', type: Office })
   @ApiResponse({ status: 404, description: 'Office not found' })
