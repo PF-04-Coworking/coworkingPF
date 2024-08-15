@@ -8,13 +8,13 @@ import { Heading } from "@/components/common/Heading";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { ADMIN_LINKS } from "../../user/links";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
-import { useRedirectHook } from "../../_hooks/useRedirectHook";
+import { useRedirectAdminHook } from "../../_hooks/useRedirectAdminHook";
 
 const Account = () => {
   const { userData } = useAuthStore();
   const { name, lastname, email } = userData || {};
 
-  useRedirectHook();
+  useRedirectAdminHook();
 
   return (
     <DashboardLayout headerTitle="Mi cuenta" navLinks={ADMIN_LINKS}>

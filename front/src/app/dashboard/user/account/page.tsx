@@ -8,13 +8,13 @@ import { Heading } from "@/components/common/Heading";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { USER_LINKS } from "../links";
 import { useUser } from "../../../../hooks/useUser";
+import { useRedirectUserHook } from "../../_hooks/useRedirectUserHook";
 
 const Account = () => {
   const { userData } = useUser();
   const { name, lastname, email } = userData || {};
 
-  console.log("userData");
-  console.log(userData);
+  useRedirectUserHook();
 
   return (
     <DashboardLayout headerTitle="Mi cuenta" navLinks={USER_LINKS}>
