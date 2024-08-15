@@ -1,13 +1,42 @@
 import { Header } from "@/app/_page/_components/HeaderSection";
 import { FooterSection } from "@/components/FooterSection";
-import Image from "next/image";
 import { Heading } from "@/components/common/Heading";
 import { Highlight } from "@/components/common/Highlight";
 import { Paragraph } from "@/components/common/Paragraph";
 import { TextCard } from "./_components/TextCard";
-import Link from "next/link";
-import { Button } from "@/components/common/Button";
-import { TerminalIcon } from "lucide-react";
+
+const members = [
+  {
+    name: "Bardo Untiveros",
+    role: "Frontend",
+    image: "/images/bardo-untiveros.png",
+  },
+  {
+    name: "Ángel Vázquez",
+    role: "Frontend",
+    image: "/images/bardo-untiveros.png",
+  },
+  {
+    name: "Felipe Cabana",
+    role: "Backend",
+    image: "/images/bardo-untiveros.png",
+  },
+  {
+    name: "Lola Campos",
+    role: "Backend",
+    image: "/images/bardo-untiveros.png",
+  },
+  {
+    name: "Mateo Tello",
+    role: "Backend",
+    image: "/images/bardo-untiveros.png",
+  },
+  {
+    name: "Renata Montoya",
+    role: "Backend",
+    image: "/images/bardo-untiveros.png",
+  },
+];
 
 const About = () => {
   return (
@@ -64,37 +93,28 @@ const About = () => {
         </div>
         <div className="text-center space-y-12 !mt-24">
           <Heading level="2">Nuestro equipo de desarrollo</Heading>
-          <Paragraph variant="secondary" className="max-w-xl mx-auto">
-            Sé parte de muchos equipos que realizan sus proyectos de manera
-            colaborativa y productiva. ¡Con Relux, podrás encontrar espacios de
-            trabajo que se ajusten a tus necesidades y que te permitan trabajar
-            de manera eficiente y productiva!
-          </Paragraph>
-          <div className="space-y-4">
-            <div className="flex items-center space-x-4 text-white">
-              <TerminalIcon size={20} />
-              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
-            </div>
-            <div className="flex items-center space-x-4 text-white">
-              <TerminalIcon size={20} />
-              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
-            </div>
-            <div className="flex items-center space-x-4 text-white">
-              <TerminalIcon size={20} />
-              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
-            </div>
-            <div className="flex items-center space-x-4 text-white">
-              <TerminalIcon size={20} />
-              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
-            </div>
-            <div className="flex items-center space-x-4 text-white">
-              <TerminalIcon size={20} />
-              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
-            </div>
-            <div className="flex items-center space-x-4 text-white">
-              <TerminalIcon size={20} />
-              <Paragraph variant="primary">Bardo Untiveros</Paragraph>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {members.map((member, index) => (
+              <div
+                key={index}
+                className="border-2 border-primary rounded-lg p-6 text-white flex flex-col items-center justify-center gap-6"
+              >
+                <div
+                  className="bg-cover rounded-full size-24"
+                  style={{
+                    backgroundImage: "url(/images/bardo-untiveros.png)",
+                  }}
+                ></div>
+                <div className="space-y-2">
+                  <Paragraph variant="primary" className="font-semibold">
+                    {member.name}
+                  </Paragraph>
+                  <Paragraph variant="primary" className="!text-primary">
+                    {member.role}
+                  </Paragraph>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

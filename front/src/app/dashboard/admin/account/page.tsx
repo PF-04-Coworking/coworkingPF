@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import faceImage from "@/../public/images/face-1.png";
+import faceImage from "@/../public/images/usuario.png";
 import { EditProfileForm } from "../../_components/EditProfileForm";
 import { Paragraph } from "@/components/common/Paragraph";
 import { Heading } from "@/components/common/Heading";

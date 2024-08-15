@@ -27,7 +27,10 @@ const Hero = () => {
         <Heading level="2" className="uppercase">
           Coworking
         </Heading>
-        <Heading level="1" className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem]">
+        <Heading
+          level="1"
+          className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem]"
+        >
           Relux
         </Heading>
         <Paragraph variant="primary">
@@ -52,13 +55,7 @@ const Hero = () => {
           ))}
         </div>
         <div className="space-y-2">
-          <Paragraph variant="primary">
-            ¡Comienza a buscar tu oficina ideal!
-          </Paragraph>
           <Searchbar />
-          <Paragraph variant="secondary" size="xs">
-            Nosotros cuidamos de tus datos en nuestra <span className="text-white">politica de privacidad</span>
-          </Paragraph>
         </div>
       </div>
       <div className="shrink-0 relative hidden lg:block">

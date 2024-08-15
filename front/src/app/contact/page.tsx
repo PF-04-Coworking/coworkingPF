@@ -32,7 +32,7 @@ const Contact = () => {
         <Image
           src={supportImage}
           alt="Soporte"
-          className="w-full lg:w-1/3 rounded-tl-3xl rounded-br-3xl hidden lg:block"
+          className="w-auto rounded-tl-3xl rounded-br-3xl hidden lg:block h-[40rem]"
         />
       </div>
       <FooterSection />
