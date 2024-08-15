@@ -944,10 +944,7 @@ ol li {
                                                                                                 <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif;">&nbsp;<strong>Nombre y Apelldio</strong></p>
                                                                                             </li>
                                                                                             <li style="color: #ffffff;">
-                                                                                                <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif;"><strong>RUC/RUT/DNI</strong></p>
-                                                                                            </li>
-                                                                                            <li style="color: #ffffff;">
-                                                                                                <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif;"><strong>País de residencia actualmente</strong></p>
+                                                                                                <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif;"><strong>País de residencia actual</strong></p>
                                                                                             </li>
                                                                                         </ul>
                                                                                         <p style="color: #ffffff; font-family: 'open sans', 'helvetica neue', helvetica, arial, sans-serif;">Un miembro de nuestro equípo se pondra en contacto dentro de las 72hrs hábiles.</p>
