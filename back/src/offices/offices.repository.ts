@@ -82,7 +82,6 @@ export class OfficeRepository {
           office.description = element.description;
           office.details= element.details,
           office.capacity = element.capacity;
-          office.stock = element.stock;
           office.price = element.price;
           office.imgUrl = element.imgUrl;
           office.services = element.services;
@@ -162,5 +161,40 @@ export class OfficeRepository {
 
     return 'Office deleted successfully';
   }
+
+  async activateOffice(id: string){
+    const foundOffice = await this.officeRepository.findOneBy({id});
+
+    if(!foundOffice) throw new NotFoundException(`Office with id '${id}' was not found`);
+
+    if(foundOffice.is_active === true) return `Office is already active`;
+
+    await this.officeRepository.update(id, {is_active: true});
+
+    const dbOffice = await this.officeRepository.findOneBy({id});
+
+    return {
+      message: 'Office set active',
+      dbOffice
+    }
+  }
+
+  async deactivateOffice(id: string){
+    const foundOffice = await this.officeRepository.findOneBy({id});
+
+    if(!foundOffice) throw new NotFoundException(`Office with id '${id}' was not found`);
+
+    if(foundOffice.is_active === false) return `Office is already inactive`;
+
+    await this.officeRepository.update(id, {is_active: false});
+
+    const dbOffice = await this.officeRepository.findOneBy({id});
+
+    return {
+      message: 'Office set inactive',
+      dbOffice
+    }
+  }
+
 }
 

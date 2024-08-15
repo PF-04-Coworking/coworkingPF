@@ -1,5 +1,6 @@
 import { PickType, ApiProperty } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
   IsNumber,
@@ -97,6 +98,10 @@ export class CreateUserDto {
   @IsOptional()
   @ApiProperty({ description: 'User role', enum: UserRole, required: false })
   role: UserRole;
+
+  @IsOptional()
+  @IsBoolean()
+  is_active: boolean;
 }
 
 export class UpdateUserDto {

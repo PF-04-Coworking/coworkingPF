@@ -221,4 +221,24 @@ export class UserController {
   contactInfo(@Body() contactInfo: contactInfoDto) {
     return this.userService.contactInfo(contactInfo);
   }
+
+  @Put('activate/:id')
+  @ApiOperation({ summary: 'Deactivate / ADMIN only' })
+  @ApiResponse({ status: 200, description: 'User successfully deactivated'})
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
+  activateUser(@Param('id') id: string){
+    return this.userService.activateUser(id)
+  }
+
+  @Put('deactivate/:id')
+  @ApiOperation({ summary: 'Activate user / ADMIN only' })
+  @ApiResponse({ status: 200, description: 'User successfully activated'})
+  @ApiBearerAuth()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
+  deactivateUser(@Param('id') id: string){
+    return this.userService.deactivateUser(id);
+  }
 }
