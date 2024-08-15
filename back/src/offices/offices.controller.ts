@@ -172,5 +172,4 @@ export class OfficeController {
   deleteOffice(@Param('id', ParseUUIDPipe) id: string) {
     return this.officeService.deleteOffice(id);
   }
-
 }
