@@ -34,11 +34,30 @@ export class FileUploadController {
   @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({ summary: 'Upload an image for a user / User and Admin' })
   @ApiConsumes('multipart/form-data')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 201, description: 'Image successfully uploaded' })
-  @Roles(UserRole.USER)
-  @Roles(UserRole.ADMIN)
+  @ApiParam({ name: 'id', type: String, description: 'ID of the user' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Image successfully uploaded',
+    schema: {
+      example: {
+        message: 'Image uploaded successfully',
+        url: 'https://example.com/uploads/yourimage.jpg',
+      },
+    },
+  })
   @ApiBearerAuth()
+  @Roles(UserRole.USER, UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   uploadUserImage(
     @Param('id') userId: string,
@@ -55,18 +74,39 @@ export class FileUploadController {
         ],
       }),
     )
-    File: Express.Multer.File,
+    file: Express.Multer.File,
   ) {
     console.log('user id: ', userId);
-    console.log('File: ', File);
-    return this.fileUploadRepository.uploadUserImage(File, userId);
+    console.log('File: ', file);
+    return this.fileUploadRepository.uploadUserImage(file, userId);
   }
 
   @Post('uploadOfficeImage/:id')
   @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({ summary: 'Upload an image for an office / Admin only' })
   @ApiConsumes('multipart/form-data')
-  @ApiResponse({ status: 201, description: 'Image successfully uploaded' })
+  @ApiParam({ name: 'id', type: String, description: 'ID of the office' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Image successfully uploaded',
+    schema: {
+      example: {
+        message: 'Image uploaded successfully',
+        url: 'https://example.com/uploads/officeimage.jpg',
+      },
+    },
+  })
   @ApiBearerAuth()
   @Roles(UserRole.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)

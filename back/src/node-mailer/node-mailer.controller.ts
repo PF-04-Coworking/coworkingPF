@@ -1,31 +1,65 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { NodeMailerService } from './node-mailer.service';
-import { User } from 'src/entities/Users.entity';
-import { Office } from 'src/entities/Offices.entity';
-import { Reservation } from 'src/entities/Reservations.entity';
-import { contactInfoDto } from 'src/user/user.dto';
+import { ApiTags, ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
 
+@ApiTags('NodeMailer')
 @Controller('node-mailer')
 export class NodeMailerController {
   constructor(private readonly nodeMailerService: NodeMailerService) {}
 
-  registerEmail(userNoPassword: Partial<User>) {
+  @Post('register')
+  @ApiOperation({ summary: 'Send registration email' })
+  @ApiBody({
+    description: 'Partial user data without password',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Registration email sent successfully',
+  })
+  @ApiResponse({ status: 400, description: 'Invalid user data' })
+  registerEmail(@Body() userNoPassword) {
     return this.nodeMailerService.registerEmail(userNoPassword);
   }
 
-  contactEmail(contactInfo: contactInfoDto) {
+  @Post('contact')
+  @ApiOperation({ summary: 'Send contact email' })
+  @ApiBody({
+    description: 'Contact information for the email',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Contact email sent successfully',
+  })
+  @ApiResponse({ status: 400, description: 'Invalid contact information' })
+  contactEmail(@Body() contactInfo) {
     return this.nodeMailerService.contactEmail(contactInfo);
   }
 
-  successEmail(foundOffice: Office, foundUser: User, data: any) {
+  @Post('success')
+  @ApiOperation({ summary: 'Send success email' })
+  @ApiBody({
+    description: 'Office and user information along with additional data',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Success email sent successfully',
+  })
+  @ApiResponse({ status: 400, description: 'Invalid data provided' })
+  successEmail(@Body() foundOffice, @Body() foundUser, @Body() data) {
     return this.nodeMailerService.successEmail(foundOffice, foundUser, data);
   }
 
-  reservationEmail(
-    startDate: Date,
-    endDate: Date,
-    reservation: Partial<Reservation>,
-  ) {
+  @Post('reservation')
+  @ApiOperation({ summary: 'Send reservation email' })
+  @ApiBody({
+    description: 'Reservation details including start and end dates',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Reservation email sent successfully',
+  })
+  @ApiResponse({ status: 400, description: 'Invalid reservation details' })
+  reservationEmail(@Body() startDate, @Body() endDate, @Body() reservation) {
     return this.nodeMailerService.reservationEmail(
       startDate,
       endDate,
