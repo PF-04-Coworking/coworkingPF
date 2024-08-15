@@ -10,7 +10,7 @@ import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { EditReservationsModal } from "../reservations/_components/modals/EditReservationsModal";
 import { DeactivateUser } from "./_components/DeactivateUser";
-import { useRedirectHook } from "../../_hooks/useRedirectHook";
+import { useRedirectAdminHook } from "../../_hooks/useRedirectAdminHook";
 
 const UsersPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,7 +20,7 @@ const UsersPage = () => {
     setSearchTerm(event.target.value);
   };
 
-  useRedirectHook();
+  useRedirectAdminHook();
 
   return (
     <DashboardLayout headerTitle="Gestionar usuarios" navLinks={ADMIN_LINKS}>

@@ -7,9 +7,12 @@ import { useUser } from "@/hooks/useUser";
 import { Paragraph } from "@/components/common/Paragraph";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { InfoIcon } from "lucide-react";
+import { useRedirectUserHook } from "../../_hooks/useRedirectUserHook";
 
 const Reservations = () => {
   const { userData } = useUser();
+
+  useRedirectUserHook();
 
   const pendingReservations = userData?.reservations?.filter(
     (reservation) => new Date(reservation.start_day) >= new Date()

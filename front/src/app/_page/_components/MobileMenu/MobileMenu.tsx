@@ -56,17 +56,19 @@ const MobileMenu = () => {
         >
           <TextLogo />
         </CustomLink>
-        <div className="items-center gap-x-4 p-2.5 mt-6 flex">
-          <Link href={dashboardLink} className="flex items-center gap-x-2">
-            <CircleUserRound size={35} className="text-primary" />
-            <Paragraph
-              variant="primary"
-              className="!text-primary font-semibold"
-            >
-              {userData?.name}
-            </Paragraph>
-          </Link>
-        </div>
+        {userData && (
+          <div className="items-center gap-x-4 p-2.5 mt-6 flex">
+            <Link href={dashboardLink} className="flex items-center gap-x-2">
+              <CircleUserRound size={35} className="text-primary" />
+              <Paragraph
+                variant="primary"
+                className="!text-primary font-semibold"
+              >
+                {userData?.name}
+              </Paragraph>
+            </Link>
+          </div>
+        )}
         <nav className="flex flex-col gap-y-4 mt-8">
           {links.map((link) => (
             <CustomLink
