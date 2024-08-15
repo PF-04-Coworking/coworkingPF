@@ -17,6 +17,7 @@ import {
 import axios from 'axios';
 import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
 import { Reservation } from 'src/entities/Reservations.entity';
+import { domainToUnicode } from 'url';
 
 @Injectable()
 export class UserRepository {
@@ -268,5 +269,45 @@ export class UserRepository {
       user: userNoPassword,
     };
   }
+
+  async deactivateUser(id: string){
+    const foundUser = await this.userRepository.findOneBy({id});
+
+    if(!foundUser) throw new NotFoundException(`User with id '${id}' was not found`);
+
+    if(foundUser.is_active === false) return `User is already deactivated`;
+
+    await this.userRepository.update(id, {is_active: false});
+
+    const dbUser = await this.userRepository.findOneBy({id});
+
+    const { password:_, ...user} = dbUser;
+
+    return {
+      message: 'User was successfully deactivated',
+      user
+    }
+  }
+
+  async activateUser(id: string){
+    const foundUser = await this.userRepository.findOneBy({id});
+
+    if(!foundUser) throw new NotFoundException(`User with id '${id}' was not found`);
+
+    if(foundUser.is_active === true) return `User is already active`;
+
+    await this.userRepository.update(id, {is_active: true});
+
+    const dbUser = await this.userRepository.findOneBy({id});
+
+    const { password:_, ...user} = dbUser;
+
+    return {
+      message: 'User was successfully activated',
+      user
+    }
+
+  }
+
 }
 

@@ -57,6 +57,9 @@ export class User {
   })
   imgUrl: string;
 
+  @Column({default: true})
+  is_active: boolean;
+
   @ApiProperty({ description: 'User reservations' })
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];

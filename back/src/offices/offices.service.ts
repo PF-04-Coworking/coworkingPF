@@ -36,9 +36,6 @@ export class OfficeService {
       office.imgUrl = imgUrl;
     }
 
-    // Temporalmente
-    office['stock'] = 100;
-
     return this.officeRepository.createOffice(office);
   }
 
@@ -73,6 +70,14 @@ export class OfficeService {
 
   deleteOffice(id: string) {
     return this.officeRepository.deleteOffice(id);
+  }
+
+  activateOffice(id: string){
+    return this.officeRepository.activateOffice(id);
+  }
+  
+  deactivateOffice(id: string){
+    return this.officeRepository.deactivateOffice(id);
   }
 }
 
