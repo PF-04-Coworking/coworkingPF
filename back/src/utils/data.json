@@ -107,7 +107,7 @@
     "capacity": 280,
     "price": 330,
     "imgUrl": "https://res.cloudinary.com/danpp1ys8/image/upload/v1722925958/p5tqjsy7zaaug1es6kpp.jpg",
-    "services": ["Internet", "Acceso a transporte público"]
+    "services": ["Internet", "Acceso al transporte público"]
   },
   {
     "name": "Torre Ejecutiva Santa Fe",

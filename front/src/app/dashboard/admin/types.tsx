@@ -8,6 +8,7 @@ export interface IOffice {
   price: string;
   imgUrl: string;
   services: string[];
+  is_active: boolean;
 }
 
 export interface IEditOfficeData {

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/common/Sheet";
-import { Menu } from "lucide-react";
+import { CircleUserRound, Menu } from "lucide-react";
 import { CustomLink } from "../../../../components/common/CustomLink";
 import { TextLogo } from "../../../../components/common/TextLogo";
 import { authLinks, links } from "../../links";
@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { Logout } from "@/app/dashboard/_components/Logout";
 import { Button } from "@/components/common/Button";
+import { Paragraph } from "@/components/common/Paragraph";
 
 interface ISheetTriggerButtonProps
   extends React.HTMLAttributes<HTMLDivElement> {}
@@ -34,6 +35,11 @@ SheetTriggerButton.displayName = "SheetTriggerButton";
 const MobileMenu = () => {
   const { userData } = useAuthStore();
 
+  const dashboardLink =
+    userData?.role === "admin"
+      ? "/dashboard/admin/account"
+      : "/dashboard/user/account";
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -50,6 +56,17 @@ const MobileMenu = () => {
         >
           <TextLogo />
         </CustomLink>
+        <div className="items-center gap-x-4 p-2.5 mt-6 flex">
+          <Link href={dashboardLink} className="flex items-center gap-x-2">
+            <CircleUserRound size={35} className="text-primary" />
+            <Paragraph
+              variant="primary"
+              className="!text-primary font-semibold"
+            >
+              {userData?.name}
+            </Paragraph>
+          </Link>
+        </div>
         <nav className="flex flex-col gap-y-4 mt-8">
           {links.map((link) => (
             <CustomLink

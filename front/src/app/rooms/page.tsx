@@ -13,6 +13,7 @@ import { FooterSection } from "@/components/FooterSection";
 import { sortOptions } from "@/lib/constants/sortOfficesOptions";
 import { CardOffice } from "@/components/dashboard/CardOfficex";
 import { useEffect } from "react";
+import { Paragraph } from "@/components/common/Paragraph";
 
 const Rooms = () => {
   const [sortOption, setSortOption] = useState("");
@@ -110,21 +111,28 @@ const Rooms = () => {
                 <div className="w-16 h-16 border-4 border-transparent text-primary text-2xl animate-spin flex items-center justify-center border-t-primary rounded-full"></div>
               </div>
             </div>
+          ) : sortedOffices.length > 0 ? (
+            sortedOffices
+              .filter((office) => office.is_active)
+              .map((office, index) => (
+                <CardOffice
+                  key={index}
+                  id={office.id}
+                  imgUrl={office.imgUrl}
+                  name={office.name}
+                  description={office.description}
+                  details={office.details}
+                  capacity={office.capacity}
+                  price={office.price}
+                  services={office.services}
+                  location={office.location}
+                  is_active={office.is_active}
+                />
+              ))
           ) : (
-            sortedOffices.map((office, index) => (
-              <CardOffice
-                key={index}
-                id={office.id}
-                imgUrl={office.imgUrl}
-                name={office.name}
-                description={office.description}
-                details={office.details}
-                capacity={office.capacity}
-                price={office.price}
-                services={office.services}
-                location={office.location}
-              />
-            ))
+            <Paragraph variant="primary" className="text-center">
+              No se han encontrado oficinas con los criterios de búsqueda
+            </Paragraph>
           )}
         </div>
       </div>

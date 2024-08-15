@@ -8,6 +8,9 @@ import { Paragraph } from "@/components/common/Paragraph";
 import { TextInput } from "@/components/common/TextInput";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
+import { EditReservationsModal } from "../reservations/_components/modals/EditReservationsModal";
+import { DeactivateUser } from "./_components/DeactivateUser";
+import { useRedirectHook } from "../../_hooks/useRedirectHook";
 
 const UsersPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,6 +19,8 @@ const UsersPage = () => {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
+
+  useRedirectHook();
 
   return (
     <DashboardLayout headerTitle="Gestionar usuarios" navLinks={ADMIN_LINKS}>
@@ -31,14 +36,15 @@ const UsersPage = () => {
           <SearchIcon size={20} className="text-white absolute right-4 top-3" />
         </div>
       </div>
-      <div className="rounded-md border-2 border-primary">
-        <table className="w-full text-sm bg-background/50 backdrop-blur-md rounded-md table-fixed">
+      <div className="rounded-md border-2 border-primary overflow-auto">
+        <table className="min-w-[50rem] text-sm bg-background/50 backdrop-blur-md rounded-md table-fixed">
           <thead className="text-left">
             <tr>
               <th className="px-8 py-3 w-4/12">Nombre</th>
-              <th className="px-8 py-3 w-5/12">Contacto</th>
+              <th className="px-8 py-3 w-3/12">Contacto</th>
               <th className="px-8 py-3 w-2/12">Ubicación</th>
               <th className="px-8 py-3 w-2/12">Edad</th>
+              <th className="px-8 py-3 w-2/12"></th>
             </tr>
           </thead>
           <tbody>
@@ -57,6 +63,15 @@ const UsersPage = () => {
                         <Paragraph variant="primary">
                           {user.name} {user.lastname}
                         </Paragraph>
+                        {user.is_active ? (
+                          <Paragraph variant="secondary">
+                            <span className="text-primary">Activo</span>
+                          </Paragraph>
+                        ) : (
+                          <Paragraph variant="secondary">
+                            <span className="text-red-400">Inactivo</span>
+                          </Paragraph>
+                        )}
                       </div>
                     </div>
                   </td>
@@ -76,6 +91,12 @@ const UsersPage = () => {
                   </td>
                   <td className="p-8">
                     <Paragraph variant="secondary">{user.age || "-"}</Paragraph>
+                  </td>
+                  <td className="py-6 px-8">
+                    <DeactivateUser
+                      userId={user.id}
+                      is_active={user.is_active}
+                    />
                   </td>
                 </tr>
               ))}

@@ -12,29 +12,29 @@ const members = [
     image: "/images/bardo-untiveros.png",
   },
   {
-    name: "Ángel Vázquez",
+    name: "Angel Vázquez",
     role: "Frontend",
     image: "/images/bardo-untiveros.png",
   },
   {
     name: "Felipe Cabana",
     role: "Backend",
-    image: "/images/bardo-untiveros.png",
+    image: "/images/felipe-cabana.png",
   },
   {
     name: "Lola Campos",
     role: "Backend",
-    image: "/images/bardo-untiveros.png",
+    image: "/images/lola-campos.png",
   },
   {
     name: "Mateo Tello",
     role: "Backend",
-    image: "/images/bardo-untiveros.png",
+    image: "/images/mateo-tello.png",
   },
   {
     name: "Renata Montoya",
     role: "Backend",
-    image: "/images/bardo-untiveros.png",
+    image: "/images/renata-montoya.png",
   },
 ];
 
@@ -100,9 +100,9 @@ const About = () => {
                 className="border-2 border-primary rounded-lg p-6 text-white flex flex-col items-center justify-center gap-6"
               >
                 <div
-                  className="bg-cover rounded-full size-24"
+                  className="bg-cover bg-center rounded-full size-32"
                   style={{
-                    backgroundImage: "url(/images/bardo-untiveros.png)",
+                    backgroundImage: `url(${member.image})`,
                   }}
                 ></div>
                 <div className="space-y-2">

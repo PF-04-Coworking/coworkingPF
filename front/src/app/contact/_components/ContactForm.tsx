@@ -14,8 +14,8 @@ const ContactForm = () => {
     email: Yup.string().required("Debes ingresar un email"),
     phone: Yup.string()
       .required("Debes ingresar un número de teléfono")
-      .matches(/^\+[0-9]{1,3}[-]?[0-9]{3}[-]?[0-9]{3}-?[0-9]{4}$/, {
-        message: "Número de telefono debe ser de formato: +51943944312",
+      .matches(/^(\+?\d{1,3}-?)\s*\d{6,14}\s*$/, {
+        message: "Número de telefono debe ser de formato: +51 943944312",
       }),
     description: Yup.string()
       .required("Debes ingresar una descripción")

@@ -29,7 +29,7 @@ const Hero = () => {
         </Heading>
         <Heading
           level="1"
-          className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem]"
+          className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem] text-6xl md:text-8xl"
         >
           Relux
         </Heading>
@@ -41,7 +41,7 @@ const Hero = () => {
           individual. Descubre espacios diseñados para inspirarte y facilitar tu
           productividad.
         </Paragraph>
-        <div className="flex gap-x-4">
+        <div className="gap-x-4 hidden sm:flex">
           {features.map((feature) => (
             <Paragraph
               variant="secondary"

@@ -20,8 +20,8 @@ export const servicesIcons: Record<string, IServicesIcon> = {
   Gimnasio: { icon: <Dumbbell />, name: "Gimnasio" },
   "Zona de descanso": { icon: <Armchair />, name: "Zona de descanso" },
   "Sala de conferencias": { icon: <Mic2 />, name: "Sala de conferencias" },
-  "Acceso a transporte publico": {
+  "Acceso al transporte publico": {
     icon: <Bus />,
-    name: "Acceso a transporte público",
+    name: "Acceso al transporte público",
   },
 };

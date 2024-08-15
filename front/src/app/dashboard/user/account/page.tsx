@@ -13,6 +13,9 @@ const Account = () => {
   const { userData } = useUser();
   const { name, lastname, email } = userData || {};
 
+  console.log("userData");
+  console.log(userData);
+
   return (
     <DashboardLayout headerTitle="Mi cuenta" navLinks={USER_LINKS}>
       <div className="flex flex-col items-center bg-black/50 rounded-lg p-8">
