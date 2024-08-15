@@ -24,12 +24,12 @@ const Hero = () => {
   return (
     <div className="layout flex items-center pt-32 md:pt-36 pb-12 space-x-10">
       <div className="space-y-6">
-        <Heading level="2" className="uppercase">
+        <Heading level="2" className="uppercase !text-lg md:text-3xl">
           Coworking
         </Heading>
         <Heading
           level="1"
-          className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem] text-6xl md:text-8xl"
+          className="uppercase text-gradient w-min font-[Clash] font-bold tracking-[1rem]"
         >
           Relux
         </Heading>
