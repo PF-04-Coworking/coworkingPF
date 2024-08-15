@@ -1,7 +1,9 @@
 import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ApiOperation, ApiResponse, ApiTags, ApiBody } from '@nestjs/swagger';
 import Stripe from 'stripe';
 
+@ApiTags('payments')
 @Controller('payments')
 export class PaymentsController {
   private stripe: Stripe;
@@ -18,8 +20,46 @@ export class PaymentsController {
   }
 
   @Post('create-payment-intent')
+  @ApiOperation({ summary: 'Create a new payment intent' })
+  @ApiBody({
+    description: 'Payment details',
+    schema: {
+      type: 'object',
+      properties: {
+        amount: { type: 'number', description: 'Payment amount in cents' },
+        currency: { type: 'string', description: 'Currency code (e.g., usd)' },
+        payment_method: {
+          type: 'string',
+          description: 'Stripe payment method ID',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Payment intent successfully created',
+    schema: {
+      type: 'object',
+      properties: {
+        clientSecret: {
+          type: 'string',
+          description: 'Client secret for the payment intent',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal server error',
+    schema: {
+      type: 'object',
+      properties: {
+        error: { type: 'string', description: 'Error message' },
+      },
+    },
+  })
   async createPaymentIntent(
-    @Body() body: { amount: number; currency: string, payment_method: string },
+    @Body() body: { amount: number; currency: string; payment_method: string },
     @Res() res,
   ) {
     const { amount, currency, payment_method } = body;
@@ -31,18 +71,19 @@ export class PaymentsController {
         payment_method,
         confirm: true,
         automatic_payment_methods: {
-          enabled: true, 
-          allow_redirects: 'never', 
+          enabled: true,
+          allow_redirects: 'never',
         },
       });
 
-      return res.status(HttpStatus.OK).json({ 
-        clientSecret: paymentIntent.client_secret 
+      return res.status(HttpStatus.OK).json({
+        clientSecret: paymentIntent.client_secret,
       });
     } catch (error) {
       console.error('Error creating payment intent:', error);
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error: error.message });
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ error: error.message });
     }
   }
 }
-

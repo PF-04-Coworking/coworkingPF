@@ -114,7 +114,6 @@ export class OfficeController {
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Update an office' })
   @ApiOperation({ summary: 'Update an office / Admin only' })
   @ApiResponse({ status: 200, description: 'The updated office', type: Office })
   @ApiResponse({ status: 404, description: 'Office not found' })
@@ -155,4 +154,3 @@ export class OfficeController {
     return this.officeService.deleteOffice(id);
   }
 }
-
