@@ -14,7 +14,7 @@ const members = [
   {
     name: "Angel Vázquez",
     role: "Frontend",
-    image: "/images/bardo-untiveros.png",
+    image: "/images/Angel.jpg",
   },
   {
     name: "Felipe Cabana",
