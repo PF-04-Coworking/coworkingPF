@@ -9,7 +9,7 @@ import { useReservations } from "./_hooks/useReservations";
 import ReservationsTable from "./_components/ReservationsTable";
 import { Sort } from "@/app/rooms/_components/Sort";
 import { sortOptions } from "@/lib/constants/sortReservationsOptions";
-import { useRedirectHook } from "../../_hooks/useRedirectHook";
+import { useRedirectAdminHook } from "../../_hooks/useRedirectAdminHook";
 
 const ReservationsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,7 +39,7 @@ const ReservationsPage = () => {
     }
   });
 
-  useRedirectHook();
+  useRedirectAdminHook();
 
   return (
     <DashboardLayout headerTitle="Gestionar reservas" navLinks={ADMIN_LINKS}>

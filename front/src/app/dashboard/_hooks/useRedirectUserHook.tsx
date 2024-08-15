@@ -2,13 +2,13 @@ import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const useRedirectHook = () => {
+const useRedirectUserHook = () => {
   const { userData } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
-    if (userData?.role === "user") router.push("/");
+    if (!userData) router.push("/");
   }, [userData, router]);
 };
 
-export { useRedirectHook };
+export { useRedirectUserHook };
