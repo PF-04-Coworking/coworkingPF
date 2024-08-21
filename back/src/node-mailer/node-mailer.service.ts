@@ -27,7 +27,7 @@ export class NodeMailerService {
         return this.nodeMailerRepository.contactEmail(contactInfo);
     }
 
-    @Cron('* 13 * * *') 
+    @Cron('0 13 * * *') 
     async sendReservationReminders() {
       console.log('Cron job ejecutado: ', new Date().toISOString());
       const tomorrow = new Date();
