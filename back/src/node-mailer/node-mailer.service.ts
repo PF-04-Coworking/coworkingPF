@@ -27,7 +27,7 @@ export class NodeMailerService {
         return this.nodeMailerRepository.contactEmail(contactInfo);
     }
 
-    @Cron('0 8 * * *') // expresión manual ('0 8 * * *'), o para dos minutos para poder testear: ('*/2 * * * *')
+    @Cron('* 13 * * *') 
     async sendReservationReminders() {
       console.log('Cron job ejecutado: ', new Date().toISOString());
       const tomorrow = new Date();
