@@ -10,22 +10,23 @@ import { contactInfoDto } from 'src/user/user.dto';
 
 @Injectable()
 export class NodeMailerService {
-    constructor(private readonly nodeMailerRepository: NodeMailerRepository,
-        @InjectRepository(Reservation) 
-        private readonly reservationRepository: Repository<Reservation>,
-    ){}
+  constructor(
+    private readonly nodeMailerRepository: NodeMailerRepository,
+    @InjectRepository(Reservation)
+    private readonly reservationRepository: Repository<Reservation>,
+  ) {}
 
-    registerEmail(userNoPassword: Partial<User>) {
-        return this.nodeMailerRepository.registerEmail(userNoPassword);
-    }
+  registerEmail(userNoPassword: Partial<User>) {
+    return this.nodeMailerRepository.registerEmail(userNoPassword);
+  }
 
-    successEmail(foundOffice: Office, foundUser: User, data: any) {
-        return this.nodeMailerRepository.successEmail(foundOffice, foundUser, data);
-    }
+  successEmail(foundOffice: Office, foundUser: User, data: any) {
+    return this.nodeMailerRepository.successEmail(foundOffice, foundUser, data);
+  }
 
-    contactEmail(contactInfo: contactInfoDto) {
-        return this.nodeMailerRepository.contactEmail(contactInfo);
-    }
+  contactEmail(contactInfo: contactInfoDto) {
+    return this.nodeMailerRepository.contactEmail(contactInfo);
+  }
 
     @Cron('0 13 * * *') 
     async sendReservationReminders() {
@@ -50,10 +51,18 @@ export class NodeMailerService {
         await this.reservationEmail(startDate , endDate, reservation);
       }
     }
-  
-  
-      async reservationEmail(startDate: Date, endDate: Date, reservation: Partial<Reservation>) {
-        return this.nodeMailerRepository.reservationEmail(startDate , endDate, reservation)
-      }
+  }
 
+  async reservationEmail(
+    startDate: Date,
+    endDate: Date,
+    reservation: Partial<Reservation>,
+  ) {
+    return this.nodeMailerRepository.reservationEmail(
+      startDate,
+      endDate,
+      reservation,
+    );
+  }
 }
+

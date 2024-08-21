@@ -63,8 +63,6 @@ const CardOffice = ({
     setIsModalOpen(true);
   };
 
-  console.log("isActive", is_active);
-
   return (
     <>
       <div className="backdrop-blur-lg bg-secondaryDark/30 hover:bg-secondaryDark/60 transition-colors rounded-t-md shadow-md text-white h-[50rem]">
