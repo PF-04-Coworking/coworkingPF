@@ -28,25 +28,28 @@ export class NodeMailerService {
     return this.nodeMailerRepository.contactEmail(contactInfo);
   }
 
-  @Cron('0 8 * * *') // expresión manual ('0 8 * * *'), o para dos minutos para poder testear: ('*/2 * * * *')
-  async sendReservationReminders() {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const startOfDay = new Date(tomorrow.setHours(0, 0, 0, 0));
-    const endOfDay = new Date(tomorrow.setHours(23, 59, 59, 999));
-
-    const reservations = await this.reservationRepository.find({
-      where: {
-        start_day: Between(startOfDay, endOfDay),
-      },
-      relations: ['user', 'office'],
-    });
-
-    for (const reservation of reservations) {
-      const { user, office } = reservation;
-      const startDate = reservation.start_day;
-      const endDate = reservation.end_day;
-      await this.reservationEmail(startDate, endDate, reservation);
+    @Cron('0 13 * * *') 
+    async sendReservationReminders() {
+      console.log('Cron job ejecutado: ', new Date().toISOString());
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const startOfDay = new Date(tomorrow.setHours(0, 0, 0, 0));
+      const endOfDay = new Date(tomorrow.setHours(23, 59, 59, 999));
+  
+      const reservations = await this.reservationRepository.find({
+        where: {
+          start_day: Between(startOfDay, endOfDay),
+        },
+        relations: ['user', 'office'],
+      });
+  
+      for (const reservation of reservations) {
+        const { user, office } = reservation;
+        const startDate = reservation.start_day;
+        const endDate =  reservation.end_day;
+        console.log(`Enviando recordatorio a ${user.email} para la reserva en ${office.name}`);
+        await this.reservationEmail(startDate , endDate, reservation);
+      }
     }
   }
 
