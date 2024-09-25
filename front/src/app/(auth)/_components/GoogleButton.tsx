@@ -16,6 +16,8 @@ interface IProps {
 const GoogleButton = ({ redirectRoute, text, disabled }: IProps) => {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
   const redirectUri = process.env.NEXT_PUBLIC_DOMAIN + redirectRoute;
+  console.log(process.env.NEXT_PUBLIC_DOMAIN);
+  console.log(redirectUri);
   const scope =
     "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
   const responseType = "token";

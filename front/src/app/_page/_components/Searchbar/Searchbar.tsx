@@ -41,9 +41,11 @@ const Searchbar = () => {
     }
   }, []);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     setCountry(inputValue);
+    await fetchOffices(country);
+    setShowDropdown(true); // Mostrar el dropdown al hacer clic en Buscar
   };
 
   const fetchOffices = async (query: string) => {
@@ -99,7 +101,7 @@ const Searchbar = () => {
 
       {showDropdown && (
         <div className="absolute top-14 z-10 shadow-lg" ref={dropdownRef}>
-          <ScrollArea className="bg-background border-primary border rounded-md p-4 h-[15rem]">
+          <ScrollArea className="bg-[#111111] border-primary border rounded-md p-1 h-[15rem]">
             {offices.length > 0 ? (
               <ul>
                 {offices.map((office, index) => (
@@ -124,21 +126,20 @@ const Searchbar = () => {
               </ul>
             ) : (
               <div className="w-[30rem]">
-                <div className="p-3 flex justify-center">
-                  <Paragraph variant="secondary">
-                    No se encontraron oficinas en tu ubicación. <br />
-                    <Link href={`/rooms`} className="flex justify-center mt-5">
-                      <Paragraph
-                        variant="primary"
-                        className="!text-primary border-b-primary border-b"
-                      >
-                        Ver todas las oficinas
-                      </Paragraph>
-                    </Link>
-                  </Paragraph>
-                </div>
-                <div></div>
+              <div className="p-3 flex justify-center">
+                <Paragraph variant="secondary">
+                  No se encontraron oficinas en tu ubicación. <br />
+                  <Link href={`/rooms`} className="flex justify-center mt-5">
+                    <Paragraph
+                      variant="primary"
+                      className="!text-primary border-b-primary border-b"
+                    >
+                      Ver todas las oficinas
+                    </Paragraph>
+                  </Link>
+                </Paragraph>
               </div>
+            </div>
             )}
           </ScrollArea>
         </div>
