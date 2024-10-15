@@ -24,7 +24,7 @@ export class OfficeRepository {
       services?: ServicesEnum | ServicesEnum[];
       capacity?: number;
       location?: LocationEnum;
-      price?: number;
+      price?: number;x|
     } = {},
   ) {
     const pageNumber = Number(page) || 1;
