@@ -16,7 +16,7 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
 
   return (
     <div
-      className="h-full min-h-screen bg-no-repeat bg-top bg-cover bg-fixed"
+      className="bg-no-repeat bg-cover h-[210vh]"
       style={{ backgroundImage: "url(/images/fondo-1.png)" }}
     >
       <Header />
@@ -64,10 +64,9 @@ const OfficeById = ({ params }: { params: { id: string } }) => {
               <div className="space-y-4">
                 <Paragraph variant="primary">Acerca de la oficina</Paragraph>
                 <Paragraph variant="secondary">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Repudiandae asperiores mollitia at ut laborum eius adipisci,
-                  voluptatem, ducimus pariatur saepe officia eum! Inventore
-                  natus minus accusantium. Rerum a vel aliquam.
+                  {office.details
+                    ? office.details
+                    : "Pronto incluiremos los detalles de esta oficina."}
                 </Paragraph>
                 <div className="!mt-6">
                   <ModalCalendar

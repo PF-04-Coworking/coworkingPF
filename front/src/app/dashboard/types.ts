@@ -17,5 +17,6 @@ export interface IUserData {
   age: number;
   role: string;
   imgUrl: string;
+  is_active: boolean;
   reservations: IFullReservation[];
 }

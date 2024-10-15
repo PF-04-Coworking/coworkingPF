@@ -10,6 +10,7 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { useReservationsStore } from "../_stores/useReservationsStore";
+import { CancelReservation } from "./CancelReservation";
 
 const EditReservationForm = ({
   reservation,
@@ -47,7 +48,6 @@ const EditReservationForm = ({
     });
     resetForm({ values });
     const _reservation = await promise;
-    console.log(_reservation);
     updateReservation(reservation.id, formattedValues);
   };
 
@@ -93,20 +93,13 @@ const EditReservationForm = ({
           <DialogFooter className="flex gap-2 mt-8">
             <Button
               variant="primary"
-              className="w-full"
+              className="w-1/2"
               type="submit"
               disabled={isSubmitting || !dirty}
             >
               Confirmar
             </Button>
-            <Button
-              type="button"
-              variant="destructive"
-              className="w-full"
-              // onClick={() => handleDeleteOffice({ id: selectedOffice.id })}
-            >
-              Eliminar
-            </Button>
+            <CancelReservation reservationId={reservation.id} />
           </DialogFooter>
         </Form>
       )}

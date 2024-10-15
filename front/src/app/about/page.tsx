@@ -1,12 +1,42 @@
 import { Header } from "@/app/_page/_components/HeaderSection";
 import { FooterSection } from "@/components/FooterSection";
-import Image from "next/image";
 import { Heading } from "@/components/common/Heading";
 import { Highlight } from "@/components/common/Highlight";
 import { Paragraph } from "@/components/common/Paragraph";
 import { TextCard } from "./_components/TextCard";
-import Link from "next/link";
-import { Button } from "@/components/common/Button";
+
+const members = [
+  {
+    name: "Bardo Untiveros",
+    role: "Frontend",
+    image: "/images/bardo-untiveros.png",
+  },
+  {
+    name: "Angel Vázquez",
+    role: "Frontend",
+    image: "/images/Angel.jpg",
+  },
+  {
+    name: "Felipe Cabana",
+    role: "Backend",
+    image: "/images/felipe-cabana.png",
+  },
+  {
+    name: "Lola Campos",
+    role: "Backend",
+    image: "/images/lola-campos.png",
+  },
+  {
+    name: "Mateo Tello",
+    role: "Backend",
+    image: "/images/mateo-tello.png",
+  },
+  {
+    name: "Renata Montoya",
+    role: "Backend",
+    image: "/images/renata-montoya.png",
+  },
+];
 
 const About = () => {
   return (
@@ -62,16 +92,30 @@ const About = () => {
           </div>
         </div>
         <div className="text-center space-y-12 !mt-24">
-          <Heading level="2">Sigue con tus proyectos</Heading>
-          <Paragraph variant="secondary" className="max-w-xl mx-auto">
-            Sé parte de muchos equipos que realizan sus proyectos de manera
-            colaborativa y productiva. ¡Con Relux, podrás encontrar espacios de
-            trabajo que se ajusten a tus necesidades y que te permitan trabajar
-            de manera eficiente y productiva!
-          </Paragraph>
-          <Link href="/rooms" className="block">
-            <Button variant="primary">Buscar oficinas</Button>
-          </Link>
+          <Heading level="2">Nuestro equipo de desarrollo</Heading>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {members.map((member, index) => (
+              <div
+                key={index}
+                className="border-2 border-primary rounded-lg p-6 text-white flex flex-col items-center justify-center gap-6"
+              >
+                <div
+                  className="bg-cover bg-center rounded-full size-32"
+                  style={{
+                    backgroundImage: `url(${member.image})`,
+                  }}
+                ></div>
+                <div className="space-y-2">
+                  <Paragraph variant="primary" className="font-semibold">
+                    {member.name}
+                  </Paragraph>
+                  <Paragraph variant="primary" className="!text-primary">
+                    {member.role}
+                  </Paragraph>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <FooterSection />

@@ -53,11 +53,15 @@ export class User {
   @Column({
     type: 'text',
     nullable: true,
-    default: 'https://i.postimg.cc/yxJm8gJT/default-User.png',
+    default: 'https://i.postimg.cc/cLbq5TZH/usuario.png',
   })
   imgUrl: string;
+
+  @Column({default: true})
+  is_active: boolean;
 
   @ApiProperty({ description: 'User reservations' })
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }
+

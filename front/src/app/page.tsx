@@ -5,6 +5,8 @@ import { Features } from "./_page/_components/FeaturesSection";
 import { Testimonials } from "./_page/_components/TestimonialsSection";
 import { CallToAction } from "./_page/_components/CallToActionSection";
 import { FooterSection } from "@/components/FooterSection";
+import VoiceflowChat from "@/components/common/Chat-bot";
+
 
 export default function Page() {
   return (
@@ -19,6 +21,7 @@ export default function Page() {
       <Testimonials />
       <CallToAction />
       <FooterSection />
+      <VoiceflowChat/>
     </div>
   );
 }

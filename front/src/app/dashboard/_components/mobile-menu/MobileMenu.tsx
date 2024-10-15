@@ -9,7 +9,8 @@ import { CustomLink } from "@/components/common/CustomLink";
 import { TextLogo } from "@/components/common/TextLogo";
 import "./MobileMenu.css";
 import React from "react";
-import { ADMIN_LINKS } from "../../user/links";
+import { INavLink } from "../../types";
+import { Logout } from "../Logout";
 
 interface ISheetTriggerButtonProps
   extends React.HTMLAttributes<HTMLDivElement> {}
@@ -30,7 +31,7 @@ const SheetTriggerButton = React.forwardRef<
 
 SheetTriggerButton.displayName = "SheetTriggerButton";
 
-const MobileMenu = () => {
+const MobileMenu = ({ links }: { links: INavLink[] }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -48,7 +49,7 @@ const MobileMenu = () => {
           <TextLogo />
         </CustomLink>
         <nav className="flex flex-col gap-y-4 mt-8">
-          {ADMIN_LINKS.map((link) => (
+          {links.map((link) => (
             <CustomLink
               key={link.name}
               href={link.href}
@@ -60,6 +61,9 @@ const MobileMenu = () => {
             </CustomLink>
           ))}
         </nav>
+        <div className="p-2 mt-4">
+          <Logout />
+        </div>
       </SheetContent>
     </Sheet>
   );

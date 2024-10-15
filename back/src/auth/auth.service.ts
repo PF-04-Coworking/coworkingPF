@@ -15,8 +15,6 @@ export class AuthService {
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
-    console.log(process.env.GOOGLE_CLIENT_ID);
-
     const payload = ticket.getPayload();
 
     if (!payload || payload.email !== email) {

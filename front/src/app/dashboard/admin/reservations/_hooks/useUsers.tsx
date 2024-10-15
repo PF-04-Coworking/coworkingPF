@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "@/app/(auth)/stores/useAuthStore";
 import { IUserData } from "@/app/dashboard/types";
 import { apiUsers } from "@/lib/api/users/apiUsers";
+import { useUsersStore } from "../../account/_stores/useUsersStore";
 
 const useUsers = ({ searchTerm }: { searchTerm: string }) => {
-  const [users, setUsers] = useState<IUserData[]>([]);
+  const { users, setUsers } = useUsersStore();
   const { authToken } = useAuthStore();
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const useUsers = ({ searchTerm }: { searchTerm: string }) => {
     };
 
     getUsers();
-  }, [authToken, searchTerm]);
+  }, [authToken, searchTerm, setUsers]);
 
   return { users };
 };

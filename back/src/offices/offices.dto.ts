@@ -10,6 +10,7 @@ import {
   MaxLength,
   MinLength,
   IsEnum,
+  IsBoolean,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { ServicesEnum } from 'src/utils/services.enum';
@@ -52,6 +53,17 @@ export class CreateOfficesDto {
   @ApiProperty({ description: 'Office capacity' })
   capacity: number;
 
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(10)
+  @MaxLength(150)
+  @ApiProperty({
+    description: 'Office details',
+    minLength: 10,
+    maxLength: 150,
+  })
+  details: string;
+
   @IsNotEmpty()
   @Type(() => Number)
   @IsNumber()
@@ -62,6 +74,10 @@ export class CreateOfficesDto {
   @IsUrl()
   @ApiProperty({ description: 'Office image URL', required: false })
   imgUrl: string;
+
+  @IsOptional()
+  @IsBoolean()
+  is_active: boolean;
 
   @IsArray()
   @ArrayNotEmpty()
@@ -101,6 +117,13 @@ export class UpdateOfficeDto {
   description: string;
 
   @IsOptional()
+  @IsString()
+  @ApiProperty({
+    description: 'Office details',
+  })
+  details: string;
+
+  @IsOptional()
   @Type(() => Number)
   @IsNumber()
   @ApiProperty({ description: 'Office capacity' })
@@ -109,14 +132,12 @@ export class UpdateOfficeDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  @ApiProperty({ description: 'Office stock' })
-  stock: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber()
   @ApiProperty({ description: 'Office price' })
   price: number;
+
+  @IsOptional()
+  @IsBoolean()
+  is_active: boolean;
 
   @IsOptional()
   @IsArray()

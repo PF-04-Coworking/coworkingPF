@@ -18,6 +18,7 @@ import { useOfficesStore } from "../../../../../../stores/useOfficesStore";
 import { apiOffices } from "@/lib/api/offices/apiOffices";
 import { toast } from "react-toastify";
 import { FieldValidate } from "@/components/common/FieldValidate";
+import { DeactivateOffice } from "../DeactivateOffice";
 
 interface IProps {
   selectedOffice: IOffice;
@@ -30,24 +31,8 @@ const EditOfficeModal = ({
   isModalOpen,
   setIsModalOpen,
 }: IProps) => {
-  const { updateStoredOffice, removeStoredOffice } = useOfficesStore();
+  const { updateStoredOffice } = useOfficesStore();
   const { authToken } = useAuthStore();
-
-  const handleDeleteOffice = async ({ id }: { id: string }) => {
-    try {
-      if (!authToken) return;
-      const promise = apiOffices.deleteOffice(id, authToken);
-      toast.promise(promise, {
-        pending: "Eliminando...",
-        success: "Oficina eliminada exitosamente",
-        error: "Error",
-      });
-      await promise;
-      removeStoredOffice(id);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleEditOffice = async (
     values: IEditOfficeData,
@@ -59,6 +44,7 @@ const EditOfficeModal = ({
       formData.append("name", values.name);
       formData.append("location", values.location);
       formData.append("description", values.description);
+      formData.append("details", values.details);
       formData.append("capacity", values.capacity);
       formData.append("price", values.price);
       values.services.forEach((service) =>
@@ -66,7 +52,6 @@ const EditOfficeModal = ({
       );
       // @ts-ignore
       formData.append("file", values.file);
-      console.log("authToken", authToken);
       const promise = apiOffices.updateOffice(
         selectedOffice.id,
         formData,
@@ -115,13 +100,14 @@ const EditOfficeModal = ({
         <div>
           <Formik
             initialValues={{
-              name: selectedOffice.name,
-              description: selectedOffice.description,
-              location: selectedOffice.location,
-              capacity: selectedOffice.capacity,
-              price: selectedOffice.price,
+              name: selectedOffice.name || "",
+              description: selectedOffice.description || "",
+              details: selectedOffice.details || "",
+              location: selectedOffice.location || "",
+              capacity: selectedOffice.capacity || "",
+              price: selectedOffice.price || "",
               file: undefined,
-              services: selectedOffice.services,
+              services: selectedOffice.services || [],
             }}
             validationSchema={validationSchema}
             // @ts-ignore
@@ -155,6 +141,14 @@ const EditOfficeModal = ({
                     />
                   </div>
                   <div className="grid gap-2">
+                    <InputLabel htmlFor="details">Detalles</InputLabel>
+                    <FieldValidate
+                      type="text"
+                      name="details"
+                      className="rounded-md py-3 mt-1 text-md w-full bg-inherit text-white border focus:outline-none border-primary px-3 text-sm"
+                    />
+                  </div>
+                  <div className="grid gap-2">
                     <InputLabel htmlFor="capacity">
                       Número máximo de invitados
                     </InputLabel>
@@ -166,7 +160,7 @@ const EditOfficeModal = ({
                   </div>
                   <div className="grid gap-2">
                     <InputLabel htmlFor="price">
-                      Precio de alquiler por día
+                      Precio de alquiler por día (US$)
                     </InputLabel>
                     <FieldValidate
                       type="number"
@@ -212,22 +206,17 @@ const EditOfficeModal = ({
                 <DialogFooter className="flex gap-2 mt-8">
                   <Button
                     variant="primary"
-                    className="w-full"
+                    className="w-1/2"
                     type="submit"
                     disabled={isSubmitting || !dirty}
                   >
                     Confirmar
                   </Button>
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    className="w-full"
-                    onClick={() =>
-                      handleDeleteOffice({ id: selectedOffice.id })
-                    }
-                  >
-                    Eliminar
-                  </Button>
+                  <DeactivateOffice
+                    officeId={selectedOffice.id}
+                    is_active={selectedOffice.is_active}
+                    setIsModalOpen={setIsModalOpen}
+                  />
                 </DialogFooter>
               </Form>
             )}

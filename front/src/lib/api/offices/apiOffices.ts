@@ -45,12 +45,28 @@ const apiOffices = {
     return response.data;
   },
 
-  deleteOffice: async (officeId: string, authToken: string) => {
-    const response = await axiosClient.delete(`/offices/${officeId}`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
+  deactivateOffice: async (officeId: string, authToken: string) => {
+    await axiosClient.put(
+      `/offices/deactivate/${officeId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+  },
+
+  activateOffice: async (officeId: string, authToken: string) => {
+    await axiosClient.put(
+      `/offices/activate/${officeId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
   },
 };
 

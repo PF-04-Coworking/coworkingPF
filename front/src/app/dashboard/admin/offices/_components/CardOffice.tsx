@@ -16,10 +16,12 @@ const CardOffice = ({
   name,
   location,
   description,
+  details,
   capacity,
   price,
   imgUrl,
   services,
+  is_active,
 }: IOffice) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOffice, setSelectedOffice] = useState<IOffice>({
@@ -27,10 +29,12 @@ const CardOffice = ({
     name,
     location,
     description,
+    details,
     capacity,
     price,
     imgUrl,
     services,
+    is_active,
   });
 
   const handleAddInfo = ({
@@ -38,19 +42,23 @@ const CardOffice = ({
     name,
     location,
     description,
+    details,
     capacity,
     price,
     services,
+    is_active,
   }: IOffice) => {
     setSelectedOffice({
       id,
       name,
       location,
       description,
+      details,
       capacity,
       price,
       imgUrl,
       services,
+      is_active,
     });
     setIsModalOpen(true);
   };
@@ -73,6 +81,11 @@ const CardOffice = ({
         <div className="p-6 lg:p-8 flex flex-col gap-6 justify-between w-full h-1/2">
           <Paragraph variant="primary" className="font-medium">
             {name}
+            {!is_active ? (
+              <span className="text-red-400"> (Inactiva)</span>
+            ) : (
+              <span className="text-primary"> (Activa)</span>
+            )}
           </Paragraph>
           <div className="space-y-2">
             <div className="flex items-center gap-4">
@@ -111,10 +124,12 @@ const CardOffice = ({
                 name,
                 location,
                 description,
+                details,
                 capacity,
                 price,
                 imgUrl,
                 services,
+                is_active,
               })
             }
           >

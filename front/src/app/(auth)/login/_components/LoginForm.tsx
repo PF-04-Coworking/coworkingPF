@@ -1,7 +1,6 @@
 "use client";
 
 import { Formik, Form } from "formik";
-import { validateLogin } from "@/app/(auth)/helpers/validateLogin";
 import { FieldValidate } from "@/components/common/FieldValidate";
 import { Button } from "@/components/common/Button";
 import { InputLabel } from "@/components/common/InputLabel";
@@ -11,6 +10,7 @@ import { apiAuth } from "@/lib/api/auth/apiAuth";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useAuthStore } from "../../stores/useAuthStore";
+import * as Yup from "yup";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -34,13 +34,20 @@ const LoginForm = () => {
     setSubmitting(false);
   };
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Ingresa un correo electrónico válido")
+      .required("Requerido"),
+    password: Yup.string().required("Requerido"),
+  });
+
   return (
     <Formik
       initialValues={{
         email: "",
         password: "",
       }}
-      validate={validateLogin}
+      validationSchema={validationSchema}
       onSubmit={handleSubmitLogin}
     >
       {({ isSubmitting }: any) => (

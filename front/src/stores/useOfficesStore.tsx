@@ -10,7 +10,7 @@ interface IOfficesStore {
     imgUrl?: string
   ) => void;
   addStoredOffice: (office: IOffice) => void;
-  removeStoredOffice: (id: string) => void;
+  toggleActivateOffice: (id: string) => void;
 }
 
 const useOfficesStore = create<IOfficesStore>((set) => ({
@@ -24,10 +24,13 @@ const useOfficesStore = create<IOfficesStore>((set) => ({
     })),
   addStoredOffice: (office: IOffice) =>
     set((state) => ({ offices: [...state.offices, office] })),
-  removeStoredOffice: (id: string) =>
+  toggleActivateOffice: (id: string) => {
     set((state) => ({
-      offices: state.offices.filter((office) => office.id !== id),
-    })),
+      offices: state.offices.map((office) =>
+        office.id === id ? { ...office, is_active: !office.is_active } : office
+      ),
+    }));
+  },
 }));
 
 export { useOfficesStore };

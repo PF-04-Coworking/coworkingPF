@@ -1,5 +1,6 @@
 import { IUserData } from "@/app/dashboard/types";
 import { axiosClient } from "../apiConfig";
+import { IContactData } from "@/types/types";
 
 const apiUsers = {
   getUsers: async (accessToken: string, searchTerm: string) => {
@@ -34,6 +35,34 @@ const apiUsers = {
       },
     });
     return response.data;
+  },
+
+  deactivateUser: async (userId: string, accessToken: string) => {
+    return await axiosClient.put(
+      `/user/deactivate/${userId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  },
+
+  activateUser: async (userId: string, accessToken: string) => {
+    return await axiosClient.put(
+      `/user/activate/${userId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  },
+
+  contactMessage: async (formData: IContactData) => {
+    return await axiosClient.post(`/user/contact/form`, formData);
   },
 };
 

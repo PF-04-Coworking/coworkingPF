@@ -1,14 +1,10 @@
 export enum ServicesEnum {
-    INTERNET = 'Internet',
-    CAFE = 'Cafe',
-    TELEVISOR = 'Televisor',
-    AIRE_ACONDICIONADO = 'Aire Acondicionado',
-    PROYECTOR = 'Proyector',
-    ESCRITORIO_ERGONOMICO = 'Escritorio Ergonómico',
-    CATERING = 'Catering',
-    SERVICIO_DE_LIMPIEZA = 'Servicio de Limpieza',
-    ACCESO_A_TRANSPORTE_PUBLICO = 'Acceso a transporte publico',
-    GIMNASIO = 'Gimnasio',
-    ESTACIONAMIENTO = 'Estacionamiento',
-  }
-  
+  INTERNET = 'Internet',
+  CAFE = 'Cafe',
+  GIMNASIO = 'Gimnasio',
+  ESTACIONAMIENTO = 'Estacionamiento',
+  ZONA_DE_DESCANSO = 'Zona de descanso',
+  SALA_DE_CONFERENCIAS = 'Sala de conferencias',
+  ACCESO_AL_TRANSPORTE_PUBLICO = 'Acceso al transporte publico',
+}
+

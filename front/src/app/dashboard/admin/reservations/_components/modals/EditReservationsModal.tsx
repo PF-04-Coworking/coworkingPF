@@ -10,7 +10,7 @@ import {
 } from "@/components/common/Dialog";
 import EditReservationForm from "../EditReservationForm";
 import { IFullReservation, IReservation } from "@/types/types";
-import { SettingsIcon } from "lucide-react";
+import { EditIcon, SettingsIcon } from "lucide-react";
 import { Tooltip } from "@/components/common/Tooltip";
 
 const EditReservationsModal = ({
@@ -23,12 +23,14 @@ const EditReservationsModal = ({
   return (
     <div className="">
       <Tooltip text="Editar">
-        <div
-          className="p-2 hover:bg-primary transition rounded-md cursor-pointer w-min"
+        <Button
+          variant="outline"
+          className="w-min !px-3"
           onClick={() => setIsModalOpen(true)}
+          disabled={!reservation.is_active}
         >
-          <SettingsIcon size={20} />
-        </div>
+          <EditIcon size={20} />
+        </Button>
       </Tooltip>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>

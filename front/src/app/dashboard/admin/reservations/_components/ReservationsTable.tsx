@@ -5,6 +5,7 @@ import {
   CalendarCheckIcon,
   CalendarClockIcon,
   CalendarIcon,
+  CalendarX,
   UserIcon,
 } from "lucide-react";
 import Image from "next/image";
@@ -17,7 +18,7 @@ const ReservationsTable = ({
 }) => {
   return (
     <div className="rounded-md border-2 border-primary overflow-auto">
-      <table className="w-full text-sm bg-background/50 backdrop-blur-md rounded-md">
+      <table className="min-w-[60rem] text-sm bg-background/50 backdrop-blur-md rounded-md">
         <thead className="text-left">
           <tr>
             <th className="px-8 py-3 w-4/12">Usuario</th>
@@ -28,6 +29,15 @@ const ReservationsTable = ({
           </tr>
         </thead>
         <tbody>
+          {reservations.length === 0 && (
+            <tr className="border-t-2 border-primary">
+              <td className="py-6 px-8" colSpan={4}>
+                <Paragraph variant="primary">
+                  No hay reservas disponibles
+                </Paragraph>
+              </td>
+            </tr>
+          )}
           {reservations.map((reservation) => (
             <tr key={reservation.id} className="border-t-2 border-primary">
               <td className="py-6 px-8">
@@ -78,11 +88,19 @@ const ReservationsTable = ({
                   <Paragraph variant="secondary">
                     Fin: {utcDateFormatter(reservation.end_day)}
                   </Paragraph>
-                  {new Date(reservation.end_day).getDate() <
-                  new Date().getDate() ? (
+                  {!reservation.is_active ? (
                     <Paragraph
                       variant="secondary"
-                      className=" flex items-center gap-x-2"
+                      className="flex items-center gap-x-2 !text-red-4|00"
+                    >
+                      <CalendarX size={20} className="flex-shrink-0" />
+                      Cancelada
+                    </Paragraph>
+                  ) : new Date(reservation.end_day).getDate() <
+                    new Date().getDate() ? (
+                    <Paragraph
+                      variant="secondary"
+                      className="flex items-center gap-x-2"
                     >
                       <CalendarCheckIcon size={20} className="flex-shrink-0" />
                       Terminada
@@ -91,7 +109,7 @@ const ReservationsTable = ({
                     new Date().getDate() ? (
                     <Paragraph
                       variant="secondary"
-                      className="!text-green-500 flex items-center gap-x-2"
+                      className="!text-green-400 flex items-center gap-x-2"
                     >
                       <CalendarIcon size={20} className="flex-shrink-0" />
                       Pendiente
@@ -99,7 +117,7 @@ const ReservationsTable = ({
                   ) : (
                     <Paragraph
                       variant="secondary"
-                      className="!text-blue-500 flex items-center gap-x-2"
+                      className="!text-blue-400 flex items-center gap-x-2"
                     >
                       <CalendarClockIcon size={20} className="flex-shrink-0" />
                       En curso

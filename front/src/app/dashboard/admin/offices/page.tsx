@@ -6,10 +6,10 @@ import { TextInput } from "@/components/common/TextInput";
 import { SearchIcon } from "lucide-react";
 import { DashboardLayout } from "../../_components/dashboard-layout/DashboardLayout";
 import { ADMIN_LINKS } from "../../user/links";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useOffices } from "@/hooks/useOffices";
 import { IFilters } from "@/app/rooms/types";
-import { EditReservationsModal } from "../reservations/_components/modals/EditReservationsModal";
+import { useRedirectAdminHook } from "../../_hooks/useRedirectAdminHook";
 
 const DashboardOffices = () => {
   const [filters] = useState<IFilters>({
@@ -33,6 +33,8 @@ const DashboardOffices = () => {
       office.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  useRedirectAdminHook();
+
   return (
     <DashboardLayout headerTitle="Gestionar oficinas" navLinks={ADMIN_LINKS}>
       <div className="flex justify-between">
@@ -51,7 +53,7 @@ const DashboardOffices = () => {
         </div>
         <CardAdd />
       </div>
-      <div className="w-full 2xl:grid-cols-3 grid gap-10 md:grid-cols-2 grid-cols-1">
+      <div className="w-full 2xl:grid-cols-3 grid gap-10 md:grid-cols-2 grid-cols-1 pb-8">
         {searchedOffices.map((office, index) => (
           <CardOffice
             key={index}
@@ -61,8 +63,10 @@ const DashboardOffices = () => {
             capacity={office.capacity}
             price={office.price}
             description={office.description}
+            details={office.details}
             imgUrl={office.imgUrl}
             services={office.services}
+            is_active={office.is_active}
           />
         ))}
       </div>

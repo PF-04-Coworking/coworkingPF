@@ -1028,7 +1028,7 @@ button.es-button {
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" class="esd-block-text es-p10t es-p10b" esd-links-color="#EB9A32">
-                                                                                        <p style="color: #ffffff;">Preguntas? Complete el formulario en nuestra <a target="_blank" style="color: #eb9a32;" href="https://Relux/contact/form">pagina de contacto</a> y nos comunicaremos con usted lo antes posible.&nbsp;</p>
+                                                                                        <p style="color: #ffffff;">Preguntas? Complete el formulario en nuestra <a target="_blank" style="color: #eb9a32;" href="https://coworking-pf.vercel.app/contact">pagina de contacto</a> y nos comunicaremos con usted lo antes posible.&nbsp;</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>

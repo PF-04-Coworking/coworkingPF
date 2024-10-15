@@ -1,5 +1,7 @@
 import {
   BadRequestException,
+  HttpException,
+  HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -17,6 +19,7 @@ import {
 import axios from 'axios';
 import { NodeMailerRepository } from 'src/node-mailer/node-mailer.repository';
 import { Reservation } from 'src/entities/Reservations.entity';
+import { domainToUnicode } from 'url';
 
 @Injectable()
 export class UserRepository {
@@ -42,34 +45,42 @@ export class UserRepository {
         'user.age',
         'user.role',
         'user.imgUrl',
+        'user.is_active',
         'reservations',
       ]);
-  
+
     if (search) {
-      const searchTerms = search.split(' ').map(term => term.toLowerCase());
-  
-      query.where('LOWER(user.email) LIKE :email', { email: `%${searchTerms.join(' ')}%` });
-  
+      const searchTerms = search.split(' ').map((term) => term.toLowerCase());
+
+      query.where('LOWER(user.email) LIKE :email', {
+        email: `%${searchTerms.join(' ')}%`,
+      });
+
       if (searchTerms.length > 1) {
         query.orWhere(
           new Brackets((qb) => {
-            qb.where('LOWER(user.name) LIKE :name', { name: `%${searchTerms[0]}%` })
-              .andWhere('LOWER(user.lastname) LIKE :lastname', { lastname: `%${searchTerms[1]}%` });
+            qb.where('LOWER(user.name) LIKE :name', {
+              name: `%${searchTerms[0]}%`,
+            }).andWhere('LOWER(user.lastname) LIKE :lastname', {
+              lastname: `%${searchTerms[1]}%`,
+            });
           }),
         );
       } else {
         query.orWhere(
           new Brackets((qb) => {
-            qb.where('LOWER(user.name) LIKE :name', { name: `%${searchTerms[0]}%` })
-              .orWhere('LOWER(user.lastname) LIKE :lastname', { lastname: `%${searchTerms[0]}%` });
+            qb.where('LOWER(user.name) LIKE :name', {
+              name: `%${searchTerms[0]}%`,
+            }).orWhere('LOWER(user.lastname) LIKE :lastname', {
+              lastname: `%${searchTerms[0]}%`,
+            });
           }),
         );
       }
     }
-  
+
     return await query.getMany();
   }
-  
 
   async getuserById(id: string) {
     const user = await this.userRepository.findOne({
@@ -143,7 +154,7 @@ export class UserRepository {
     const { password: _, ...userNoPassword } = user;
 
     //nodeMailer envía mail de registro
-    await this.nodeMailerRepository.registerEmail(userNoPassword)
+    await this.nodeMailerRepository.registerEmail(userNoPassword);
 
     return userNoPassword;
   }
@@ -155,6 +166,9 @@ export class UserRepository {
     if (!user) {
       throw new BadRequestException('Wrong credentials');
     }
+
+    if (user.is_active === false)
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
@@ -198,9 +212,6 @@ export class UserRepository {
       console.error('Error fetching user info:', error);
       throw new Error('Error fetching user info');
     }
-
-    console.log('googleUserData.data');
-    console.log(googleUserData.data);
 
     const foundUser = await this.userRepository.findOne({
       where: { email: googleUserData.data.email },
@@ -251,6 +262,9 @@ export class UserRepository {
 
     if (!user) throw new BadRequestException('Wrong credentials');
 
+    if (user.is_active === false)
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+
     const tokenPayload = {
       id: user.id,
       email: user.email,
@@ -266,6 +280,46 @@ export class UserRepository {
       message: `Successfully signed in. Welcome ${user.name}`,
       token,
       user: userNoPassword,
+    };
+  }
+
+  async deactivateUser(id: string) {
+    const foundUser = await this.userRepository.findOneBy({ id });
+
+    if (!foundUser)
+      throw new NotFoundException(`User with id '${id}' was not found`);
+
+    if (foundUser.is_active === false) return `User is already deactivated`;
+
+    await this.userRepository.update(id, { is_active: false });
+
+    const dbUser = await this.userRepository.findOneBy({ id });
+
+    const { password: _, ...user } = dbUser;
+
+    return {
+      message: 'User was successfully deactivated',
+      user,
+    };
+  }
+
+  async activateUser(id: string) {
+    const foundUser = await this.userRepository.findOneBy({ id });
+
+    if (!foundUser)
+      throw new NotFoundException(`User with id '${id}' was not found`);
+
+    if (foundUser.is_active === true) return `User is already active`;
+
+    await this.userRepository.update(id, { is_active: true });
+
+    const dbUser = await this.userRepository.findOneBy({ id });
+
+    const { password: _, ...user } = dbUser;
+
+    return {
+      message: 'User was successfully activated',
+      user,
     };
   }
 }

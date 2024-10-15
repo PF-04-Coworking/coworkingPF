@@ -57,4 +57,12 @@ export class UserService {
 
     return 'Contact email sent successfully';
   }
+
+  deactivateUser(id: string){
+    return this.usersRepository.deactivateUser(id);
+  }
+
+  activateUser(id: string){
+    return this.usersRepository.activateUser(id);
+  }
 }

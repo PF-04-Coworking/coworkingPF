@@ -83,7 +83,7 @@ export class ReservationsController {
   })
   @ApiResponse({
     status: 200,
-    description: 'Success message ',
+    description: 'Success message',
     type: Office,
   })
   @ApiBearerAuth()

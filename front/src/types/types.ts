@@ -23,6 +23,7 @@ export interface IOffice {
   price: number;
   services: string[];
   location: string;
+  details: string;
   reservations: IReservation[];
 }
 
@@ -42,6 +43,7 @@ export interface IFullReservation {
   paid_amount: number;
   office: IOffice;
   user: IUserData;
+  is_active: boolean;
 }
 
 export interface IOfficeStripe {
@@ -54,4 +56,12 @@ export interface IOfficeStripe {
 
 export interface FormValues {
   guests: number;
+}
+
+export interface IContactData {
+  name: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  description: string;
 }

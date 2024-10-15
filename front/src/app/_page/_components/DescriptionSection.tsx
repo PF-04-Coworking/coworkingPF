@@ -7,6 +7,7 @@ import officeImage from "@/../public/images/office-2.png";
 import { Button } from "../../../components/common/Button";
 import { Badge } from "../../../components/common/Badge";
 import { UsersRound } from "lucide-react";
+import Link from "next/link";
 
 const badges = [
   {
@@ -44,7 +45,9 @@ const Description = () => {
               oficinas que son perfectas para cualquier tamaño de equipo, que
               van desde 2 hasta 200 personas, o más.
             </Paragraph>
-            <Button variant="primary">Explora oficinas</Button>
+            <Link href="/rooms" className="block">
+              <Button variant="primary">Explora oficinas</Button>
+            </Link>
           </div>
           <div className="shrink-0 relative">
             <Image

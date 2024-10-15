@@ -5,7 +5,7 @@ const servicesOptions: string[] = [
   "Estacionamiento",
   "Zona de descanso",
   "Sala de conferencias",
-  "Acceso a transporte publico",
+  "Acceso al transporte publico",
 ];
 
 export { servicesOptions };
